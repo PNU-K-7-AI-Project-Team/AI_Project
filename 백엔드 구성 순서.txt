@@ -1,0 +1,5 @@
+1. domain
+2. controller - service
+3. persistence(repository) db처리
+4. config - security 
+
