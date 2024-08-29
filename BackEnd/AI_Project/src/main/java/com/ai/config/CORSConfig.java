@@ -13,7 +13,7 @@ public class CORSConfig implements WebMvcConfigurer { // CORSConfig: CORS 설정
 		// addCorsMappings: CORS 매핑 추가하는 메서드
 		// CorsRegistry: 해당 객체를 사용해서 CORS 설정 구성
 		// NonNull: registry의 파라미터가 null이 아니어야한다
-		registry.addMapping("/login")  // 해당 경로에 CORS 적용 "/**"는 모든 경로에 적용 
+		registry.addMapping("/**")  // 해당 경로에 CORS 적용 "/**"는 모든 경로에 적용 
 				.allowCredentials(true) 
 				// 클라이언트가 credential(쿠키, HTTP 인증정보 등)을 요청에 포함 할수 있도록 허용
 				.allowedHeaders(HttpHeaders.CONTENT_TYPE)
@@ -25,6 +25,7 @@ public class CORSConfig implements WebMvcConfigurer { // CORSConfig: CORS 설정
 				.allowedMethods(HttpMethod.GET.name(), // 클라이언트에게 허용되는 메서드를 GET, POST로 제한
 								HttpMethod.POST.name())
 				.allowedOrigins( // 허용할 도메인 설정
-						"http://localhost:3000");
+						"http://localhost:3000",
+						"http://localhost:8080");
 	}
 }

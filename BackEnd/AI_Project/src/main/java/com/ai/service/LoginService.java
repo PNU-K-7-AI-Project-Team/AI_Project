@@ -25,12 +25,15 @@ public class LoginService {
 	// 로그인
 	public ResponseEntity<?> login(String inputId, String inputPassword) {
 		Optional<User> inputUser = userRepo.findByUserId(inputId);
+		System.out.println("Input Password: " + inputPassword);
 		// DB에 입력된 아이디가 없는 경우
 		if (inputUser.isEmpty()) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("사용자를 찾을 수 없습니다.");
 		}
 		User user = inputUser.get(); // DB에 존재하는 ID를 user에 저장
 		
+		 System.out.println("Stored Password: " + user.getPassword());
+		 
 		// DB에 입력된 비밀번호와 일치하지 않는 경우
 		if (!passwordEnc.matches(inputPassword, user.getPassword())) {
 	        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("비밀번호가 일치하지 않습니다.");

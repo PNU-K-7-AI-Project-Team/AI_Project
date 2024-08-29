@@ -28,20 +28,20 @@ public class UserInit implements ApplicationRunner{
 	public void run(ApplicationArguments args) throws Exception {
 		// 현재 날짜를 생년월일로 지정
 
-		userRepo.save(User.builder()
-						  .userId("admin")
-						  .password(passwordEnc.encode("11"))
-						  .userName("관리자")
-						  .role(Role.ADMIN)
-						  .position("과장")
-						  .department("영업1팀")
-						  .region("서울")
-						  .dateOfBirth(new Date())
-						  .gender(Gender.M)
-						  .createdAt(new Date())
-						  .updatedAt(new Date())
-						  .build()
-						  
-				);
+//		userRepo.save(User.builder()
+//						  .userId("admin")
+//						  .password(passwordEnc.encode("11"))
+//						  .userName("관리자")
+//						  .role(Role.ADMIN)
+//						  .position("과장")
+//						  .department("영업1팀")
+//						  .region("서울")
+//						  .dateOfBirth(new Date())
+//						  .gender(Gender.M)
+//						  .createdAt(new Date())
+//						  .updatedAt(new Date())
+//						  .build()
+//						  
+//				);
 	}
 }
