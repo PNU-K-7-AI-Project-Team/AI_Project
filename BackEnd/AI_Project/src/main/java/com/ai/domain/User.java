@@ -1,6 +1,11 @@
 package com.ai.domain;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -30,10 +35,10 @@ public class User {
 	// @GeneratedValue(~): 기본 키의 값을 자동으로 생성 (Auto Increment)
 	private int userCode;
 	
-	@Column (nullable = false, length = 45)
-	private String id;
+	@Column (nullable = false, length = 45, unique = true) //unique = true: 해당 데이터 중복없음
+	private String userId;
 	
-	@Column (nullable = false, length = 45)
+	@Column (nullable = false, length = 255)
 	private String password;
 	
 	@Column (nullable = false, length = 45)
@@ -55,7 +60,7 @@ public class User {
 	@Column (nullable = false, length = 45)
 	private String region;
 	
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.DATE) // Temporal: 날짜타입 정의 어노테이션 
 	@Column(nullable = false)
 	private Date dateOfBirth;
 	
@@ -69,7 +74,14 @@ public class User {
 	
 	@Temporal(TemporalType.TIMESTAMP) 
 	@Column(nullable = false)
-	private Date updated_at;
+	private Date updatedAt;
+	
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		return Collections.singletonList(new SimpleGrantedAuthority(this.role.name()));
+	} // GrantedAuthority: 사용자에게 부여할 권한을 선언하는 클래스
+	  // SimpleGrantedAuthority: 권한을 문자열 형태로 변환
+	  // Collections.singletonList: 단일 요소를 포함하는 불변의 리스트로 변환
+	  
 
 }
 
