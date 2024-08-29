@@ -38,7 +38,7 @@ public class Board {
     @JoinColumn(name = "usercode", nullable = false) 
 	// JoinColumn: 외래키 지정
 	// name = userid(DB의 board-userid와 member-userid가 외래키)
-	private Member member; 
+	private User member; 
 	
 	@Column(nullable = false, length = 2000)
 	private String content;
