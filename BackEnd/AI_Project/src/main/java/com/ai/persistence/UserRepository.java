@@ -9,5 +9,5 @@ import com.ai.domain.User;
 // 첫번째인자: 리포지토리가 관리하는 엔티티클래스
 // 두번째인자: 엔티티의 기본키 타입
 public interface UserRepository extends JpaRepository<User, > {
-
+ddd
 }
