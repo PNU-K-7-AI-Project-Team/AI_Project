@@ -1,0 +1,11 @@
+/* Rectangle 4 */
+.headerbar{
+
+    position: absolute;
+    width: 100%;
+    height: 40px;
+    left: 220px;
+    top: 0px;
+    
+    background: #ffffff;
+}

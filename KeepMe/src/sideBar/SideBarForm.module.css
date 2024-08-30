@@ -1,0 +1,51 @@
+/* SideBarForm.module.css */
+
+.sidebar {
+  position: absolute;
+  width: 230px;
+  height: 1024px;
+  left: 0px;
+  top: 0px;
+  background: #146693;
+}
+
+.formGroup {
+  margin-bottom: 15px;
+}
+
+
+.keepme {
+/* Keep me */
+position: fixed;
+width: 146px;
+height: 43px;
+left: 35px;
+top: 0px;
+margin-top: 2px;
+font-family: 'Jura', sans-serif;
+font-style: normal;
+font-weight: 200;
+font-size: 36px;
+line-height: 43px;
+/* identical to box height */
+
+color: #FFFFFF;
+
+
+}
+.button {
+  position: absolute;
+  width: 150px;
+  height: 30px;
+  left: 35px;
+  top: 381px;
+  background: #146693;
+  border-radius: 50px;
+}
+
+.button:hover {
+  background-color: #2b77a3;
+}
+
+/* navbar */
+/* Rectangle 1 */
