@@ -22,7 +22,6 @@ public class UserService {
 	private final UserRepository userRepo;
 	private final PasswordEncoder passwordEnc;
 
-	
 	public void save(User user) {
 		userRepo.save(user);
 	}
