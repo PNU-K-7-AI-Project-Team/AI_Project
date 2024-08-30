@@ -16,31 +16,33 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `gyro`
+-- Table structure for table `bio`
 --
 
-DROP TABLE IF EXISTS `gyro`;
+DROP TABLE IF EXISTS `bio`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `gyro` (
+CREATE TABLE `bio` (
   `idx` int NOT NULL AUTO_INCREMENT,
   `work_date` date NOT NULL,
   `user_code` int NOT NULL,
-  `x` float NOT NULL,
-  `y` float NOT NULL,
-  `z` float NOT NULL,
-  `register_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `heart_rate` int NOT NULL,
+  `temperature` float NOT NULL,
+  `spo2` int NOT NULL,
+  `latitude` decimal(10,7) NOT NULL,
+  `longitude` decimal(10,7) NOT NULL,
+  `vital_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`idx`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `gyro`
+-- Dumping data for table `bio`
 --
 
-LOCK TABLES `gyro` WRITE;
-/*!40000 ALTER TABLE `gyro` DISABLE KEYS */;
-/*!40000 ALTER TABLE `gyro` ENABLE KEYS */;
+LOCK TABLES `bio` WRITE;
+/*!40000 ALTER TABLE `bio` DISABLE KEYS */;
+/*!40000 ALTER TABLE `bio` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -52,4 +54,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-08-29 22:40:53
+-- Dump completed on 2024-08-30 23:19:38
