@@ -5,9 +5,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.ai.service.LoginService;
+import com.ai.domain.User;
+import com.ai.service.UserService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -15,13 +17,13 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor // final 필드나 @NonNull이 붙은 필드의 생성자를 자동 생성(의존성 주
 public class LoginController {
 	
-	private final LoginService ls;
+	private final UserService ls;
 	
-	@GetMapping("/login")
-	public String getLogin() {
-		System.out.println("로그인 조회");
-		return "로그인 성공!";
-	}
+//    @GetMapping("/login")
+//    public String getLogin() {
+//        System.out.println("로그인 조회");
+//        return "로그인 성공!";
+//    }
 	
 	// 로그인 요청 처리
 	@PostMapping("/login")
