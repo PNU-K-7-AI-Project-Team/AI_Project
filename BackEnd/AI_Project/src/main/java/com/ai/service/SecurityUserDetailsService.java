@@ -21,9 +21,10 @@ public class SecurityUserDetailsService implements UserDetailsService {
 	// 
 	@Override
 	public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException {
-		// 입력한 아이디와 일치하는지 DB에서 찾고 있으면 사용자 정보를 user에 저장
+		// 입력한 아이디와 일치하는지 DB에서 찾는다
+		// 존재하면, 사용자 정보를 user에 저장
 		// 없으면, UserNotFoundException으로 User Not Found 화면에 출력
-		User user = userRepo.findByUserId(userId).orElseThrow(()->new UsernameNotFoundException("User Not Found"));
+		User user = userRepo.findByUserId(userId).orElseThrow(()->new UsernameNotFoundException("아이디 혹은 비밀번호를 확인해주세요."));
 			
 		// 내장객체 User를 사용해서 UserDetails 객체를 생성
 		// 객체에는 사용자 아이디, 비밀번호, 권한 목록을 포함
@@ -31,5 +32,6 @@ public class SecurityUserDetailsService implements UserDetailsService {
 				user.getUserId(),
 				user.getPassword(),
 				AuthorityUtils.createAuthorityList(user.getRole().toString()));
+		// 생성된 UserDetails 객체는 Spring Security로 반환되어 자격을 검증하고 처리
 	}
 }

@@ -1,41 +1,50 @@
 package com.ai.controller;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ai.domain.User;
-import com.ai.service.UserService;
+import com.ai.service.LoginService;
 
 import lombok.RequiredArgsConstructor;
 
-@Controller // 웹 요청 컨트롤러 어노테이션
-@RequiredArgsConstructor // final 필드나 @NonNull이 붙은 필드의 생성자를 자동 생성(의존성 주
+@Controller
+@RequiredArgsConstructor
 public class LoginController {
 	
-	private final UserService ls;
+	private final LoginService ls;
 	
-//    @GetMapping("/login")
-//    public String getLogin() {
-//        System.out.println("로그인 조회");
-//        return "로그인 성공!";
-//    }
 	
-	// 로그인 요청 처리
-	@PostMapping("/login")
-	public ResponseEntity<?> login(@RequestParam String inputId, @RequestParam String inputPassword) {
-		System.out.println("로그인 시도");
-		ResponseEntity<?> resp = ls.login(inputId, inputPassword);
-		
-		if (resp.getStatusCode() == HttpStatus.OK) {
-			return ResponseEntity.ok("로그인 성공");
-		} else {
-			return ResponseEntity.status(resp.getStatusCode()).body((String) resp.getBody());
-		}
+	@GetMapping("/login")
+	public void login() {
+		System.out.println("로그인 요청");
 	}
 	
+	@GetMapping("/loginSuccess")
+	public void loginSuccess() {
+	System.out.println("로그인 성공");
+	}
+	
+	@GetMapping("/loginError")
+	public void loginError() {
+	System.out.println("로그인 실패");
+	}
+	
+	
+	@PostMapping("/signup")
+	public ResponseEntity<?> signup(@RequestBody User user) {
+		try {
+			ls.signUp(user);
+			return ResponseEntity.ok("가입 성공");
+		}
+		catch(Exception e) {
+			return ResponseEntity.badRequest().body("가입 실패: " + e.getMessage());
+		}
+	}
+
 }

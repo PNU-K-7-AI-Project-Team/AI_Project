@@ -51,37 +51,32 @@ public class User {
 	@Column(nullable = false)
 	private Role role = Role.USER;
 	
-	@Column (nullable = false, length = 45)
+	@Column (length = 45)
 	private String position;
 	
-	@Column (nullable = false, length = 45)
+	@Column (length = 45)
 	private String department;
 	
-	@Column (nullable = false, length = 45)
+	@Column (length = 45)
 	private String region;
 	
 	@Temporal(TemporalType.DATE) // Temporal: 날짜타입 정의 어노테이션 
-	@Column(nullable = false)
+	@Column
 	private Date dateOfBirth;
 	
 	@Enumerated(EnumType.STRING)
-	@Column(nullable = false)
+	@Column
 	private Gender gender; 
 	
 	@Temporal(TemporalType.TIMESTAMP) 
-	@Column(nullable = false)
+	@Column
 	private Date createdAt;
 	
 	@Temporal(TemporalType.TIMESTAMP) 
-	@Column(nullable = false)
+	@Column
 	private Date updatedAt;
 	
-	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return Collections.singletonList(new SimpleGrantedAuthority(this.role.name()));
-	} // GrantedAuthority: 사용자에게 부여할 권한을 선언하는 클래스
-	  // SimpleGrantedAuthority: 권한을 문자열 형태로 변환
-	  // Collections.singletonList: 단일 요소를 포함하는 불변의 리스트로 변환
-	  
 
+	 
 }
 

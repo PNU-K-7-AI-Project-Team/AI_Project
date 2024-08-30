@@ -27,7 +27,7 @@ public class UserInit implements ApplicationRunner{
 	@Override
 	public void run(ApplicationArguments args) throws Exception {
 		// 현재 날짜를 생년월일로 지정
-
+//
 //		userRepo.save(User.builder()
 //						  .userId("admin")
 //						  .password(passwordEnc.encode("11"))
@@ -40,8 +40,7 @@ public class UserInit implements ApplicationRunner{
 //						  .gender(Gender.M)
 //						  .createdAt(new Date())
 //						  .updatedAt(new Date())
-//						  .build()
-//						  
+//						  .build()  
 //				);
 	}
 }
