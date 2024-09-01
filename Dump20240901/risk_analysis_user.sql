@@ -26,18 +26,18 @@ CREATE TABLE `user` (
   `user_code` int NOT NULL AUTO_INCREMENT,
   `user_id` varchar(45) NOT NULL,
   `password` varchar(255) NOT NULL,
-  `user_name` varchar(45) DEFAULT NULL,
-  `role` enum('ADMIN','USER') NOT NULL,
+  `user_name` varchar(45) NOT NULL,
+  `role` enum('ROLE_ADMIN','ROLE_USER') NOT NULL,
   `position` varchar(45) DEFAULT NULL,
   `department` varchar(45) DEFAULT NULL,
   `region` varchar(45) DEFAULT NULL,
   `date_of_birth` date DEFAULT NULL,
-  `gender` enum('M','F') DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
+  `gender` enum('F','M') DEFAULT NULL,
+  `created_at` datetime(6) DEFAULT NULL,
+  `updated_at` datetime(6) DEFAULT NULL,
   PRIMARY KEY (`user_code`),
   UNIQUE KEY `UKa3imlf41l37utmxiquukk8ajc` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -46,7 +46,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'admin','$2a$10$J08rkxngEv98iIYox6ozru4uOzuoqlTrezstHBVKi/HsLI2u4JDIu','관리자','ADMIN','과장','영업1팀','서울','2024-08-30','M','2024-08-30 01:21:33','2024-08-30 01:21:33'),(3,'nameanme','$2a$10$GGPpMqfMeilm09lEuvXA2uTew9yrjIQtJ8t.ar3ELBqrv2mK6dW4K','관리자','USER',NULL,NULL,NULL,NULL,NULL,NULL,NULL),(8,'nameandsdsme','$2a$10$LrLHwPoOXp5OlngpdQSaZ.niU5XQkK434/dXT.AlACPY4agzKztEm','홍길동동동','USER',NULL,NULL,NULL,NULL,NULL,NULL,NULL),(9,'test','$2a$10$8Ve7eMNc7wMMXHKI3IstdOo8ISW3HvNJvlEK0M3VyOJTz87ISS3JS','테스트','USER',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+INSERT INTO `user` VALUES (1,'admin','$2a$10$HKWqweecj9gdA7FTCROT6eReUUSNR8qk6op5geo6neJTo170Tw00K','관리자','ROLE_ADMIN','과장','영업1팀','서울','2024-09-01','M','2024-09-01 11:40:16.923000','2024-09-01 11:40:16.923000'),(2,'user','$2a$10$P74MPjQHvjvfNjgF01ZrNOZwr.8c/yXU8y6R/x2YdXIiKdKD23Zwi','작업자','ROLE_USER',NULL,NULL,NULL,NULL,NULL,NULL,NULL),(4,'user01','$2a$10$ZlsD4G60CbjU5WnpIP/OGOIFgOUJHrONtM2DqdjrVC.QhqWadhyti','작업자2','ROLE_USER',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -59,4 +59,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-08-30 23:19:38
+-- Dump completed on 2024-09-01 20:49:57
