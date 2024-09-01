@@ -19,7 +19,23 @@ public class LoginController {
 	
 	private final LoginService ls;
 	
-
+	
+//	@GetMapping("/login")
+//	public void login() {
+//		System.out.println("로그인 요청");
+//	}
+//	
+//	@GetMapping("/loginSuccess")
+//	public void loginSuccess() {
+//	System.out.println("로그인 성공");
+//	}
+//	
+//	@GetMapping("/loginError")
+//	public void loginError() {
+//	System.out.println("로그인 실패");
+//	}
+	
+	
 	@PostMapping("/signup")
 	public ResponseEntity<?> signup(@RequestBody User user) {
 		try {

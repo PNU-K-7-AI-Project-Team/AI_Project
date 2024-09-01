@@ -28,8 +28,7 @@ public class UserInit implements ApplicationRunner{
 	public void run(ApplicationArguments args) throws Exception {
 		// 현재 날짜를 생년월일로 지정
 
-		// 실행 시 계정 추가
-//		userRepo.save(User.builder()
+//		userRepo.save(Member.builder()
 //						  .userId("admin")
 //						  .password(passwordEnc.encode("11"))
 //						  .userName("관리자")
