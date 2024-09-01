@@ -9,8 +9,11 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.access.intercept.AuthorizationFilter;
 
 import com.ai.config.filter.JWTAuthenFilter;
+import com.ai.config.filter.JWTAuthorFilter;
+import com.ai.persistence.UserRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -20,6 +23,7 @@ import lombok.RequiredArgsConstructor;
 public class SecurityConfig {
 	
 	private final AuthenticationConfiguration authConfig;
+	private final UserRepository userRepo;
 	
 	@Bean
 	PasswordEncoder passwordEncoder() {
@@ -31,10 +35,12 @@ public class SecurityConfig {
 	SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		
 		http.authorizeHttpRequests(security->security
-				.requestMatchers("/userPage/**").authenticated()
+				.requestMatchers("/user/**").authenticated()
 				// authenticated(): 인증된 사용자면 해당 경로에 접근 가능
-				.requestMatchers("/adminPage/**").hasRole("ADMIN")
+				.requestMatchers("/admin/**").hasRole("ADMIN")
 				// hasRole: 해당 경로로 시작하는 모든 요청은 ADMIN 역할을 가진 사용자만 접근 가능
+				// 주의: hasRole, hasAnyRole은 ADMIN이면 ROLE_ADMIN으로 앞에 접두사 "ROLE_ADMIN"을 추가한다
+				// 그래서 DB에도 ROLE_"권한이름" 이런식으로 지정해야됨
 				.anyRequest().permitAll() // 위 지정한 경로말고 모든 경로는 누구나 접근 가능
 				);
 		http.csrf(cf->cf.disable()); // CSRF 보호 비활성화
@@ -43,9 +49,9 @@ public class SecurityConfig {
 		// 접근하면 form.loginPage로 지정한 경로로 리디렉션
 //		http.formLogin(form->form
 //				.loginPage("/login")
-//				.permitAll() // 사용자 정의 로그인 경로로 이동
+//				.permitAll() 
 //				.defaultSuccessUrl("/loginSuccess", true)
-//				.failureUrl("/loginError")
+//				.failureUrl("/loginFail")
 //				);
 		// permitAll: 누구나 접근 가능
 		
@@ -61,9 +67,15 @@ public class SecurityConfig {
 		http.logout(logout->logout
 				.invalidateHttpSession(true) // 세션을 유효하지않게함
 				.deleteCookies("JSESSIONID") // JSESSIONID(세션아이디) 쿠키 삭제
-				.logoutSuccessUrl("/login")); // 로그아웃 성공시 리디렉션할 경로
+				.logoutSuccessUrl("/")); // 로그아웃 성공시 리디렉션할 경로
 		
+		// addFilterBefore: JWTAuthorFilter가 AuthorizationFilter보다 먼저 실행됨
+		http.addFilterBefore(new JWTAuthorFilter(userRepo), AuthorizationFilter.class);
 		http.addFilter(new JWTAuthenFilter(authConfig.getAuthenticationManager()));
+		// 중요: 로그인시 JWTAuthenFilter가 필요한데 필터체인 순서상,
+		// JWTAuthorFilter가 먼저 실행되는데 헤더에 토큰이 없으니까
+		// doFilterChain으로 다음 필터인 JWTAuthentication으로 가서
+		// JWTAuthenFilter가 실행되어 로그인 시도 후 토큰 발행
 		
 		return http.build(); // 보안 구성 설정 완료
 	}

@@ -39,7 +39,7 @@ public class LoginService {
 						  .userId(user.getUserId())
 						  .password(passwordEnc.encode(user.getPassword())) // encode를 통해 암호화
 						  .userName(user.getUserName())
-						  .role(Role.USER).build());
+						  .role(Role.ROLE_USER).build());
 		}
 		
 		// 중복 아이디 체크

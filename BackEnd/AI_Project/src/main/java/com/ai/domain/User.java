@@ -44,7 +44,7 @@ public class User {
 	// Enum의 이름(예: ROLE_USER)을 데이터베이스에 문자열로 저장
 	// Builder.Default: 빌더 패턴으로 객체 생성 시 기본값을 Role.ROLE_USER를 가짐 
 	@Column(nullable = false)
-	private Role role = Role.USER;
+	private Role role = Role.ROLE_USER;
 	
 	@Column (length = 45)
 	private String position;

@@ -33,7 +33,7 @@ public class UserInit implements ApplicationRunner{
 //						  .userId("admin")
 //						  .password(passwordEnc.encode("11"))
 //						  .userName("관리자")
-//						  .role(Role.ADMIN)
+//						  .role(Role.ROLE_ADMIN)
 //						  .position("과장")
 //						  .department("영업1팀")
 //						  .region("서울")
