@@ -44,18 +44,8 @@ public class SecurityConfig {
 				.anyRequest().permitAll() // 위 지정한 경로말고 모든 경로는 누구나 접근 가능
 				);
 		http.csrf(cf->cf.disable()); // CSRF 보호 비활성화
-		
-		// authenticated()로 인해 미인증 사용자가 인증된 사용자만 들어갈수있는 경로에
-		// 접근하면 form.loginPage로 지정한 경로로 리디렉션
-//		http.formLogin(form->form
-//				.loginPage("/login")
-//				.permitAll() 
-//				.defaultSuccessUrl("/loginSuccess", true)
-//				.failureUrl("/loginFail")
-//				);
-		// permitAll: 누구나 접근 가능
-		
-		http.formLogin(fm->fm.disable());
+				
+		http.formLogin(fm->fm.loginPage("/login").permitAll());
 		
 		
 		http.httpBasic(basic->basic.disable());
@@ -68,6 +58,8 @@ public class SecurityConfig {
 				.invalidateHttpSession(true) // 세션을 유효하지않게함
 				.deleteCookies("JSESSIONID") // JSESSIONID(세션아이디) 쿠키 삭제
 				.logoutSuccessUrl("/")); // 로그아웃 성공시 리디렉션할 경로
+		
+		http.cors(c->{});
 		
 		// addFilterBefore: JWTAuthorFilter가 AuthorizationFilter보다 먼저 실행됨
 		http.addFilterBefore(new JWTAuthorFilter(userRepo), AuthorizationFilter.class);

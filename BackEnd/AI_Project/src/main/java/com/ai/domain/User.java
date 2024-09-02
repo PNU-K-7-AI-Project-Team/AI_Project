@@ -30,13 +30,13 @@ public class User {
 	// @GeneratedValue(~): 기본 키의 값을 자동으로 생성 (Auto Increment)
 	private int userCode;
 	
-	@Column (nullable = false, length = 45, unique = true) //unique = true: 해당 데이터 중복없음
+	@Column (length = 45, nullable = false, unique = true) //unique = true: 해당 데이터 중복없음
 	private String userId;
 	
-	@Column (nullable = false, length = 255)
+	@Column (length = 255, nullable = false)
 	private String password;
 	
-	@Column (nullable = false, length = 45)
+	@Column (length = 45, nullable = false)
 	private String userName;
 	
 	// JPA가 Enum 타입의 필드를 데이터베이스에 저장
@@ -55,23 +55,19 @@ public class User {
 	@Column (length = 45)
 	private String region;
 	
-	@Temporal(TemporalType.DATE) // Temporal: 날짜타입 정의 어노테이션 
+	 
 	@Column
+	@Temporal(TemporalType.DATE) // Temporal: 날짜타입 정의 어노테이션
 	private Date dateOfBirth;
 	
 	@Enumerated(EnumType.STRING)
 	@Column
 	private Gender gender; 
 	
-	@Temporal(TemporalType.TIMESTAMP) 
 	@Column
-	private Date createdAt;
-	
 	@Temporal(TemporalType.TIMESTAMP) 
-	@Column
-	private Date updatedAt;
-	
+	@Builder.Default // 스프링부트에서 default를 new Date로 설정
+	private Date createDate = new Date();
 
-	 
 }
 

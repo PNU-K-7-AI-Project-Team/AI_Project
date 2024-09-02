@@ -29,6 +29,13 @@ public class LoginController {
 		catch(Exception e) {
 			return ResponseEntity.badRequest().body("가입 실패: " + e.getMessage());
 		}
+		
+		
+	}
+	
+	@PostMapping("signup/checkId")
+	public ResponseEntity<?> checkId(@RequestBody User user) {
+		return ls.checkId(user);
 	}
 
 }

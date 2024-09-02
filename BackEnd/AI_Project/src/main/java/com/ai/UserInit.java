@@ -39,8 +39,6 @@ public class UserInit implements ApplicationRunner{
 //						  .region("서울")
 //						  .dateOfBirth(new Date())
 //						  .gender(Gender.M)
-//						  .createdAt(new Date())
-//						  .updatedAt(new Date())
 //						  .build()  
 //				);
 	}

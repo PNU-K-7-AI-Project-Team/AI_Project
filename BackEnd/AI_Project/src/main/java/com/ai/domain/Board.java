@@ -1,0 +1,57 @@
+package com.ai.domain;
+
+import java.util.Date;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
+// 공지사항
+@Getter @Setter
+@ToString
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@Entity
+public class Board {
+	// 기본키, AutoIncrement
+	@Id @GeneratedValue(strategy = GenerationType.IDENTITY) 
+	private int idx;
+	
+	@Column
+	private int userCode;
+	
+	@Column (length = 100, nullable = false)
+	private String title;
+	
+	@Column (length = 2000, nullable = false)
+	private String content;
+	
+	@Column (length = 45, nullable = false)
+	private String userId;
+	
+	@Column (length = 45, nullable = false)
+	private String userName;
+	
+	@Column
+	@Temporal(TemporalType.TIMESTAMP)
+	@Builder.Default
+	private Date createDate = new Date();
+	
+	@Column
+	@Temporal(TemporalType.TIMESTAMP)
+	@Builder.Default
+	private Date updateDate = new Date();
+	
+	
+}

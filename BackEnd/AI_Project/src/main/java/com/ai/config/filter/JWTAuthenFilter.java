@@ -71,7 +71,7 @@ public class JWTAuthenFilter extends UsernamePasswordAuthenticationFilter{
 		// User로 캐스팅해서 user에 저장
 		
 		String token = JWT.create() // 새로운 JWT 토큰 생성
-				.withExpiresAt(new Date(System.currentTimeMillis()+1000*60*10)) // 토큰만료시간설정(10분)
+				.withExpiresAt(new Date(System.currentTimeMillis()+1000*60*1000)) // 토큰만료시간설정(10분)
 				.withClaim("userId", user.getUsername()) // 클레임에 유저 아이디 추가(User 내장객체의 함수(username=아이디)
 				.sign(Algorithm.HMAC256("com.ai.project")); // 서명
 		response.addHeader(HttpHeaders.AUTHORIZATION, "Bearer " + token);
