@@ -1,0 +1,156 @@
+1D CNN 모델은 시계열 데이터나 연속적인 데이터를 처리하는 데 매우 효과적입니다. 이 모델은 각 데이터 포인트 간의 지역적 상관관계를 학습하는 데 주로 사용되며, 특히 시간 축에 따라 패턴을 인식하는 데 유용합니다. 이제 코드에서 사용된 1D CNN 모델의 각 층에 대해 구체적으로 설명드리겠습니다.
+
+1D CNN 모델 생성 코드
+
+model = tf.keras.Sequential()
+model.add(tf.keras.layers.Input(shape=(TIME_PERIODS, 3)))
+model.add(tf.keras.layers.Conv1D(filters=100, kernel_size=11, activation='relu'))
+model.add(tf.keras.layers.MaxPool1D())
+model.add(tf.keras.layers.BatchNormalization())
+
+model.add(tf.keras.layers.Conv1D(filters=10, kernel_size=5, activation='relu'))
+model.add(tf.keras.layers.MaxPool1D())
+model.add(tf.keras.layers.Dropout(rate=0.5))
+
+model.add(tf.keras.layers.Flatten())
+model.add(tf.keras.layers.Dense(units=6, activation='softmax'))
+model.summary()
+
+
+각 층의 역할과 이유
+1. 입력층 (Input Layer)
+model.add(tf.keras.layers.Input(shape=(TIME_PERIODS, 3)))
+설명: 이 층은 모델의 입력 형태를 정의합니다. 여기서 shape=(TIME_PERIODS, 3)는 모델이 TIME_PERIODS 길이의 시계열 데이터를 받고, 각 타임 스텝에 대해 3개의 특징(x-accl, y-accl, z-accl)을 처리한다는 것을 의미합니다.
+이유: 모델에 입력 데이터의 형식을 명확히 정의해주어, 이후의 모든 층이 올바르게 데이터를 처리할 수 있도록 합니다.
+
+
+2. 첫 번째 컨볼루션 층 (Conv1D Layer)
+model.add(tf.keras.layers.Conv1D(filters=100, kernel_size=11, activation='relu'))
+설명: 이 층은 1차원 컨볼루션을 수행합니다. filters=100은 100개의 필터를 사용하여 입력 데이터를 컨볼루션합니다. kernel_size=11은 11개의 연속된 데이터 포인트를 대상으로 필터를 적용한다는 의미입니다. 활성화 함수로 ReLU가 사용됩니다.
+이유: 컨볼루션 층은 데이터의 지역적 패턴을 학습하는 데 매우 효과적입니다. 11개의 타임 스텝을 보면서 특정 특징을 추출하고, 100개의 필터를 사용하여 다양한 패턴을 학습할 수 있습니다. 이는 모델이 시계열 데이터의 중요한 패턴을 감지하는 데 도움을 줍니다.
+
+
+3. 맥스 풀링 층 (MaxPooling1D Layer)
+model.add(tf.keras.layers.MaxPool1D())
+설명: 맥스 풀링 층은 컨볼루션 층의 출력에서 가장 큰 값을 추출하여 데이터의 크기를 줄이고, 중요한 특징을 강조합니다.
+이유: 데이터의 크기를 줄이면서도 중요한 특징을 유지하고, 과적합을 방지하며 계산 효율성을 높입니다.
+
+
+4. 배치 정규화 층 (BatchNormalization Layer)
+model.add(tf.keras.layers.BatchNormalization())
+설명: 이 층은 각 배치마다 활성화 값을 정규화하여 학습 과정을 안정화하고 가속화합니다.
+이유: 학습 과정에서 각 층의 입력 분포가 크게 변하지 않도록 유지하여, 학습 속도를 높이고, 과적합을 줄이는 효과를 제공합니다.
+
+
+5. 두 번째 컨볼루션 층 (Conv1D Layer)
+model.add(tf.keras.layers.Conv1D(filters=10, kernel_size=5, activation='relu'))
+설명: 두 번째 컨볼루션 층은 앞서 추출된 특징을 기반으로 더 작은 범위의 패턴을 학습합니다. 이번에는 10개의 필터를 사용하고, 5개의 타임 스텝을 대상으로 필터를 적용합니다.
+이유: 첫 번째 컨볼루션 층에서 추출한 고수준 특징을 더 세밀하게 분석하여, 더욱 정교한 패턴을 학습하게 합니다.
+
+
+6. 두 번째 맥스 풀링 층 (MaxPooling1D Layer)
+model.add(tf.keras.layers.MaxPool1D())
+설명: 두 번째 맥스 풀링 층도 첫 번째와 유사하게 중요한 특징을 강조하며 데이터의 크기를 줄입니다.
+이유: 모델의 복잡성을 줄이고, 가장 중요한 특징을 보존하면서 학습을 효율적으로 진행할 수 있도록 합니다.
+
+
+7. 드롭아웃 층 (Dropout Layer)
+model.add(tf.keras.layers.Dropout(rate=0.5))
+설명: 드롭아웃 층은 학습 과정에서 일부 뉴런을 무작위로 비활성화합니다. rate=0.5는 전체 뉴런의 50%를 드롭아웃하겠다는 의미입니다.
+이유: 과적합을 방지하고, 모델이 특정 뉴런에 지나치게 의존하지 않도록 돕습니다.
+
+
+8. 평탄화 층 (Flatten Layer)
+model.add(tf.keras.layers.Flatten())
+설명: 평탄화 층은 다차원 배열을 일차원으로 변환합니다.
+이유: 완전 연결 층(Dense Layer)에 데이터를 전달하기 위해 필요한 전처리 단계로, 시계열 데이터를 벡터 형태로 변환합니다.
+
+
+9. 완전 연결 층 (Dense Layer)
+model.add(tf.keras.layers.Dense(units=6, activation='softmax'))
+설명: 마지막 층은 6개의 뉴런을 가진 완전 연결 층입니다. softmax 활성화 함수를 사용해 출력값을 다중 클래스 확률로 변환합니다.
+이유: 이 층은 최종적으로 각 클래스(활동)에 대한 확률을 출력하며, 모델의 예측을 결정합니다. 6개의 클래스는 각각의 활동(Walking, Jogging, Upstairs, Sitting, Downstairs, Standing)을 나타냅니다.
+
+
+히든 레이어(은닉층)의 역할
+컨볼루션 층과 맥스 풀링 층은 모델의 히든 레이어 역할을 합니다. 히든 레이어는 입력 데이터에서 점점 더 높은 수준의 특징을 학습하도록 도와줍니다. 각 히든 레이어는 이전 레이어의 출력에서 중요한 패턴을 학습하며, 이 패턴들이 쌓여 최종적으로 데이터의 분류를 수행하는 데 필요한 복잡한 특징을 학습하게 됩니다.
+
+- 컨볼루션 층: 입력 데이터의 국소적인 패턴을 학습합니다.
+- 맥스 풀링 층: 이 패턴에서 중요한 부분을 선택하고, 데이터의 크기를 줄여 다음 층에서 효율적으로 처리할 수 있게 합니다.
+- 배치 정규화 층: 학습 과정을 안정화하고 가속화합니다.
+- 드롭아웃 층: 과적합을 방지하여 모델의 일반화 성능을 높입니다.
+
+이와 같은 히든 레이어들을 통해 모델은 입력 데이터를 점진적으로 높은 수준의 특징으로 변환하며, 마지막에는 이 특징들을 기반으로 입력 데이터의 클래스(활동)를 예측하게 됩니다. 이 과정이 CNN의 핵심적인 학습 메커니즘입니다.
+
+
+
+
+
+모델 요약 분석
+1. Conv1D (conv1d)
+ · Output Shape: (None, 70, 100)
+   - 입력 데이터의 길이가 80이었고, kernel_size=11을 적용하여 (80 - 11 + 1) = 70이 됨
+     이 결과는 컨볼루션 연산이 적용된 후의 시퀀스 길이
+   - 100은 필터의 개수를 의미
+     각 필터는 입력 데이터의 지역적 특징을 학습
+ · Param #: 3,400
+   - 계산: (11 * 3 * 100) + 100 = 3,400
+            (커널 크기 * 입력 채널 수 * 출력 채널 수) + 바이어스
+            11(커널 크기) * 3(입력 채널 수) * 100(출력 채널 수) + 100(바이어스 파라미터) = 3,400
+
+2. MaxPooling1D (max_pooling1d)
+ · Output Shape: (None, 35, 100)
+   - MaxPooling1D은 pool_size=2를 기본으로 사용
+     따라서 시퀀스 길이가 절반으로 줄어 35가 됩니다.
+ · Param #: 0
+   - 맥스 풀링 층은 학습 가능한 파라미터가 없음
+
+3. BatchNormalization (batch_normalization)
+ · Output Shape: (None, 35, 100)
+   - 출력 형태는 MaxPooling1D의 결과와 동일
+ · Param #: 400
+   - 계산: 4 * 출력 채널 수 = 4 * 100 = 400
+            배치 정규화에는 평균, 분산, 스케일, 쉬프트 4개의 파라미터가 포함됨
+
+4. Conv1D (conv1d_1)
+ · Output Shape: (None, 31, 10)
+   - kernel_size=5로, 시퀀스 길이가 (35 - 5 + 1) = 31이 됨
+   - 10은 필터의 개수
+ · Param #: 5,010
+   - 계산: (5 * 100 * 10) + 10 = 5,010
+            (커널 크기 * 입력 채널 수 * 출력 채널 수) + 바이어스
+
+5. MaxPooling1D (max_pooling1d_1)
+ · Output Shape: (None, 15, 10)
+   - pool_size=2로 시퀀스 길이가 절반으로 줄어 15가 됨
+ · Param #: 0
+   - 맥스 풀링 층은 학습 가능한 파라미터가 없음
+
+6. Dropout (dropout)
+ · Output Shape: (None, 15, 10)
+   - 드롭아웃은 입력 데이터의 형식에 영향을 미치지 않음, 단지 일부 뉴런을 학습 시 비활성화 함
+ · Param #: 0
+   - 드롭아웃 층은 학습 가능한 파라미터가 없음
+
+7. Flatten (flatten)
+ · Output Shape: (None, 150)
+   - 이 층은 데이터를 평탄화하여 일차원 벡터로 변환, 15 * 10 = 150이 됨
+ · Param #: 0
+   - 평탄화 층은 학습 가능한 파라미터가 없음
+
+8. Dense (dense)
+ · Output Shape: (None, 6)
+   - 6개의 유닛을 가진 완전 연결 층으로, 6개의 클래스(활동)를 예측
+ · Param #: 906
+   - 계산: (150 * 6) + 6 = 906
+            (입력 유닛 수 * 출력 유닛 수) + 바이어스 파라미터
+
+모델의 총 파라미터
+· Total params: 9,716
+· Trainable params: 9,516
+· Non-trainable params: 200
+
+결론
+모델이 잘 생성되었습니다. 모든 층이 예상대로 동작하며, 파라미터 수와 출력 형태도 의도한 대로 계산되었습니다. 이 모델은 입력된 시계열 데이터에서 중요한 특징을 추출하고, 이를 바탕으로 6개의 활동을 정확하게 분류할 수 있도록 설계되었습니다. BatchNormalization과 Dropout을 통해 학습의 안정성과 일반화 성능을 높인 것도 이 모델의 장점입니다.
+
+
