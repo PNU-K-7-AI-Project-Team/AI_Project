@@ -19,19 +19,19 @@ public class LoginService {
 	private final UserRepository userRepo;
 	private final PasswordEncoder passwordEnc;
 	
-	// 프론트에서 받은 토큰으로 유저 id 반환
-		public String getUserIdFromToken() {
-			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-			// SecurityContextHolder: SecurityContext 저장소
-			// SecurityContext: 사용자 인증정보(Authentication) 보관
-			// Authentication: 유저의 아이디, 비밀번호, 권한 등이 포함
-			if (auth != null && auth.isAuthenticated()) {
-				// auth != null: 사용자 인증 정보가 존재하면서, 
-				// isAuthenticated: 사용자가 인증된 상태일때,
-				return auth.getName(); // getName(): 사용자의 아이디를 반환
-			}
-			return null; // 인증 정보가 존재하지않으면, null값 반환
-		}
+//	// 프론트에서 받은 토큰으로 유저 id 반환
+//		public String getUserIdFromToken() {
+//			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+//			// SecurityContextHolder: SecurityContext 저장소
+//			// SecurityContext: 사용자 인증정보(Authentication) 보관
+//			// Authentication: 유저의 아이디, 비밀번호, 권한 등이 포함
+//			if (auth != null && auth.isAuthenticated()) {
+//				// auth != null: 사용자 인증 정보가 존재하면서, 
+//				// isAuthenticated: 사용자가 인증된 상태일때,
+//				return auth.getName(); // getName(): 사용자의 아이디를 반환
+//			}
+//			return null; // 인증 정보가 존재하지않으면, null값 반환
+//		}
 		
 		// 회원가입 메서드
 		public void signUp(User user) {

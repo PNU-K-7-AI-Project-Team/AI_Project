@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -47,15 +48,23 @@ public class BoardController {
     @GetMapping("/board/{idx}") 
     public ResponseEntity<?> getBoard(@PathVariable int idx) {
     	// @PathVariable: URL 경로의 변수 {idx}를 메서드의 파라미터로 변환해줌
-    	Board board = bs.getBoard(idx);
-    	return ResponseEntity.ok(board);
+    	try {
+    		Board board = bs.getBoard(idx);
+        	return ResponseEntity.ok(board);
+    	} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("게시물 조회 실패");
+		}
     }
     
     // 게시물 등록
     @PostMapping("/board/write")
     public ResponseEntity<?> boardWrite(@RequestBody Board board) {
-    	Board createBoard = bs.boardWrite(board);
-    	return ResponseEntity.ok(createBoard);
+    	try {
+    		bs.boardWrite(board);
+    	} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("글쓰기 실패");
+		}
+    	return ResponseEntity.ok("글쓰기 성공");
     }
     
     
