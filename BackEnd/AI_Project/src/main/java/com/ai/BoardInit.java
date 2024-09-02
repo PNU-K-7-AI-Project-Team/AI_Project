@@ -24,16 +24,16 @@ public class BoardInit implements ApplicationRunner{
 		User admin = userRepo.findByUserId("admin")
 				.orElseThrow(()->new UsernameNotFoundException("User Not Found"));
 		
-		for (int i=1; i<=10; i++) {
-			
-			boardRepo.save(Board.builder()
-							.title("제목" + i)
-							.content("내용" + i)
-							.userCode(admin.getUserCode())
-							.userId(admin.getUserId())
-							.userName(admin.getUserName())
-							.build());
-		}
+//		for (int i=1; i<=10; i++) {
+//			
+//			boardRepo.save(Board.builder()
+//							.title("제목" + i)
+//							.content("내용" + i)
+//							.userCode(admin.getUserCode())
+//							.userId(admin.getUserId())
+//							.userName(admin.getUserName())
+//							.build());
+//		}
 	}
 	
 	
