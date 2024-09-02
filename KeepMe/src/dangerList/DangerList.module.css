@@ -1,0 +1,12 @@
+/* 위험 작업자 리스트 */
+.bg{
+
+    position: absolute;
+    width: 580px;
+    height: 250px;
+    left: 267px;
+    top: 750px;
+    margin: 20px;
+    background: #ac3e3e;
+    border-radius: 5px;
+}

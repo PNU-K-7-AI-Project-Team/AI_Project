@@ -1,5 +1,6 @@
 import React from 'react'
 import { useRef, useEffect } from 'react'
+import styles from './NaverMap.module.css'
 export default function NaverMap() {
     const mapRef = useRef(null);
     const locations = [
@@ -9,8 +10,6 @@ export default function NaverMap() {
         {lat:35.17997666666667, lng:129.078785 }, 
         {lat:35.1573938,lng:129.05128355 }, 
     ]
-
-    
     useEffect(() => {
       const { naver } = window;
       if (mapRef.current && naver) {
@@ -35,6 +34,6 @@ export default function NaverMap() {
     }, [locations]);
 
   return (
-    <div ref={mapRef} style={{ width: "500px", height: "500px" }}></div>
+    <div ref={mapRef} className={styles.map}></div>
   )
 }

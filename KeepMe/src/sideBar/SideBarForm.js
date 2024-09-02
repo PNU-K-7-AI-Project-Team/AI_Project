@@ -8,7 +8,7 @@ export default function SideBarForm() {
         <div className={styles.formGroup}>
             <h1 className={styles.keepme}>Keep me</h1>
         </div>
-        <button className={styles.button} >공지사항</button>
+        <button className={styles.button}>공지사항</button>
       </form>
     </div>
   )

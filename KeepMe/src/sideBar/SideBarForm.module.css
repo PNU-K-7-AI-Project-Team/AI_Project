@@ -2,11 +2,12 @@
 
 .sidebar {
   position: absolute;
-  width: 230px;
+  width: 220px;
   height: 1024px;
   left: 0px;
   top: 0px;
-  background: #146693;
+  
+  background: #143A52;
 }
 
 .formGroup {
@@ -24,28 +25,40 @@ top: 0px;
 margin-top: 2px;
 font-family: 'Jura', sans-serif;
 font-style: normal;
-font-weight: 200;
+font-weight: 100;
 font-size: 36px;
 line-height: 43px;
 /* identical to box height */
 
 color: #FFFFFF;
-
-
 }
 .button {
   position: absolute;
   width: 150px;
   height: 30px;
-  left: 35px;
+  left: -10px;
   top: 381px;
-  background: #146693;
+  background: #143A52;
   border-radius: 50px;
+  border : none;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 15px;
+  
+  color: rgba(255, 255, 255, 0.6);
+  /* identical to box height */
 }
 
 .button:hover {
-  background-color: #2b77a3;
+  color: white;
 }
 
-/* navbar */
-/* Rectangle 1 */
+
+
+
+
+
+
+
+
+
