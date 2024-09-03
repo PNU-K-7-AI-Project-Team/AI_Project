@@ -1,18 +1,23 @@
 package com.ai.service;
 
 import java.util.Date;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.ai.domain.Board;
+import com.ai.domain.Role;
 import com.ai.domain.User;
 import com.ai.persistence.BoardRepository;
 import com.ai.persistence.UserRepository;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -56,7 +61,8 @@ public class BoardService {
 	}
 	
 	// 게시물 작성
-	public Board boardWrite(Board board) {
+	@Transactional
+	public Board writeBoard(Board board) {
 		// 토큰에서 추출한 유저 객체
 		User user = getUserFromToken();
 		Date now = new Date();
@@ -71,5 +77,71 @@ public class BoardService {
 							   .build(); // DB에 작성한 새 게시물을 저장
 		return boardRepo.save(newBoard);
 	}
+	
+	
+	// 게시물 수정
+	@Transactional
+	public int editBoard(Board inputBoard, int idx) { // inputBoard: 수정하려는 Board 객체의 입력값(title, content)
+		Optional<Board> board = boardRepo.findById(idx); // 해당 번호로 존재하는 게시물 DB에서 찾기
+		int userCode = board.get().getUserCode(); // 찾은 게시물의 userCode 추출
+		if (userCode != getUserFromToken().getUserCode()) // 게시물에 저장된 userCode와 토큰의 userCode가 다르면,
+			return HttpStatus.UNAUTHORIZED.value(); // 401 반환 (인증 처리 실패)
+		if (board.isPresent()) {
+			Board updateBoard = board.get(); 
+			// 게시물 저장된 userCode와 토큰 userCode가 같으면, 해당 board의 객체 참조값을 updateBoard에 저장
+			updateBoard.setTitle(inputBoard.getTitle()); // 해당 Board 객체의 제목 수정
+			updateBoard.setContent(inputBoard.getTitle());// 해당 Board 객체의 내용 수정
+			boardRepo.save(updateBoard); // DB에 해당 Board 객체 저장
+			return HttpStatus.OK.value(); // 200 반환 (요청 성공) 
+		} else {
+			return HttpStatus.INTERNAL_SERVER_ERROR.value(); // 500 반환 (예상치 못한 에러 발생)
+		}
+	}
+	
+	// 해당 게시물에 저장된 유저의 정보와 일치하는지, 모두 접근 가능한 권한인지 확인(해당 url 접근 여부 결정)
+	public int checkUser (int idx) {
+		try {
+			// 해당 번호의 게시물이 DB에 존재하는지 확인
+			// 존재하면, 해당 Board 객체를 board에 집어넣음
+			// 존재하지않으면, Optional.empty()를 집어넣음 
+			Optional<Board> board = boardRepo.findById(idx);
+			// 존재하지 않으면, 예외 처리
+			if (board.isEmpty()) throw new NoSuchElementException("해당 번호의 게시물을 찾을 수 없습니다.");
+			// 해당 게시물에 저장된 userCode를 추출 
+			int userCode = board.get().getUserCode();
+			
+			// 해당 userCode가 DB에 존재하는지 확인 후 일치하는 user 객체 추출
+			Optional<User> user = userRepo.findByUserCode(getUserFromToken().getUserCode());
+			// 존재하지 않으면, 예외 처리
+			if (user.isEmpty()) throw new NoSuchElementException("해당 유저 코드를 찾을 수 없습니다.");
+			// 해당 user 객체의 역할 추출
+			Role role = user.get().getRole();
+			
+			if ((board.isPresent() && userCode == getUserFromToken().getUserCode())
+					|| role == Role.ROLE_ADMIN) { // 게시물이 존재하면서 토큰에 저장된 userCode와 일치하거나, 권한이 관리자이면 이용 가능
+				return HttpStatus.OK.value(); // 200 값 반환(요청 성공)
+			} else {
+				return HttpStatus.UNAUTHORIZED.value(); // 401값 반환(인증 처리 실패)
+			}	
+			} catch (Exception e) {
+				return HttpStatus.UNAUTHORIZED.value();
+			} 
+	}
 
+	// userCode와 idx로 해당 게시물 삭제
+	@Transactional // 원자성: 모든 작업이 성공하거나, 오류가 발생하면 모든 작업을 취소시킴
+	public int deleteBoard(int idx) {
+		Optional<Board> board = boardRepo.findById(idx); // 해당 번호와 일치하는 게시물 객체를 찾아서 board에 저장
+		int userCode = board.get().getUserCode(); // 해당 Board 객체의 userCode를 추출
+		Optional<User> user = userRepo.findByUserCode(getUserFromToken().getUserCode());
+		// 토큰에 저장된 userCode와 일치하는 DB의 User 객체를 user에 저장
+		Role role = user.get().getRole(); // 해당 user의 권한을 추출
+		if ((board.isPresent() && userCode == getUserFromToken().getUserCode())
+				|| role == Role.ROLE_ADMIN) {
+			boardRepo.deleteById(idx); // 
+			return HttpStatus.OK.value(); // 200 값 반환 (성공)
+		} else {
+			return HttpStatus.UNAUTHORIZED.value(); // 401 값 반환 (인증 처리 실패)
+		}
+	}
 }

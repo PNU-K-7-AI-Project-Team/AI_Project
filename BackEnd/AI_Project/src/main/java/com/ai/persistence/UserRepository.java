@@ -12,4 +12,5 @@ import com.ai.domain.User;
 //두번째인자: 엔티티의 기본키 타입
 public interface UserRepository extends JpaRepository<User, Integer>{
 	Optional<User> findByUserId(String userId);
+	Optional<User> findByUserCode(int userCode);
 }

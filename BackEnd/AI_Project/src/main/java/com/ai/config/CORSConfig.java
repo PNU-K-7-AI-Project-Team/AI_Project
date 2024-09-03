@@ -35,7 +35,8 @@ public class CORSConfig implements WebMvcConfigurer {
 						);	
 		
 		registry.addMapping("/signup/**")
-				.allowedHeaders(HttpHeaders.CONTENT_TYPE)
+				.allowedHeaders(HttpHeaders.CONTENT_TYPE) // 사용자 입력값을 
+				// CONTENT_TYPE: 사용자가 웹페이지에서 입력한 값을 CONTENT_TYPE을 통해 JSON 형태로 변환해서 서버로 전송 
 				.allowedMethods(
 						HttpMethod.GET.name(),
 						HttpMethod.POST.name())
@@ -44,6 +45,19 @@ public class CORSConfig implements WebMvcConfigurer {
 						"http://192.168.0.143:3000", 
 						"http://192.168.0.131:3000"
 						);
+		
+		registry.addMapping("/board/write/**")
+				.allowedHeaders(HttpHeaders.CONTENT_TYPE, HttpHeaders.AUTHORIZATION)
+				.allowedMethods(
+						HttpMethod.GET.name(),
+						HttpMethod.POST.name())
+				.allowedOrigins(
+						"http://localhost:3000", 
+						"http://192.168.0.143:3000", 
+						"http://192.168.0.131:3000"
+						);
+				
+				
 				
 		
 		
