@@ -21,7 +21,7 @@ position: fixed;
 width: 146px;
 height: 43px;
 left: 35px;
-top: 0px;
+top: 5px;
 margin-top: 2px;
 font-family: 'Jura', sans-serif;
 font-style: normal;
@@ -30,14 +30,17 @@ font-size: 36px;
 line-height: 43px;
 /* identical to box height */
 
-color: #FFFFFF;
+color: #ffffffd0;
 }
+.keepme:hover{
+  color: white;
+}
+
 .button {
   position: absolute;
   width: 150px;
   height: 30px;
-  left: -10px;
-  top: 381px;
+  top: 380px;
   background: #143A52;
   border-radius: 50px;
   border : none;
@@ -50,6 +53,27 @@ color: #FFFFFF;
 }
 
 .button:hover {
+  color: white;
+}
+
+.button1 {
+  position: absolute;
+  width: 150px;
+  height: 30px;
+  top: 450px;
+  left: 8px;
+  background: #143A52;
+  border-radius: 50px;
+  border : none;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 15px;
+  
+  color: rgba(255, 255, 255, 0.6);
+  /* identical to box height */
+}
+
+.button1:hover {
   color: white;
 }
 

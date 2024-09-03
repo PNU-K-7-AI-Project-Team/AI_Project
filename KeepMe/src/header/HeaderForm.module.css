@@ -13,48 +13,23 @@
     position: absolute;
     width: 90px;
     height: 30px;
-    left: 1550px;
-    top: 5px;
+    left: 1540px;
+    top: 8px;
     
     background: #FFFFFF;
     border : none;
 
     font-style: normal;
-    font-weight: 200;
+    font-weight: 600;
     font-size: 16px;
     line-height: 10px;
     /* identical to box height */
     
-    color: #9D9D9D;
+    color: #00000081;
 }
 .logout:hover{
     color: black;
 }
-/* Rectangle 8 */
 
-position: absolute;
-width: 90px;
-height: 30px;
-left: 1330px;
-top: 5px;
-
-
-
-/* 로그아웃 */
-
-position: absolute;
-width: 59px;
-height: 19px;
-left: 1345px;
-top: 11px;
-
-font-family: 'Jura';
-font-style: normal;
-font-weight: 400;
-font-size: 16px;
-line-height: 19px;
-/* identical to box height */
-
-color: #9D9D9D;
 
 

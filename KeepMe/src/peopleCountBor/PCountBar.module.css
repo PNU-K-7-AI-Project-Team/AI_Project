@@ -1,6 +1,6 @@
 .all{
     position: absolute;
-    width: 330px;
+    width: 350px;
     height: 80px;
     left: 270px;
     top: 80px;
@@ -17,12 +17,18 @@
     
     color: rgba(0, 0, 0, 0.7);
 }
+.Allbg{
+    position: relative;
+    left: 50px;
+    top: 80px;
+    color: black;
+}
 
 .today{
     position: absolute;
-    width: 330px;
+    width: 350px;
     height: 80px;
-    left: 670px;
+    left: 663px;
     top: 80px;
     margin: 20px;
     background: #FFFFFF;
@@ -39,9 +45,9 @@
 
 .good{
     position: absolute;
-    width: 330px;
+    width: 350px;
     height: 80px;
-    left: 1070px;
+    left: 1056px;
     top: 80px;
     margin: 20px;
     background: #FFFFFF;
@@ -57,9 +63,9 @@
 }
 .bad{
     position: absolute;
-    width: 330px;
+    width: 350px;
     height: 80px;
-    left: 1470px;
+    left: 1449px;
     top: 80px;
     margin: 20px;
     background: rgba(247, 0, 0, 0.75);
@@ -72,7 +78,7 @@
     line-height: 19px;
     /* identical to box height */
     
-    color: rgba(0, 0, 0, 0.7);
+    color: rgba(255, 255, 255, 0.9);
 }
 
 /* 위험인원 */

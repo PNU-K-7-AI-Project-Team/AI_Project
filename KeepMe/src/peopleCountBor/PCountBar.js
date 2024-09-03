@@ -1,10 +1,14 @@
 import React from 'react'
 import styles from './PCountBar.module.css'
+import AllIcon from './AllIcon.svg'
 export default function PCountBar() {
+
+
     return (
         <div>
             <div className={styles.all}>
                 <h3>전체 인원</h3>
+                <img src={AllIcon} className={styles.Allbg}/>
             </div>
             <div className={styles.today}>
                 <h3>금일 투입 인원</h3>

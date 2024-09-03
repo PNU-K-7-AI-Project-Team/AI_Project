@@ -1,10 +1,9 @@
-/* 위험 작업자 리스트 */
 .bg{
 
     position: absolute;
     width: 482px;
     height: 230px;
-    left: 792px;
+    left: 1317px;
     top: 750px;
     margin: 20px;
     background: #ffffff;
@@ -13,6 +12,9 @@
     font-style: normal;
     font-weight: 400;
     font-size: 14px;
+    line-height: 19px;
+    /* identical to box height */
+    
     color: rgba(0, 0, 0, 0.7);
 }
 

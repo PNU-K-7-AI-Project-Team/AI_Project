@@ -10,6 +10,25 @@
     background: rgba(227, 239, 243, 0.5);
 
 }
+/* 전체 현장 관리 */
+.text{
+    position: absolute;
+    width: 120px;
+    height: 19px;
+    left: 290px;
+    top: 47px;
+    
+    font-family: 'Jura';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 19px;
+    /* identical to box height */
+    
+    color: #000000;
+
+}
+
 
 
 
