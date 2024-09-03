@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 8.0.38, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.36, for Win64 (x86_64)
 --
 -- Host: 127.0.0.1    Database: risk_analysis
 -- ------------------------------------------------------
--- Server version	8.0.39
+-- Server version	8.0.37
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -16,29 +16,31 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `risk_prediction`
+-- Table structure for table `gyro`
 --
 
-DROP TABLE IF EXISTS `risk_prediction`;
+DROP TABLE IF EXISTS `gyro`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `risk_prediction` (
+CREATE TABLE `gyro` (
   `idx` int NOT NULL AUTO_INCREMENT,
+  `work_date` date NOT NULL,
   `user_code` int NOT NULL,
-  `prediction_date` datetime NOT NULL,
-  `prediction_risk_level` enum('Normal','Slight Risk','High Risk') NOT NULL,
-  `prediction_details` varchar(3000) NOT NULL,
+  `x` float NOT NULL,
+  `y` float NOT NULL,
+  `z` float NOT NULL,
+  `register_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`idx`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `risk_prediction`
+-- Dumping data for table `gyro`
 --
 
-LOCK TABLES `risk_prediction` WRITE;
-/*!40000 ALTER TABLE `risk_prediction` DISABLE KEYS */;
-/*!40000 ALTER TABLE `risk_prediction` ENABLE KEYS */;
+LOCK TABLES `gyro` WRITE;
+/*!40000 ALTER TABLE `gyro` DISABLE KEYS */;
+/*!40000 ALTER TABLE `gyro` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -50,4 +52,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-09-02 22:25:53
+-- Dump completed on 2024-09-03 18:00:57

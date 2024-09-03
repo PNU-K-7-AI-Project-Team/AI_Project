@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 8.0.38, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.36, for Win64 (x86_64)
 --
 -- Host: 127.0.0.1    Database: risk_analysis
 -- ------------------------------------------------------
--- Server version	8.0.39
+-- Server version	8.0.37
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -16,29 +16,33 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `incident_log`
+-- Table structure for table `bio`
 --
 
-DROP TABLE IF EXISTS `incident_log`;
+DROP TABLE IF EXISTS `bio`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `incident_log` (
+CREATE TABLE `bio` (
   `idx` int NOT NULL AUTO_INCREMENT,
+  `work_date` date NOT NULL,
   `user_code` int NOT NULL,
-  `incident_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `incident_description` varchar(500) NOT NULL,
-  `resolution` varchar(500) NOT NULL,
+  `heart_rate` int NOT NULL,
+  `temperature` float NOT NULL,
+  `spo2` int NOT NULL,
+  `latitude` decimal(10,7) NOT NULL,
+  `longitude` decimal(10,7) NOT NULL,
+  `vital_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`idx`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `incident_log`
+-- Dumping data for table `bio`
 --
 
-LOCK TABLES `incident_log` WRITE;
-/*!40000 ALTER TABLE `incident_log` DISABLE KEYS */;
-/*!40000 ALTER TABLE `incident_log` ENABLE KEYS */;
+LOCK TABLES `bio` WRITE;
+/*!40000 ALTER TABLE `bio` DISABLE KEYS */;
+/*!40000 ALTER TABLE `bio` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -50,4 +54,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-09-02 22:25:52
+-- Dump completed on 2024-09-03 18:00:57
