@@ -20,6 +20,7 @@ public class LoginController {
 	private final LoginService ls;
 	
 
+	// 회원가입
 	@PostMapping("/signup")
 	public ResponseEntity<?> signup(@RequestBody User user) {
 		try {
@@ -33,6 +34,7 @@ public class LoginController {
 		
 	}
 	
+	// 회원가입 시 아이디 중복 확인
 	@PostMapping("signup/checkId")
 	public ResponseEntity<?> checkId(@RequestBody User user) {
 		return ls.checkId(user);

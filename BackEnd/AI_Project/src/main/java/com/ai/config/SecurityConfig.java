@@ -54,11 +54,11 @@ public class SecurityConfig {
 		http.sessionManagement(sm->sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 		// 세션이 응답할때까지만 유지되고 삭제됨(주로 JWT 토큰방식에서 사용)
 
-		http.logout(logout->logout
-				.invalidateHttpSession(true) // 세션을 유효하지않게함
-				.deleteCookies("JSESSIONID") // JSESSIONID(세션아이디) 쿠키 삭제
-				.logoutSuccessUrl("/")); // 로그아웃 성공시 리디렉션할 경로
-		
+//		http.logout(logout->logout
+//				.invalidateHttpSession(true) // 세션을 유효하지않게함
+//				.deleteCookies("JSESSIONID") // JSESSIONID(세션아이디) 쿠키 삭제
+//				.logoutSuccessUrl("/")); // 로그아웃 성공시 리디렉션할 경로
+//		
 		http.cors(c->{});
 		
 		// addFilterBefore: JWTAuthorFilter가 AuthorizationFilter보다 먼저 실행됨

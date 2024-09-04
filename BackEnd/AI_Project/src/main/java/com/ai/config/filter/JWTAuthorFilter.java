@@ -3,6 +3,7 @@ package com.ai.config.filter;
 import java.io.IOException;
 import java.util.Optional;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.AuthorityUtils;
@@ -13,6 +14,7 @@ import com.ai.domain.User;
 import com.ai.persistence.UserRepository;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.exceptions.TokenExpiredException;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -43,43 +45,49 @@ public class JWTAuthorFilter extends OncePerRequestFilter{
 			// JWTAuthenFilter가 실행되어 로그인 시도 후 토큰 발행
 			return; // 토큰 없으니까 이후 처리과정 수행하지 않음
 		}
-		
+
 		// 토큰이 존재하면 순수한 JWT 토큰만 추출
 		String jwtToken = srcToken.replace("Bearer ", ""); // 앞에 Bearer 제거
 		
-		// 토큰에서 사용자명(아이디) 추출
-		String username = JWT.require(Algorithm.HMAC256("com.ai.project"))
-				.build()
-				.verify(jwtToken)
-				.getClaim("userId")
-				.asString();
-		
-		// 사용자 조회: DB에 해당 사용자 아이디 존재 여부 확인
-		// Optional<User> opt: DB의 해당 ID(username)값이 있는 객체를 opt에 저장
-		// Optional은 null값도 저장가능
-		Optional<User> opt = userRepo.findByUserId(username); 
-		// 확인 후 해당 아이디가 존재하지 않으면 다음 필터(로그인 인증)를 진행
-		if(!opt.isPresent()) {
-			filterChain.doFilter(request, response);
-			return; // DB에 해당 아이디 없으니까 이후 처리과정 수행하지 않음
+		// 이후부턴 토큰이 존재하니까 토큰 검증 밑 토큰의 정보를 가져오는 과정
+		try {
+			// 토큰에서 사용자명(아이디) 추출
+			String username = JWT.require(Algorithm.HMAC256("com.ai.project"))
+								 .build()
+								 .verify(jwtToken)
+								 .getClaim("userId")
+								 .asString();
+			
+			// 사용자 조회: DB에 해당 사용자 아이디 존재 여부 확인
+			// Optional<User> opt: DB의 해당 ID(username)값이 있는 객체를 opt에 저장
+			// Optional은 null값도 저장가능
+			Optional<User> opt = userRepo.findByUserId(username); 
+			// 확인 후 해당 아이디가 존재하지 않으면 다음 필터(로그인 인증)를 진행
+			if(!opt.isPresent()) {
+				filterChain.doFilter(request, response);
+				return; // DB에 해당 아이디 없으니까 이후 처리과정 수행하지 않음
+			}
+			
+			// DB에 토큰에 저장된 아이디가 존재하면 해당 사용자 정보를 findUser에 저장
+			User findUser = opt.get();
+			
+			// 사용자 정보를 UserDetails 타입의 객체로 생성 (해당 User는 스프링시큐리티 내장 객체이며 UserDetails를 상속받음)
+			// 인증된 사용자의 정보를 담기 위해서 사용된다
+			org.springframework.security.core.userdetails.
+			User user = new org.springframework.security.core.userdetails.User(
+					findUser.getUserId(), findUser.getPassword(),
+					AuthorityUtils.createAuthorityList(findUser.getRole().toString())) ;
+			// AuthorityUtils.createAuthorityList: 사용자의 권한을 GrantedAuthoriy 객체로 변환해서 반환 
+			
+			//Authentication 객체를 생성: 아이디, 비밀번호(null:표시되면안됨), Role(사용자 권한)
+			Authentication auth = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
+			
+			// 세션에 등록
+			SecurityContextHolder.getContext().setAuthentication(auth);
+		} catch (TokenExpiredException e) {
+			response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "토큰이 검증 오류.");
 		}
-		
-		// DB에 토큰에 저장된 아이디가 존재하면 해당 사용자 정보를 findUser에 저장
-		User findUser = opt.get();
-		
-		// 사용자 정보를 UserDetails 타입의 객체로 생성 (해당 User는 스프링시큐리티 내장 객체이며 UserDetails를 상속받음)
-		// 인증된 사용자의 정보를 담기 위해서 사용된다
-		org.springframework.security.core.userdetails.
-		User user = new org.springframework.security.core.userdetails.User(
-				findUser.getUserId(), findUser.getPassword(),
-				AuthorityUtils.createAuthorityList(findUser.getRole().toString())) ;
-		// AuthorityUtils.createAuthorityList: 사용자의 권한을 GrantedAuthoriy 객체로 변환해서 반환 
-		
-		//Authentication 객체를 생성: 아이디, 비밀번호(null:표시되면안됨), Role(사용자 권한)
-		Authentication auth = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
-		
-		// 세션에 등록
-		SecurityContextHolder.getContext().setAuthentication(auth);
+
 			
 		// 다음 필터로 요청 전달(SecurityConfig에 addFilter 정의한 순서대로) 
 		filterChain.doFilter(request, response);

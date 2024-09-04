@@ -4,6 +4,8 @@ import java.util.Date;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -28,8 +30,8 @@ public class Board {
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY) 
 	private int idx;
 	
-	@Column
-	private int userCode;
+	@Column (nullable = false)
+	private String userCode;
 	
 	@Column (length = 100, nullable = false)
 	private String title;
@@ -42,6 +44,9 @@ public class Board {
 	
 	@Column (length = 45, nullable = false)
 	private String userName;
+	
+	@Enumerated(EnumType.STRING)
+	private Dept dept;
 	
 	@Column
 	@Temporal(TemporalType.TIMESTAMP)

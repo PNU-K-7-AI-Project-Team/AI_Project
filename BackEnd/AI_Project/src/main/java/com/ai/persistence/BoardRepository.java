@@ -11,10 +11,10 @@ import com.ai.domain.Board;
 import com.ai.dto.GetBoardsDTO;
 
 public interface BoardRepository extends JpaRepository<Board, Integer> {
-	Optional<Board> findByUserCode(Integer userCode); // Integer는 null값을 가질수있음
+	Optional<Board> findByUserCode(String userCode); // Integer는 null값을 가질수있음
 	
 	@Query // 데이터 조회 및 전체 데이터 개수를 계산하는 SQL 쿼리문 정의 어노테이션
-	(value = "SELECT idx, user_code, title, content, user_id, user_name, create_date, update_date FROM board", // db에서 조회할 데이터  
+	(value = "SELECT idx, user_code, title, content, user_id, user_name, dept, create_date, update_date FROM board", // db에서 조회할 데이터  
      countQuery = "SELECT count(*) FROM board",  // 해당 테이블 데이터 전체 개수를 계산
      nativeQuery = true) // 해당 쿼리가 실제 SQL 쿼리임을 지정
 	Page<GetBoardsDTO> findBoardsDTO(Pageable pageable);
