@@ -1,0 +1,58 @@
+-- MySQL dump 10.13  Distrib 8.0.36, for Win64 (x86_64)
+--
+-- Host: 127.0.0.1    Database: risk_analysis
+-- ------------------------------------------------------
+-- Server version	8.0.37
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!50503 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `board`
+--
+
+DROP TABLE IF EXISTS `board`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `board` (
+  `idx` int NOT NULL AUTO_INCREMENT,
+  `user_code` varchar(255) NOT NULL,
+  `title` varchar(100) NOT NULL,
+  `content` varchar(2000) NOT NULL,
+  `user_id` varchar(45) NOT NULL,
+  `user_name` varchar(45) NOT NULL,
+  `dept` varchar(45) NOT NULL,
+  `create_date` datetime(6) DEFAULT NULL,
+  `update_date` datetime(6) DEFAULT NULL,
+  PRIMARY KEY (`idx`)
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `board`
+--
+
+LOCK TABLES `board` WRITE;
+/*!40000 ALTER TABLE `board` DISABLE KEYS */;
+INSERT INTO `board` VALUES (1,'78301726','제목1','내용1','admin','관리자','IT','2024-09-04 08:49:06.013000','2024-09-04 08:49:06.013000'),(2,'78301726','제목2','내용2','admin','관리자','IT','2024-09-04 08:49:06.044000','2024-09-04 08:49:06.044000'),(3,'78301726','제목3','내용3','admin','관리자','IT','2024-09-04 08:49:06.051000','2024-09-04 08:49:06.051000'),(4,'78301726','제목4','내용4','admin','관리자','IT','2024-09-04 08:49:06.056000','2024-09-04 08:49:06.056000'),(5,'78301726','제목5','내용5','admin','관리자','IT','2024-09-04 08:49:06.061000','2024-09-04 08:49:06.061000'),(6,'78301726','제목6','내용6','admin','관리자','IT','2024-09-04 08:49:06.066000','2024-09-04 08:49:06.066000'),(7,'78301726','제목7','내용7','admin','관리자','IT','2024-09-04 08:49:06.070000','2024-09-04 08:49:06.070000'),(8,'78301726','제목8','내용8','admin','관리자','IT','2024-09-04 08:49:06.075000','2024-09-04 08:49:06.075000'),(9,'78301726','제목9','내용9','admin','관리자','IT','2024-09-04 08:49:06.079000','2024-09-04 08:49:06.079000'),(10,'78301726','제목10','내용10','admin','관리자','IT','2024-09-04 08:49:06.083000','2024-09-04 08:49:06.083000'),(11,'78301726','제목1','내용1','admin','관리자','IT','2024-09-04 08:53:56.930000','2024-09-04 08:53:56.930000'),(12,'78301726','제목2','내용2','admin','관리자','IT','2024-09-04 08:53:56.960000','2024-09-04 08:53:56.960000'),(13,'78301726','제목3','내용3','admin','관리자','IT','2024-09-04 08:53:56.965000','2024-09-04 08:53:56.965000'),(14,'78301726','제목4','내용4','admin','관리자','IT','2024-09-04 08:53:56.971000','2024-09-04 08:53:56.971000'),(15,'78301726','제목5','내용5','admin','관리자','IT','2024-09-04 08:53:56.976000','2024-09-04 08:53:56.976000'),(16,'78301726','제목6','내용6','admin','관리자','IT','2024-09-04 08:53:56.980000','2024-09-04 08:53:56.980000'),(17,'78301726','제목7','내용7','admin','관리자','IT','2024-09-04 08:53:56.985000','2024-09-04 08:53:56.985000'),(18,'78301726','제목8','내용8','admin','관리자','IT','2024-09-04 08:53:56.989000','2024-09-04 08:53:56.989000'),(19,'78301726','제목9','내용9','admin','관리자','IT','2024-09-04 08:53:56.993000','2024-09-04 08:53:56.993000'),(20,'78301726','제목10','내용10','admin','관리자','IT','2024-09-04 08:53:56.998000','2024-09-04 08:53:56.998000');
+/*!40000 ALTER TABLE `board` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2024-09-04 18:01:18
