@@ -8,15 +8,12 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ai.domain.Board;
-import com.ai.dto.BoardPageResponse;
-import com.ai.dto.GetBoardsDTO;
 import com.ai.service.BoardService;
 
 import lombok.RequiredArgsConstructor;
@@ -39,8 +36,7 @@ public class BoardController {
 	// PageableDefault를 통해 첫페이지, 페이지당 항목수, 기본정렬기준, 정렬방향을 설정
     {	
 		try {
-			BoardPageResponse response = new BoardPageResponse(boardService.getBoards(pageable));
-			return ResponseEntity.ok(response);
+			return ResponseEntity.ok(boardService.getBoards(pageable));
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("게시판 조회 실패");
 		}

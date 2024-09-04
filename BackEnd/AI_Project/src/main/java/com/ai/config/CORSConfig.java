@@ -21,11 +21,10 @@ public class CORSConfig implements WebMvcConfigurer {
 				.allowedOrigins("*"); // 접근 가능 ip 주소
 		
 		registry.addMapping("/login") // 해당 경로 접근시 CORS 정책 적용
-				.allowCredentials(true) // 클라이언트가 자격증명(쿠키,인증정보)을 요청하는걸 포함 허용
+				.allowCredentials(true) // 자격증명(쿠키, Http 인증헤더(토큰),...) 보내는 것을 허용
 				.allowedHeaders(HttpHeaders.CONTENT_TYPE) // 클라이언트가 CONTENT_TYPE(JSON형태로반환) 형태만 헤더로 포함할수있음
 				.exposedHeaders(HttpHeaders.AUTHORIZATION) // 클라이언트가 응답시 보여지는 헤더
 				.allowedMethods( // 해당 메서드 허용
-						HttpMethod.GET.name(),
 						HttpMethod.POST.name(),
 						HttpMethod.OPTIONS.name())
 				.allowedOrigins( // 접근 가능한 ip 주소
@@ -46,10 +45,43 @@ public class CORSConfig implements WebMvcConfigurer {
 						"http://192.168.0.131:3000"
 						);
 		
-		registry.addMapping("/board/write/**")
+		registry.addMapping("/boards/**")
+				.allowCredentials(true) // 자격증명(쿠키, Http 인증헤더(토큰),...) 보내는 것을 허용
 				.allowedHeaders(HttpHeaders.CONTENT_TYPE, HttpHeaders.AUTHORIZATION)
 				.allowedMethods(
-						HttpMethod.GET.name(),
+						HttpMethod.GET.name())
+				.allowedOrigins(
+						"http://localhost:3000", 
+						"http://192.168.0.143:3000", 
+						"http://192.168.0.131:3000"
+		);
+		
+		registry.addMapping("/board/write/**")
+				.allowCredentials(true) // 자격증명(쿠키, Http 인증헤더(토큰),...) 보내는 것을 허용
+				.allowedHeaders(HttpHeaders.CONTENT_TYPE, HttpHeaders.AUTHORIZATION)
+				.allowedMethods(
+						HttpMethod.POST.name())
+				.allowedOrigins(
+						"http://localhost:3000", 
+						"http://192.168.0.143:3000", 
+						"http://192.168.0.131:3000"
+						);
+				
+		registry.addMapping("/board/edit/**")
+				.allowCredentials(true) // 자격증명(쿠키, Http 인증헤더(토큰),...) 보내는 것을 허용
+				.allowedHeaders(HttpHeaders.CONTENT_TYPE, HttpHeaders.AUTHORIZATION)
+				.allowedMethods(
+						HttpMethod.POST.name())
+				.allowedOrigins(
+						"http://localhost:3000", 
+						"http://192.168.0.143:3000", 
+						"http://192.168.0.131:3000"
+						);
+				
+		registry.addMapping("/board/delete/**")
+				.allowCredentials(true) // 자격증명(쿠키, Http 인증헤더(토큰),...) 보내는 것을 허용
+				.allowedHeaders(HttpHeaders.AUTHORIZATION)
+				.allowedMethods(
 						HttpMethod.POST.name())
 				.allowedOrigins(
 						"http://localhost:3000", 
@@ -58,7 +90,7 @@ public class CORSConfig implements WebMvcConfigurer {
 						);
 				
 				
-				
+		
 		
 		
 	}
