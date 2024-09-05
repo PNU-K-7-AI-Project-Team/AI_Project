@@ -37,8 +37,7 @@ public class LoginService {
 //		}
 	
 
-	// db에 중복되는 userCode가 있는지
-	
+	// db에 중복되는 userCode가 있는지 확인 후 userCode 반환
 	public String generateUniqueUserCode(int length) {
 		String userCode;
 		do {

@@ -65,10 +65,10 @@ public class User {
 	@Column
 	private Gender gender; 
 	
-	@Column
+	//입사일자(계정생성일자)
+	@Column(updatable = false, insertable = false)
 	@Temporal(TemporalType.TIMESTAMP) 
-	@Builder.Default // 스프링부트에서 default를 new Date로 설정
-	private Date createDate = new Date();
+	private Date createDate;
 
 }
 

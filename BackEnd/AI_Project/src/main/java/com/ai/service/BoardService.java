@@ -1,6 +1,5 @@
 package com.ai.service;
 
-import java.util.Date;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
@@ -68,7 +67,6 @@ public class BoardService {
 	public Board writeBoard(Board board) {
 		// 토큰에서 추출한 유저 객체
 		User user = getUserFromToken();
-		Date now = new Date();
 		Board newBoard = Board.builder()
 							   .userCode(user.getUserCode())
 							   .title(board.getTitle())
@@ -76,8 +74,6 @@ public class BoardService {
 							   .userId(user.getUserId())
 							   .userName(user.getUserName())
 							   .dept(user.getDept())
-							   .createDate(now)
-							   .updateDate(now)
 							   .build(); // DB에 작성한 새 게시물을 저장
 		return boardRepo.save(newBoard);
 	}
@@ -88,13 +84,13 @@ public class BoardService {
 	public int editBoard(Board inputBoard, int idx) { // inputBoard: 수정하려는 Board 객체의 입력값(title, content)
 		Optional<Board> board = boardRepo.findById(idx); // 해당 번호로 존재하는 게시물 DB에서 찾기
 		String userCode = board.get().getUserCode(); // 찾은 게시물의 userCode 추출
-		if (userCode != getUserFromToken().getUserCode()) // 게시물에 저장된 userCode와 토큰의 userCode가 다르면,
+		if (!userCode.equals(getUserFromToken().getUserCode())) // 게시물에 저장된 userCode와 토큰의 userCode가 다르면,
 			return HttpStatus.UNAUTHORIZED.value(); // 401 반환 (인증 처리 실패)
 		if (board.isPresent()) {
 			Board updateBoard = board.get(); 
 			// 게시물 저장된 userCode와 토큰 userCode가 같으면, 해당 board의 객체 참조값을 updateBoard에 저장
 			updateBoard.setTitle(inputBoard.getTitle()); // 해당 Board 객체의 제목 수정
-			updateBoard.setContent(inputBoard.getTitle());// 해당 Board 객체의 내용 수정
+			updateBoard.setContent(inputBoard.getContent());// 해당 Board 객체의 내용 수정
 			boardRepo.save(updateBoard); // DB에 해당 Board 객체 저장
 			return HttpStatus.OK.value(); // 200 반환 (요청 성공) 
 		} else {
@@ -102,7 +98,7 @@ public class BoardService {
 		}
 	}
 	
-	// 해당 게시물에 저장된 유저의 정보와 일치하는지, 모두 접근 가능한 권한인지 확인(해당 url 접근 여부 결정)
+	// 해당 게시물에 저장된 유저의 정보와 일치하거나, 관리자 권한인지 확인(해당 url 접근 여부 결정)
 	public int checkUser (int idx) {
 		try {
 			// 해당 번호의 게시물이 DB에 존재하는지 확인
@@ -121,7 +117,7 @@ public class BoardService {
 			// 해당 user 객체의 역할 추출
 			Role role = user.get().getRole();
 			
-			if ((board.isPresent() && userCode == getUserFromToken().getUserCode())
+			if ((board.isPresent() && userCode.equals(getUserFromToken().getUserCode()))
 					|| role == Role.ROLE_ADMIN) { // 게시물이 존재하면서 토큰에 저장된 userCode와 일치하거나, 권한이 관리자이면 이용 가능
 				return HttpStatus.OK.value(); // 200 값 반환(요청 성공)
 			} else {
@@ -140,7 +136,7 @@ public class BoardService {
 		Optional<User> user = userRepo.findByUserCode(getUserFromToken().getUserCode());
 		// 토큰에 저장된 userCode와 일치하는 DB의 User 객체를 user에 저장
 		Role role = user.get().getRole(); // 해당 user의 권한을 추출
-		if ((board.isPresent() && userCode == getUserFromToken().getUserCode())
+		if ((board.isPresent() && userCode.equals(getUserFromToken().getUserCode()))
 				|| role == Role.ROLE_ADMIN) {
 			boardRepo.deleteById(idx); // 
 			return HttpStatus.OK.value(); // 200 값 반환 (성공)

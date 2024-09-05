@@ -1,7 +1,5 @@
 package com.ai.domain;
 
-import java.util.Date;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -9,8 +7,7 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -47,16 +44,5 @@ public class Board {
 	
 	@Enumerated(EnumType.STRING)
 	private Dept dept;
-	
-	@Column
-	@Temporal(TemporalType.TIMESTAMP)
-	@Builder.Default
-	private Date createDate = new Date();
-	
-	@Column
-	@Temporal(TemporalType.TIMESTAMP)
-	@Builder.Default
-	private Date updateDate = new Date();
-	
-	
+
 }
