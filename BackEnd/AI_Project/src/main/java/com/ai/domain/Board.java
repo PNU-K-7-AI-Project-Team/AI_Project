@@ -27,7 +27,7 @@ public class Board {
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY) 
 	private int idx;
 	
-	@Column (nullable = false)
+	@Column (length= 8, nullable = false)
 	private String userCode;
 	
 	@Column (length = 100, nullable = false)

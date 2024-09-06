@@ -81,11 +81,11 @@ public class BoardController {
     	return ResponseEntity.ok(boardService.deleteBoard(idx));
     }
     
-    // 게시물에 저장된 유저 정보 검증 메서드
-    @PostMapping("/checkUser")
-    public ResponseEntity<?> checkUser(@RequestParam int idx) {
-    	return ResponseEntity.status(boardService.checkUser(idx)).body(null);
-    }
-    
+//    // 게시물에 저장된 유저 정보 검증 메서드
+//    @PostMapping("/checkUser") // /checkUser?idx=5
+//    public ResponseEntity<?> checkUser(@RequestParam int idx) {
+//    	return ResponseEntity.status(boardService.checkUser(idx)).body(null);
+//    }
+//    
  
 }

@@ -6,6 +6,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.ai.domain.User;
+import com.ai.dto.MyInfoDTO;
 import com.ai.persistence.UserRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -17,11 +18,10 @@ public class MyPageService {
 	private final PasswordEncoder passwordEnc;
 	
 	// 회원정보 조회: 로그인 후 얻은 토큰의 User 객체 정보의 토큰을 뽑아내서 DB에서 일치하는 User 객체를 가져옴
-	public User getMyInfo() {
+	public MyInfoDTO getMyInfo() {
 		User user = userRepo.findByUserCode(getUserFromToken().getUserCode()).orElseThrow();
-		return User.builder()
+		return MyInfoDTO.builder()
 				   .userId(user.getUserId())
-				   .password(user.getPassword())
 				   .userName(user.getUserName())
 				   .position(user.getPosition())
 				   .dept(user.getDept())

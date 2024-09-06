@@ -28,24 +28,7 @@ public class BoardService {
 	
 	private final UserRepository userRepo;
 	
-	// 로그인 후 얻은 토큰으로 해당 아이디의 User 객체를 추출
-	public User getUserFromToken() {
-		// SecurityContextHolder: 로그인하면 토큰이 나오는데, 
-		// 토큰에 들어있는 정보를 바탕으로 Spring Security가 인증 정보를 저장하는 객체
-		// 인증정보(아이디,비밀번호 등)를 가져와서 authentication에 저장
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		
-		// 인증정보가 있으면서 인증되었다면(아이디,비밀번호가 DB에 있다면)		
-		if (authentication != null && authentication.isAuthenticated()) {
-			String userId = authentication.getName(); // 인증 정보의 아이디를 추출해서 userId에 저장 
-			if (userId != null) { // userId가 존재하면,
-				return userRepo.findByUserId(userId).orElse(null); // 해당 userId의 user 객체를 반환
-			}
-		}
-		return null;
-	}
 
-	
 	// 게시판 출력
 	// Pageable: 페이지네이션정보(페이지 번호, 페이지 크기, 정렬방식을 포함)
 	public Page<GetBoardsDTO> getBoards(Pageable pageable) {
@@ -83,10 +66,7 @@ public class BoardService {
 	@Transactional
 	public int editBoard(Board inputBoard, int idx) { // inputBoard: 수정하려는 Board 객체의 입력값(title, content)
 		Optional<Board> board = boardRepo.findById(idx); // 해당 번호로 존재하는 게시물 DB에서 찾기
-		String userCode = board.get().getUserCode(); // 찾은 게시물의 userCode 추출
-		if (!userCode.equals(getUserFromToken().getUserCode())) // 게시물에 저장된 userCode와 토큰의 userCode가 다르면,
-			return HttpStatus.UNAUTHORIZED.value(); // 401 반환 (인증 처리 실패)
-		if (board.isPresent()) {
+		if (checkAuth(board)) {
 			Board updateBoard = board.get(); 
 			// 게시물 저장된 userCode와 토큰 userCode가 같으면, 해당 board의 객체 참조값을 updateBoard에 저장
 			updateBoard.setTitle(inputBoard.getTitle()); // 해당 Board 객체의 제목 수정
@@ -98,50 +78,77 @@ public class BoardService {
 		}
 	}
 	
-	// 해당 게시물에 저장된 유저의 정보와 일치하거나, 관리자 권한인지 확인(해당 url 접근 여부 결정)
-	public int checkUser (int idx) {
-		try {
-			// 해당 번호의 게시물이 DB에 존재하는지 확인
-			// 존재하면, 해당 Board 객체를 board에 집어넣음
-			// 존재하지않으면, Optional.empty()를 집어넣음 
-			Optional<Board> board = boardRepo.findById(idx);
-			// 존재하지 않으면, 예외 처리
-			if (board.isEmpty()) throw new NoSuchElementException("해당 번호의 게시물을 찾을 수 없습니다.");
-			// 해당 게시물에 저장된 userCode를 추출 
-			String userCode = board.get().getUserCode();
-			
-			// 해당 userCode가 DB에 존재하는지 확인 후 일치하는 user 객체 추출
-			Optional<User> user = userRepo.findByUserCode(getUserFromToken().getUserCode());
-			// 존재하지 않으면, 예외 처리
-			if (user.isEmpty()) throw new NoSuchElementException("해당 유저 코드를 찾을 수 없습니다.");
-			// 해당 user 객체의 역할 추출
-			Role role = user.get().getRole();
-			
-			if ((board.isPresent() && userCode.equals(getUserFromToken().getUserCode()))
-					|| role == Role.ROLE_ADMIN) { // 게시물이 존재하면서 토큰에 저장된 userCode와 일치하거나, 권한이 관리자이면 이용 가능
-				return HttpStatus.OK.value(); // 200 값 반환(요청 성공)
-			} else {
-				return HttpStatus.UNAUTHORIZED.value(); // 401값 반환(인증 처리 실패)
-			}	
-			} catch (Exception e) {
-				return HttpStatus.UNAUTHORIZED.value();
-			} 
-	}
-
 	// userCode와 idx로 해당 게시물 삭제
 	@Transactional // 원자성: 모든 작업이 성공하거나, 오류가 발생하면 모든 작업을 취소시킴
 	public int deleteBoard(int idx) {
 		Optional<Board> board = boardRepo.findById(idx); // 해당 번호와 일치하는 게시물 객체를 찾아서 board에 저장
-		String userCode = board.get().getUserCode(); // 해당 Board 객체의 userCode를 추출
-		Optional<User> user = userRepo.findByUserCode(getUserFromToken().getUserCode());
-		// 토큰에 저장된 userCode와 일치하는 DB의 User 객체를 user에 저장
-		Role role = user.get().getRole(); // 해당 user의 권한을 추출
-		if ((board.isPresent() && userCode.equals(getUserFromToken().getUserCode()))
-				|| role == Role.ROLE_ADMIN) {
+		if (checkAuth(board)) {
 			boardRepo.deleteById(idx); // 
 			return HttpStatus.OK.value(); // 200 값 반환 (성공)
 		} else {
 			return HttpStatus.UNAUTHORIZED.value(); // 401 값 반환 (인증 처리 실패)
 		}
 	}
+	
+	// 로그인 후 얻은 토큰으로 해당 아이디의 User 객체를 추출
+	private User getUserFromToken() {
+		// SecurityContextHolder: 로그인하면 토큰이 나오는데, 
+		// 토큰에 들어있는 정보를 바탕으로 Spring Security가 인증 정보를 저장하는 객체
+		// 인증정보(아이디,비밀번호 등)를 가져와서 authentication에 저장
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();	
+		// 인증정보가 있으면서 인증되었다면(아이디,비밀번호가 DB에 있다면)		
+		if (authentication != null && authentication.isAuthenticated()) {
+			String userId = authentication.getName(); // 인증 정보의 아이디를 추출해서 userId에 저장 
+			if (userId != null) { // userId가 존재하면,
+				return userRepo.findByUserId(userId).orElse(null); // 해당 userId의 user 객체를 반환
+			}
+		}
+		return null;
+	}
+
+	
+	private boolean checkAuth(Optional<Board> board) {
+		// 현재 토큰 정보의 userCode의 User 객체를 DB에서 찾아서추출
+		User currentUser = userRepo.findByUserCode(getUserFromToken().getUserCode()) 
+				.orElseThrow(() -> new NoSuchElementException("해당 유저를 찾을 수 없습니다.")); 
+		// 토큰의 userCode와 일치하는 User 객체가 없다면 예외 처리
+		if (board.isPresent()) { // 해당 게시물이 존재하면 
+			return board.get().getUserCode().equals(currentUser.getUserCode()) || currentUser.getRole() == Role.ROLE_ADMIN;
+			// 게시물 저장된 userCode와 토큰 userCode가 같거나, 현재 유저가 ADMIN 권한이 있다면 1 반환, 아니면 0 반환
+		} else { // 해당 게시물이 존재하지 않으면,
+			throw new NoSuchElementException("해당 유저 코드와 일치하는 게시물이 없습니다."); // 예외 처리
+		}
+		
+	}
+	
+
+//	// 해당 게시물에 저장된 유저의 정보와 일치하거나, 관리자 권한인지 확인(해당 url 접근 여부 결정)
+//	public int checkUser (int idx) {
+//		try {
+//			// 해당 번호의 게시물이 DB에 존재하는지 확인
+//			// 존재하면, 해당 Board 객체를 board에 집어넣음
+//			// 존재하지않으면, Optional.empty()를 집어넣음 
+//			Optional<Board> board = boardRepo.findById(idx);
+//			// 존재하지 않으면, 예외 처리
+//			if (board.isEmpty()) throw new NoSuchElementException("해당 번호의 게시물을 찾을 수 없습니다.");
+//			// 해당 게시물에 저장된 userCode를 추출 
+//			String userCode = board.get().getUserCode();
+//			
+//			// 해당 userCode가 DB에 존재하는지 확인 후 일치하는 user 객체 추출
+//			Optional<User> user = userRepo.findByUserCode(getUserFromToken().getUserCode());
+//			// 존재하지 않으면, 예외 처리
+//			if (user.isEmpty()) throw new NoSuchElementException("해당 유저 코드를 찾을 수 없습니다.");
+//			// 해당 user 객체의 역할 추출
+//			Role role = user.get().getRole();
+//			
+//			if ((board.isPresent() && userCode.equals(getUserFromToken().getUserCode()))
+//					|| role == Role.ROLE_ADMIN) { // 게시물이 존재하면서 토큰에 저장된 userCode와 일치하거나, 권한이 관리자이면 이용 가능
+//				return HttpStatus.OK.value(); // 200 값 반환(요청 성공)
+//			} else {
+//				return HttpStatus.UNAUTHORIZED.value(); // 401값 반환(인증 처리 실패)
+//			}	
+//			} catch (Exception e) {
+//				return HttpStatus.UNAUTHORIZED.value();
+//			} 
+//	}
 }

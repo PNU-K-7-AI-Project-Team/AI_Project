@@ -29,10 +29,9 @@
 //	@Override
 //	public void run(ApplicationArguments args) throws Exception {
 //		// 현재 날짜를 생년월일로 지정
-//		String userCode = ls.generateUniqueUserCode(8);
 //		// 실행 시 계정 추가
 //		userRepo.save(User.builder()
-//						  .userCode(userCode)
+//						  .userCode(ls.generateUniqueUserCode(8))
 //						  .userId("admin")
 //						  .password(passwordEnc.encode("11"))
 //						  .userName("관리자")
@@ -44,5 +43,61 @@
 //						  .gender(Gender.M)
 //						  .build()  
 //				);
+//		
+//		userRepo.save(User.builder()
+//				  .userCode(ls.generateUniqueUserCode(8))
+//				  .userId("aa")
+//				  .password(passwordEnc.encode("11"))
+//				  .userName("손흥민")
+//				  .role(Role.ROLE_USER)
+//				  .position(Position.JUNIOR)
+//				  .dept(Dept.HR)
+//				  .region(Region.BUSAN)
+//				  .dateOfBirth(new Date())
+//				  .gender(Gender.M)
+//				  .build()  
+//		);
+//		
+//		userRepo.save(User.builder()
+//				  .userCode(ls.generateUniqueUserCode(8))
+//				  .userId("bb")
+//				  .password(passwordEnc.encode("11"))
+//				  .userName("홍명보")
+//				  .role(Role.ROLE_USER)
+//				  .position(Position.SENIOR)
+//				  .dept(Dept.QM)
+//				  .region(Region.DAEGU)
+//				  .dateOfBirth(new Date())
+//				  .gender(Gender.F)
+//				  .build()  
+//		);
+//		
+//		userRepo.save(User.builder()
+//				  .userCode(ls.generateUniqueUserCode(8))
+//				  .userId("cc")
+//				  .password(passwordEnc.encode("11"))
+//				  .userName("차두리")
+//				  .role(Role.ROLE_USER)
+//				  .position(Position.SENIOR)
+//				  .dept(Dept.IT)
+//				  .region(Region.INCHEON)
+//				  .dateOfBirth(new Date())
+//				  .gender(Gender.M)
+//				  .build()  
+//		);
+//		
+//		userRepo.save(User.builder()
+//				  .userCode(ls.generateUniqueUserCode(8))
+//				  .userId("dd")
+//				  .password(passwordEnc.encode("11"))
+//				  .userName("이강인")
+//				  .role(Role.ROLE_ADMIN)
+//				  .position(Position.MANAGER)
+//				  .dept(Dept.HR)
+//				  .region(Region.GWANGJU)
+//				  .dateOfBirth(new Date())
+//				  .gender(Gender.M)
+//				  .build()  
+//		);
 //	}
 //}
