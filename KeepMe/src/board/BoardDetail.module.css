@@ -40,13 +40,14 @@
     font-size: 18px;
     line-height: 19px;
     /* identical to box height */
+    height: 20px;
     margin-top: 0px;
     padding-left: 40px;
     padding-top: 20px;
     color: #000000;
 }
 .etcContainer{
-    font-family: 'Jura';
+    
     font-style: normal;
     font-weight: 400;
     font-size: 14px;

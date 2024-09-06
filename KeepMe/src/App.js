@@ -11,19 +11,29 @@ import SideBarForm from './sideBar/SideBarForm';
 import HeaderForm from './header/HeaderForm';
 import Footer from './footer/Footer';
 import BoardWrite from './board/BoardWrite';
+import Logout from './logout/Logout';
+
 function Layout() {
   return (
     <>
       <SideBarForm />
-      <Footer/>
+      <Footer />
       <HeaderForm />
-      <Outlet/>
+      <Outlet />
     </>
   );
 }
 
 function App() {
   const [auth, setAuth] = useState(false);
+  const handleLogout = () => {
+    // 로그아웃 처리
+    localStorage.removeItem('token');
+    localStorage.removeItem('username');
+    localStorage.removeItem('tokenExpiration');
+    setAuth(false);
+    window.location.href = '/login'; // 로그아웃 후 메인 페이지로 이동
+  };
 
   return (
     <div className={styles.bg}>
@@ -35,8 +45,11 @@ function App() {
             <Route index element={<MainPage />} />
             <Route path="board" element={<BoardMain />} />
             <Route path="workerboard" element={<WorkerBoard />} />
-            <Route path="boarddetail/:id" element={<BoardDetail />} />
+            <Route path="boarddetail/:idx" element={<BoardDetail />} />
             <Route path="boardwrite" element={<BoardWrite />} />
+            <Route path="boarddetail/:idx/edit" element={<BoardWrite />} />
+            <Route path="boarddetail/:id/delete" element={<BoardWrite />} />
+            <Route path="logout" element={<Logout onLogout={handleLogout} />} />
           </Route>
         </Routes>
       </Router>

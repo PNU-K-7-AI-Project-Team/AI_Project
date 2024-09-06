@@ -20,7 +20,6 @@
     left: 290px;
     top: 47px;
 
-    font-family: 'Jura';
     font-style: normal;
     font-weight: 600;
     font-size: 16px;
@@ -30,72 +29,70 @@
     color: #000000;
     
 }
-
-
-
 .boardTable {
     width: 100%;
+    justify-content: space-between; /* 항목 간격 일정하게 */
     border-collapse: collapse;
     border-radius: 5px;
 }
 .boardTable th {
     background-color: #CDE3EB;
     font-weight: bold;
+    font-size: 18px;
     text-align: center;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
+    padding: 15px;
+    height: 65px;
 }
 
-.boardTable th,
+
 .boardTable td {
     border-bottom: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+    padding: 15px;
 }
 
 .boardTable th:nth-child(1),
 .boardTable td:nth-child(1) {
-    padding: 10px 15px;
+    width: 150px;
     /* 번호 열 */
     text-align: center;
-    border-right: 1px solid #ddd;
 }
 
-
+.boardTable th:nth-child(2), 
 .boardTable td:nth-child(2) {
-    padding: 10px 140px;
+    width: 800px;
+    
     /* 제목 열 */
-    padding-left: 30px;
-    border-right: 1px solid #ddd;
-    text-align: left;
+    padding-left: 20px;
+    
+    text-align: center left;
 
 }
 
 .boardTable th:nth-child(3),
 .boardTable td:nth-child(3) {
-    padding: 12px 15px;
+    width: 200px;
     /* 부서 열 */
     text-align: center;
-
-    border-right: 1px solid #ddd;
+    
 }
 
 .boardTable th:nth-child(4),
 .boardTable td:nth-child(4) {
-    padding: 12px 15px;
+    width: 200px;
     /* 작성자 열 */
     text-align: center;
-    border-right: 1px solid #ddd;
+    
 }
-
-.boardTable th:nth-child(5),
+.boardTable th:nth-child(5) 
 .boardTable td:nth-child(5) {
-    padding: 12px 0px;
+    width: 200px;
     /* 작성일 열 */
     text-align: center;
-    border-right: 1px solid #ddd;
+    
 }
-
-
-
 .boardTable td:last-child {
     border-right: none;
 }
@@ -119,7 +116,7 @@
     width: 100px;
     height: 40px;
     left: 1410px;
-    top: 830px;
+    top: 845px;
     
     background: #143A52;
     border-radius: 5px;
@@ -136,4 +133,13 @@
 }
 .writeButton:hover{
     color: white;
+}
+
+  /* 페이지네이션 스타일 */
+.paginationContainer {
+    position: absolute;
+    width: 400px;
+    height: 100px;
+    top: 830px;
+    left: 500px;
 }
