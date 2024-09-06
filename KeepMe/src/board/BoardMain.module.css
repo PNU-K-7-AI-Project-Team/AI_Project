@@ -1,12 +1,139 @@
-.bg{
-    /* Desktop - 1 */
-   
-    position: fixed;
-    overflow-y: auto;
-    overflow-x: hidden;
+
+
+/* Rectangle 10 */
+.boardContainer {
+    position: absolute;
+    width: 1550px;
+    height: 900px;
+    left: 288px;
+    top: 100px;
+
+    background: #FFFFFF;
+    border-radius: 5px;
+
+}
+
+.text {
+    position: absolute;
+    width: 120px;
+    height: 19px;
+    left: 290px;
+    top: 47px;
+
+    font-family: 'Jura';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 19px;
+    /* identical to box height */
+    
+    color: #000000;
+    
+}
+
+
+
+.boardTable {
     width: 100%;
-    height: 100%;
+    border-collapse: collapse;
+    border-radius: 5px;
+}
+.boardTable th {
+    background-color: #CDE3EB;
+    font-weight: bold;
+    text-align: center;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
 
-    background: rgba(227, 239, 243, 0.5);
+.boardTable th,
+.boardTable td {
+    border-bottom: 1px solid #ddd;
+}
 
+.boardTable th:nth-child(1),
+.boardTable td:nth-child(1) {
+    padding: 10px 15px;
+    /* 번호 열 */
+    text-align: center;
+    border-right: 1px solid #ddd;
+}
+
+
+.boardTable td:nth-child(2) {
+    padding: 10px 140px;
+    /* 제목 열 */
+    padding-left: 30px;
+    border-right: 1px solid #ddd;
+    text-align: left;
+
+}
+
+.boardTable th:nth-child(3),
+.boardTable td:nth-child(3) {
+    padding: 12px 15px;
+    /* 부서 열 */
+    text-align: center;
+
+    border-right: 1px solid #ddd;
+}
+
+.boardTable th:nth-child(4),
+.boardTable td:nth-child(4) {
+    padding: 12px 15px;
+    /* 작성자 열 */
+    text-align: center;
+    border-right: 1px solid #ddd;
+}
+
+.boardTable th:nth-child(5),
+.boardTable td:nth-child(5) {
+    padding: 12px 0px;
+    /* 작성일 열 */
+    text-align: center;
+    border-right: 1px solid #ddd;
+}
+
+
+
+.boardTable td:last-child {
+    border-right: none;
+}
+
+.boardTable tr:hover {
+    background-color: #f5f5f5;
+}
+
+.pagination {
+    position: absolute;
+    width: 100%;
+    height: 100px;
+    left: 0px;
+    top: 800px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.writeButton {
+    position: absolute;
+    width: 100px;
+    height: 40px;
+    left: 1410px;
+    top: 830px;
+    
+    background: #143A52;
+    border-radius: 5px;
+    border: none;
+
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 29px;
+    /* identical to box height */
+    
+    color: rgba(255, 255, 255, 0.6);
+}
+.writeButton:hover{
+    color: white;
 }

@@ -36,32 +36,13 @@ color: #ffffffd0;
   color: white;
 }
 
-.button {
-  position: absolute;
-  width: 150px;
-  height: 30px;
-  top: 380px;
-  background: #143A52;
-  border-radius: 50px;
-  border : none;
-  font-style: normal;
-  font-weight: 400;
-  font-size: 15px;
-  
-  color: rgba(255, 255, 255, 0.6);
-  /* identical to box height */
-}
-
-.button:hover {
-  color: white;
-}
-
 .button1 {
   position: absolute;
   width: 150px;
   height: 30px;
-  top: 450px;
-  left: 8px;
+  top: 400px;
+  
+  padding-left: 6px;
   background: #143A52;
   border-radius: 50px;
   border : none;
@@ -74,6 +55,28 @@ color: #ffffffd0;
 }
 
 .button1:hover {
+  color: white;
+}
+
+.button2 {
+  position: absolute;
+  width: 150px;
+  height: 30px;
+  top: 450px;
+  
+  padding-left: 23px;
+  background: #143A52;
+  border-radius: 50px;
+  border : none;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 15px;
+  
+  color: rgba(255, 255, 255, 0.6);
+  /* identical to box height */
+}
+
+.button2:hover {
   color: white;
 }
 

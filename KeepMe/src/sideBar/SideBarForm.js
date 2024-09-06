@@ -19,10 +19,10 @@ export default function SideBarForm() {
             <h1 className={styles.keepme} onClick={handleKeepMeClick}>Keep me</h1>
         </div>
         <div>
-          <button className={styles.button} onClick={handleBoardClick}>공지사항</button>
+          <button className={styles.button1} onClick={handleBoardClick}>공지사항</button>
         </div>
         <div>
-          <button className={styles.button1} onClick={handleWorkerClick}>작업자 관리</button>
+          <button className={styles.button2} onClick={handleWorkerClick}>작업자 관리</button>
         </div>
       </form>
     </div>

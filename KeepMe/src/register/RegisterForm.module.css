@@ -68,15 +68,28 @@
 
     color: rgba(0, 0, 0, 0.6);
 }
+.Idcheckbutton{
+    position: absolute;
+    width: 140px;
+    height: 25px;
+    left: 235px;
+    top: 285px;
+    color: rgba(255, 255, 255, 0.6); 
+    border-radius: 50px;
+    border: none;
+    background: #143A52;
 
-
+}
+.Idcheckbutton:hover{
+    color:white;
+}
 
 .password{
     position: absolute;
     width: 300px;
     height: 50px;
     left: 75px;
-    top: 294px;
+    top: 330px;
     border: none;
     background: #FFFFFF;
     border-radius: 50px;
@@ -97,7 +110,7 @@
     width: 140px;
     height: 50px;
     left: 235px;
-    top: 394px;
+    top: 412px;
     
     background: #143A52;
     border-radius: 50px;

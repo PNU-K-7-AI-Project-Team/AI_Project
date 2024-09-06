@@ -1,0 +1,107 @@
+
+.boardContainer{
+    position: absolute;
+    width: 1550px;
+    height: 900px;
+    left: 288px;
+    top: 100px;
+    
+    background: #FFFFFF;
+    border-radius: 5px;
+    
+}
+.text{
+    position: absolute;
+    width: 120px;
+    height: 19px;
+    left: 290px;
+    top: 47px;
+    
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 19px;
+    /* identical to box height */
+    
+    color: #000000;
+
+}
+.postContainer{
+    width: 100%;
+    background-color: #CDE3EB;
+    border-collapse: collapse;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+.title{
+    font-family: 'Jura';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 19px;
+    /* identical to box height */
+    margin-top: 0px;
+    padding-left: 40px;
+    padding-top: 20px;
+    color: #000000;
+}
+.etcContainer{
+    font-family: 'Jura';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 19px;
+    /* identical to box height */
+    margin-top: 0px;
+    padding-left: 40px;
+    padding-top: 0px;
+    color: #000000;
+    padding-bottom: 18px;
+}
+.etcContainer span{
+    margin-right: 20px;
+    border-right: 1px solid #0000004d;
+    padding-right: 20px;
+
+}
+
+.etcContainer span:last-child {
+    border-right: none;
+}
+.contentContainer{
+    box-sizing: border-box;
+    
+    margin-left: 40px;
+    margin-top: 20px;
+    border-color: #000000;
+    position: absolute;
+    width: 1470px;
+    height: 692px;
+    border-radius: 5px;
+    
+    background: #FFFFFF;
+    border: 1px solid #00000031;
+}
+.BackbuttonContainer{
+    position: absolute;
+    width: 100px;
+    height: 40px;
+    left: 1410px;
+    top: 830px;
+    
+    background: #143A52;
+    border-radius: 5px;
+    border: none;
+
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 29px;
+    /* identical to box height */
+    
+    color: rgba(255, 255, 255, 0.6);
+}
+.BackbuttonContainer:hover{
+    color: white;
+}

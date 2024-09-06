@@ -1,4 +1,4 @@
-.bg{
+.bg {
 
     position: absolute;
     width: 482px;
@@ -14,9 +14,50 @@
     font-size: 14px;
     line-height: 19px;
     /* identical to box height */
-    
+
     color: rgba(0, 0, 0, 0.7);
 }
 
+.boardContainer {
 
+    position: absolute;
+    width: 482px;
+    height: 180px;
+    
+    background: #FFFFFF;
+    border-radius: 5px;
 
+}
+.boardTable {
+    width: 100%;
+    
+  }
+  
+
+  .boardTable td {
+    border-bottom: 1px solid #ddd;
+    font-size: 12px;
+  }  
+  .boardTable td:nth-child(1) {
+    padding: 3px; /* 번호 열 */
+    
+    text-align: center;
+    border-right: 1px solid #ddd;
+  }
+  .boardTable td:nth-child(2) {
+    /* 제목 열 */
+    padding: 3px;
+    padding-left: 25px;
+    border-right: 1px solid #ddd;
+    text-align: left;
+    
+  }
+ 
+.boardTable td:nth-child(3) {
+  padding: 1px; /* 작성일 열 */
+  text-align: center;
+  border-right: 1px solid #ddd;
+}
+.boardTable td:last-child {
+    border-right: none;
+  }
