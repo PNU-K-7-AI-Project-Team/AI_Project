@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from './BoardWrite.module.css';
 import axios from 'axios';
@@ -11,6 +11,12 @@ export default function BoardWrite() {
     const [error, setError] = useState('');
     const navigate = useNavigate();
     const url = process.env.REACT_APP_BACKEND_URL;
+    
+    useEffect(() => {
+        setUserName(localStorage.getItem('userName'));
+        setDept(localStorage.getItem('dept'));
+    }, []);
+
     const handleSubmit = async(e) => {
         e.preventDefault();
         // 여기에 게시글 제출 로직을 구현합니다.
@@ -20,11 +26,11 @@ export default function BoardWrite() {
             return;
         }
         try{
-            await axios.post(`${url}boards`, { title:title, content:content },);
+            await axios.post(`${url}board/write`, { title:title, content:content },);
             alert("성공적으로 게시글을 등록하였습니다.");
             navigate("/board");
         }catch(error){
-            alert("게시글 등록에 실패하였습니다.");
+            setError("게시글 등록에 실패하였습니다.");
         }
         console.log({ title, userName, dept, content });
         // 제출 후 게시판 목록 페이지로 이동
@@ -40,6 +46,7 @@ export default function BoardWrite() {
             <h3 className={styles.text}>게시글 작성</h3>
             <div className={styles.boardWriteContainer}>
                 <form onSubmit={handleSubmit}>
+                    {/* {error && <p className={styles.error}>{error}</p>} */}
                     <div className={styles.postWriteContainer}>
                         <label htmlFor="title"className={styles.title}>제목</label>
                         <input className={styles.writeTitle}
@@ -50,8 +57,8 @@ export default function BoardWrite() {
                             required
                         />
                         <div className={styles.writeEtcContainer}>
-                            <label htmlFor="dept">부서:{localStorage.getItem('dept')}</label>
-                            <label htmlFor="userName">작성자:{localStorage.getItem('userName')}</label>
+                            <label htmlFor="dept">부서:{dept}</label>
+                            <label htmlFor="userName">작성자:{userName}</label>
                             <label htmlFor="date">작성일:{new Date().toLocaleDateString()}</label>
                         </div>
                     </div>
@@ -64,11 +71,11 @@ export default function BoardWrite() {
                             required
                         />
                     </div>
-                </form>
                     <div className={styles.buttonContainer}>
-                        <button type="submit" className={styles.submitButton}>작성</button>
+                        <button type="submit" className={styles.submitButton} >작성</button>
                         <button type="button" onClick={handleCancel} className={styles.cancelButton}>취소</button>
                     </div>
+                </form>
             </div>
         </div>
     );

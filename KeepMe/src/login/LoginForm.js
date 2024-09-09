@@ -1,17 +1,15 @@
 import axios from 'axios';
 import React from 'react'
 import { useState } from 'react';
-import { useLocation, Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import styles from './LoginForm.module.css'
 export default function LoginForm({ setAuth }) {
     const [userId, setUserid] = useState('');
     const [password, setPassword] = useState('');
-    const [error, setError] = useState('');
     const navigate = useNavigate();
-    const location = useLocation();
-    const from = location.state?.from || '/';
+    
     const url = process.env.REACT_APP_BACKEND_URL;
-
+    
 
     const login = async (e) => {
         e.preventDefault();//폼 제출 시 기본 동작을 막음
@@ -28,10 +26,10 @@ export default function LoginForm({ setAuth }) {
                 setAuth(true);//인증 상태를 true로 설정
                 navigate('/')
             } else {
-                setError('Login Failed');
+                console.error('Login Failed');
             }
         } catch (error) {
-            setError('Login Failed');
+            console.error('Login Failed');
         }
     }
     const joinclick = () => {

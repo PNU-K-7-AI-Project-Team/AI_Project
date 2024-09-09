@@ -8,7 +8,6 @@ import { useNavigate } from 'react-router-dom';
 export default function BoardMain() {
   const [currentPage, setCurrentPage] = useState(1);
   const [dataBoard, setDataBoard] = useState([]);
-  const [totalPosts, setTotalPosts] = useState(0);
   const [postsPerPage] = useState(10);
   const [page, setPage] = useState({
     size: 10,
@@ -32,8 +31,6 @@ export default function BoardMain() {
           }
         })).data;
         setDataBoard(response.content);
-        console.log("response.content", response.content);
-        console.log("dataBoard", dataBoard);
         setPage({
           size: response.page.size,
             number: response.page.number,
@@ -48,10 +45,8 @@ export default function BoardMain() {
     };
     // 컴포넌트가 렌더링될 때와 currentPage 또는 url이 변경될 때마다 loadBoard 함수 호출
     loadBoard();
-  }, [currentPage, url]); // currentPage와 url이 변경될 때마다 effect 실행
+  }, [currentPage, url, postsPerPage]); // currentPage와 url이 변경될 때마다 effect 실행
 
-  
-  
   const handleWrite = () => {
     navigate('/boardwrite');
   }

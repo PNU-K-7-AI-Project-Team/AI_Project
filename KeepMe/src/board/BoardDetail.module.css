@@ -106,3 +106,49 @@
 .BackbuttonContainer:hover{
     color: white;
 }
+.EditbuttonContainer{
+    position: absolute;
+    width: 100px;
+    height: 40px;
+    left: 1200px;
+    top: 830px;
+    
+    background: #143A52;
+    border-radius: 5px;
+    border: none;
+
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 29px;
+    /* identical to box height */
+    
+    color: rgba(255, 255, 255, 0.6);
+}
+.EditbuttonContainer:hover{
+    color: white;
+}
+.DeletebuttonContainer{
+    position: absolute;
+    width: 100px;
+    height: 40px;
+    left: 1305px;
+    top: 830px;
+    
+    background: #143A52;
+    border-radius: 5px;
+    border: none;
+
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 29px;
+    /* identical to box height */
+    
+    color: rgba(255, 255, 255, 0.6);
+}
+.DeletebuttonContainer:hover{
+    color: white;
+}

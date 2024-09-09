@@ -10,6 +10,21 @@
     background: #ffffff;
 }
 
-
+.logout{
+    position: absolute;
+    width: 100px;
+    height: 30px;
+    left: 1540px;
+    top: 5px;
+    background: #ffffff;
+    border: none;
+    cursor: pointer;
+    color: #0000007c;
+    font-size: 15px;
+    font-weight: 600;
+}
+.logout:hover{
+    color: #000000;
+}
 
 

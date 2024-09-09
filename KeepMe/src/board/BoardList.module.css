@@ -22,7 +22,7 @@
 
     position: absolute;
     width: 482px;
-    height: 180px;
+    height: 50px;
     
     background: #FFFFFF;
     border-radius: 5px;
@@ -30,34 +30,42 @@
 }
 .boardTable {
     width: 100%;
-    
+    table-layout: fixed;
+   
   }
   
 
   .boardTable td {
     border-bottom: 1px solid #ddd;
     font-size: 12px;
+    
   }  
   .boardTable td:nth-child(1) {
-    padding: 3px; /* 번호 열 */
-    
+    /* 번호 열 */
+    width: 20px;
     text-align: center;
     border-right: 1px solid #ddd;
   }
   .boardTable td:nth-child(2) {
     /* 제목 열 */
-    padding: 3px;
-    padding-left: 25px;
+    
+    padding-left: 15px;
     border-right: 1px solid #ddd;
     text-align: left;
     
   }
  
 .boardTable td:nth-child(3) {
-  padding: 1px; /* 작성일 열 */
+ 
   text-align: center;
   border-right: 1px solid #ddd;
 }
 .boardTable td:last-child {
     border-right: none;
   }
+  .paginationContainer {
+    display: flex;
+    justify-content: center;
+    top: 100px;
+  }
+ 

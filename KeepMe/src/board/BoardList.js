@@ -7,22 +7,38 @@ import { useState, useEffect } from 'react';
 export default function BoardList() {
   const [currentPage, setCurrentPage] = useState(1);
   const [dataBoard, setDataBoard] = useState([]);
-  const [totalPosts, setTotalPosts] = useState(0);
-  const postsPerPage = 10;
+  const [postsPerPage] = useState(5); 
+  const [page, setPage] = useState({
+    size: 5,
+    number: 0,
+    totalElements: 0,
+    totalPages: 0,
+  })
   const url = process.env.REACT_APP_BACKEND_URL;
   useEffect(() => {
     const loadBoard = async () => {
       try {
-        const response = await axios.get(`${url}/boards?page=${currentPage}&limit=${postsPerPage}`);
-        const { data, total } = response.data;
-        setDataBoard(data);
-        setTotalPosts(total);
+        const response = (await axios.get(`${url}boards`,{
+          params: {
+            page: currentPage - 1,
+            size: postsPerPage,
+          }
+        })).data;
+        setDataBoard(response.content);
+        setPage({
+          size: response.page.size,
+            number: response.page.number,
+            totalElements: response.page.totalElements,
+            totalPages: response.page.totalPages,
+        })
+        console.log(response);
       } catch (error) {
         console.log('Error fetching posts:', error);
       }
     }
     loadBoard();
-  }, [currentPage, url]);
+  }, [currentPage, url, postsPerPage]);
+
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
   return (
     <div className={styles.bg}>
@@ -31,22 +47,26 @@ export default function BoardList() {
         <table className={styles.boardTable}>
           <tbody>
             {dataBoard.map((post) => (
-              <tr key={post.id}>
-                <td>{post.id}</td>
+              <tr key={post.idx}>
+                <td>{post.idx}</td>
                 <td>
-                  <Link to={`/boarddetail/${post.id}`}>{post.title}</Link>
+                  <Link to={`/boarddetail/${post.idx}`}>{post.title}</Link>
                 </td>
-                <td>{post.date}</td>
+                <td>{post.createDate}</td>
               </tr>
             ))}
           </tbody>
         </table>
-        <Pagination 
-          postsPerPage={postsPerPage} 
-          totalPosts={totalPosts} 
-          paginate={paginate}
-          currentPage={currentPage}
-        />
+        <div className={styles.paginationContainer}>
+        <Pagination
+            postsPerPage={postsPerPage}
+            totalPosts={page.totalElements}
+            paginate={paginate}
+            currentPage={currentPage}
+            totalPages={page.totalPages}
+          />
+
+        </div>
       </div>
     </div>
   )
