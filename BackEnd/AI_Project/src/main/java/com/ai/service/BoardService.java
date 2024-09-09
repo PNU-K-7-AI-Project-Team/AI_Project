@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -14,6 +15,7 @@ import com.ai.domain.Board;
 import com.ai.domain.Role;
 import com.ai.domain.User;
 import com.ai.dto.GetBoardsDTO;
+import com.ai.dto.WriteUserDTO;
 import com.ai.persistence.BoardRepository;
 import com.ai.persistence.UserRepository;
 
@@ -119,6 +121,20 @@ public class BoardService {
 			throw new NoSuchElementException("해당 유저 코드와 일치하는 게시물이 없습니다."); // 예외 처리
 		}
 		
+	}
+	
+	// 게시물 작성시 나타내는 유저 정보
+	public WriteUserDTO getUserInfo() {
+		// 현재 토큰 정보의 userCode의 User 객체를 DB에서 찾아서추출
+		User currentUser = userRepo.findByUserCode(getUserFromToken().getUserCode()) 
+				.orElseThrow(() -> new NoSuchElementException("해당 유저를 찾을 수 없습니다.")); 
+		
+		WriteUserDTO writeUserDTO = WriteUserDTO.builder()
+												.userName(currentUser.getUserName())
+												.dept(currentUser.getDept())
+												.build();
+		
+		return writeUserDTO;
 	}
 	
 

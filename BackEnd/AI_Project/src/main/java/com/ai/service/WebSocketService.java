@@ -14,7 +14,10 @@ public class WebSocketService {
 	private final UserVitalSignRepository uvRepo; // 생체신호 정보 DB
 	private WebSocketConfig wsConfig; // 웹소켓 설정
 	
-	@Scheduled(fixedRate = 2);
+	@Scheduled(fixedRate = 2000)
+	public void sendVitalSign() {
+		
+	}
 	
 	
 	

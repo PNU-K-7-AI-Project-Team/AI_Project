@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ai.domain.Board;
+import com.ai.dto.WriteUserDTO;
 import com.ai.service.BoardService;
 
 import lombok.RequiredArgsConstructor;
@@ -79,6 +80,20 @@ public class BoardController {
     @PostMapping("/board/delete")
     public ResponseEntity<?> deleteBoard(@RequestParam int idx) {
     	return ResponseEntity.ok(boardService.deleteBoard(idx));
+    }
+    
+    // 게시물 작성 시 나타나는 정보들
+    @GetMapping("/getUserInfo")
+    public ResponseEntity<?> getUserInfo() {
+        WriteUserDTO writeUserDTO = boardService.getUserInfo();
+        // WriteUserDTO를 ResponseEntity로 반환
+        try {
+        	return ResponseEntity.ok(writeUserDTO);
+        } catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("해당 유저 정보를 불러 올 수 없습니다.");
+		}
+        
+        
     }
     
 //    // 게시물에 저장된 유저 정보 검증 메서드

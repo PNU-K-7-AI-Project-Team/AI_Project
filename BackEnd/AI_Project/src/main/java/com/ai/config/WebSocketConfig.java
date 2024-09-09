@@ -32,8 +32,10 @@ public class WebSocketConfig extends TextWebSocketHandler implements WebSocketCo
 	public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
 		registry.addHandler(this, "pushservice") // 엔드포인트 /pushservice로 지정
 				.setAllowedOrigins("*")// 모든 컴퓨터에서 접근 가능
-				.addInterceptors(null);
+				.addInterceptors(null); //
 	}
+	
+	
 
 	// Client가 접속 시 호출되는 메서드
 	@Override 
