@@ -1,0 +1,11 @@
+C:\Users\user>mysql --local-infile -u scott -p
+Enter password: tiger
+
+mysql> use risk_analysis;
+Database changed
+mysql> LOAD DATA LOCAL INFILE'C:/Program Files/MySQL/MySQL Server 8.0/Uploads/UserVitalSign.csv' IGNORE INTO TABLE risk_analysis.user_vital_sign
+    -> FIELDS TERMINATED BY ','
+    -> ENCLOSED BY '"'
+    -> LINES TERMINATED BY '\n'
+    -> IGNORE 1 ROWS
+    -> (no, work_date, user_code, agency_code, is_wear, heart_beat, temperature, outside_temperature, latitude, longitude, device_battery);
