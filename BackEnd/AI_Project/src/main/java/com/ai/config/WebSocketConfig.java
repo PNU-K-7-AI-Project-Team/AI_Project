@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
@@ -13,27 +14,34 @@ import org.springframework.web.socket.config.annotation.EnableWebSocket;
 import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
 import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
+import org.springframework.web.socket.server.HandshakeInterceptor;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import lombok.RequiredArgsConstructor;
 
+import com.ai.domain.Role;
+import com.ai.domain.User;
 import com.ai.dto.PushDTO;
 
 // WebSocket 연결을 설정
 @Configuration
 @EnableWebSocket	// Boot WebSocket 활성화
+@RequiredArgsConstructor
 public class WebSocketConfig extends TextWebSocketHandler implements WebSocketConfigurer  {
 
 	// 연결된 클라이언트들을 저장하는 Set
 	private static Set<WebSocketSession> clients = Collections.synchronizedSet(new HashSet<WebSocketSession>());
 
+	private final CustomHandshakeInterceptor customInter;
+	
 	// WebSocket 연결명 설정 (ws://localhost:8080/pushservice) ==> WebSocketConfigurer
 	@Override
 	public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
 		registry.addHandler(this, "/pushservice") // 엔드포인트 /pushservice로 지정
-				.setAllowedOrigins("*"); // 모든 컴퓨터에서 접근 가능
+				.setAllowedOrigins("*") // 모든 컴퓨터에서 접근 가능
+				.addInterceptors(customInter);
 	}
 	
 	
@@ -81,17 +89,19 @@ public class WebSocketConfig extends TextWebSocketHandler implements WebSocketCo
 		synchronized (clients) {
 		    for(WebSocketSession sess: clients) {
 				// 모든 클라이언트 세션에 sendMessage를 통해 해당 직렬화한 msg를 전송
-		    	try {
-		    		sess.sendMessage(message);
-		    	} catch (IOException e) {
-		    		System.out.println(sess.getRemoteAddress() + ":" + e.getMessage());
-		    		// 예외 발생 시 클라이언트의 원격 주소와 예외 메시지를 콘솔에 출력
+		    	Role role = (Role) sess.getAttributes().get("userRole");
+		    	if (Role.ROLE_ADMIN.equals(role) || 
+		    			pushDto.getUserCode().equals(sess.getAttributes().get("userCode"))) {
+		    		try {
+			    		sess.sendMessage(message);
+			    	} catch (IOException e) {
+			    		System.out.println(sess.getRemoteAddress() + ":" + e.getMessage());
+			    		// 예외 발생 시 클라이언트의 원격 주소와 예외 메시지를 콘솔에 출력
+			    	}
 		    	}
+		    	
 		    }
 		}
 	}
-	
-	public static Set<WebSocketSession> getClients() {
-	    return clients;
-	}
+
 }

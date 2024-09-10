@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.ai.persistence.UserRepository;
 import com.ai.persistence.UserVitalSignRepository;
+import com.ai.domain.Role;
 import com.ai.domain.User;
 import com.ai.domain.UserVitalSign;
 
@@ -23,12 +24,30 @@ public class HeartbeatService {
 	private int lastNo = 0; // 마지막 출력된 No를 저장
 	
 	@Scheduled(fixedRate = 50000000)
-	public void printHeartbeatData() {
-		List<UserVitalSign> vitalSigns = uvRepo.findByUserCode("29");
-		for (UserVitalSign vitalSign : vitalSigns) {
-			System.out.println("user_code: " + vitalSign.getUserCode() + ", heartbeat:" + vitalSign.getHeartbeat());
-		}
-	}
+	 public void printHeartbeatData() {
+        User currentUser = getUserFromToken();
+
+        if (currentUser != null) {
+            String userCode = currentUser.getUserCode();
+            Role role = currentUser.getRole(); // Assuming you have a getRole method in User
+
+            List<UserVitalSign> userVitalSigns;
+            if (Role.ROLE_ADMIN.equals(role)) {
+                // 관리자일 경우, 모든 사용자의 심박수 데이터 조회
+                userVitalSigns = uvRepo.findAll();
+            } else {
+                // 일반 사용자일 경우, 현재 사용자에 대한 심박수 데이터 조회
+                userVitalSigns = uvRepo.findByUserCode(userCode);
+            }
+
+            // 심박수 데이터를 출력
+            userVitalSigns.forEach(uvs -> {
+                System.out.println("UserCode: " + uvs.getUserCode() + ", Heartbeat: " + uvs.getHeartbeat());
+            });
+        } else {
+            System.out.println("No user found in the current session.");
+        }
+    }
 	
 	// 로그인 후 얻은 토큰으로 해당 아이디의 User 객체를 추출
 	private User getUserFromToken() {
