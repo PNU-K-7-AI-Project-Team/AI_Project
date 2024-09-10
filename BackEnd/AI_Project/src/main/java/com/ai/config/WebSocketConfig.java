@@ -17,6 +17,8 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import lombok.RequiredArgsConstructor;
+
 import com.ai.dto.PushDTO;
 
 // WebSocket 연결을 설정
@@ -30,17 +32,15 @@ public class WebSocketConfig extends TextWebSocketHandler implements WebSocketCo
 	// WebSocket 연결명 설정 (ws://localhost:8080/pushservice) ==> WebSocketConfigurer
 	@Override
 	public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
-		registry.addHandler(this, "pushservice") // 엔드포인트 /pushservice로 지정
-				.setAllowedOrigins("*")// 모든 컴퓨터에서 접근 가능
-				.addInterceptors(null); //
+		registry.addHandler(this, "/pushservice") // 엔드포인트 /pushservice로 지정
+				.setAllowedOrigins("*"); // 모든 컴퓨터에서 접근 가능
 	}
 	
 	
-
 	// Client가 접속 시 호출되는 메서드
 	@Override 
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-		clients.add(session);
+		clients.add(session); // Set에 해당 session 저장
 	    System.out.println(session + " 클라이언트 접속");
 	}
 	
@@ -89,5 +89,9 @@ public class WebSocketConfig extends TextWebSocketHandler implements WebSocketCo
 		    	}
 		    }
 		}
+	}
+	
+	public static Set<WebSocketSession> getClients() {
+	    return clients;
 	}
 }

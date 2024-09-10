@@ -90,7 +90,16 @@ public class CORSConfig implements WebMvcConfigurer {
 						);
 				
 				
-		
+		registry.addMapping("/mypage/checkpw/**")
+		.allowCredentials(true) // 자격증명(쿠키, Http 인증헤더(토큰),...) 보내는 것을 허용
+		.allowedHeaders(HttpHeaders.AUTHORIZATION)
+		.allowedMethods(
+				HttpMethod.POST.name())
+		.allowedOrigins(
+				"http://localhost:3000", 
+				"http://192.168.0.143:3000", 
+				"http://192.168.0.131:3000"
+				);
 		
 		
 	}

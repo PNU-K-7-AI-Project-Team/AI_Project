@@ -76,7 +76,7 @@ public class BoardService {
 			boardRepo.save(updateBoard); // DB에 해당 Board 객체 저장
 			return HttpStatus.OK.value(); // 200 반환 (요청 성공) 
 		} else {
-			return HttpStatus.INTERNAL_SERVER_ERROR.value(); // 500 반환 (예상치 못한 에러 발생)
+			return HttpStatus.UNAUTHORIZED.value(); // 401 반환 (예상치 못한 에러 발생)
 		}
 	}
 	
@@ -85,11 +85,10 @@ public class BoardService {
 	public int deleteBoard(int idx) {
 		Optional<Board> board = boardRepo.findById(idx); // 해당 번호와 일치하는 게시물 객체를 찾아서 board에 저장
 		if (checkAuth(board)) {
-			boardRepo.deleteById(idx); // 
-			return HttpStatus.OK.value(); // 200 값 반환 (성공)
+			boardRepo.deleteById(idx); 
 		} else {
-			return HttpStatus.UNAUTHORIZED.value(); // 401 값 반환 (인증 처리 실패)
-		}
+			return 0;
+		} return 1;
 	}
 	
 	// 로그인 후 얻은 토큰으로 해당 아이디의 User 객체를 추출
@@ -119,8 +118,7 @@ public class BoardService {
 			// 게시물 저장된 userCode와 토큰 userCode가 같거나, 현재 유저가 ADMIN 권한이 있다면 1 반환, 아니면 0 반환
 		} else { // 해당 게시물이 존재하지 않으면,
 			throw new NoSuchElementException("해당 유저 코드와 일치하는 게시물이 없습니다."); // 예외 처리
-		}
-		
+		}	
 	}
 	
 	// 게시물 작성시 나타내는 유저 정보
@@ -133,38 +131,18 @@ public class BoardService {
 												.userName(currentUser.getUserName())
 												.dept(currentUser.getDept())
 												.build();
-		
 		return writeUserDTO;
 	}
 	
+	// 해당 게시물을 작성한 유저인지 검증
+	public int checkUser(int idx) {
+		Optional<Board> board = boardRepo.findById(idx); // 해당 번호와 일치하는 게시물 객체를 찾아서 board에 저장
+		if (checkAuth(board)) {
+			return 1;
+		} else {
+			return 0;
+		} 
+	}
+	
 
-//	// 해당 게시물에 저장된 유저의 정보와 일치하거나, 관리자 권한인지 확인(해당 url 접근 여부 결정)
-//	public int checkUser (int idx) {
-//		try {
-//			// 해당 번호의 게시물이 DB에 존재하는지 확인
-//			// 존재하면, 해당 Board 객체를 board에 집어넣음
-//			// 존재하지않으면, Optional.empty()를 집어넣음 
-//			Optional<Board> board = boardRepo.findById(idx);
-//			// 존재하지 않으면, 예외 처리
-//			if (board.isEmpty()) throw new NoSuchElementException("해당 번호의 게시물을 찾을 수 없습니다.");
-//			// 해당 게시물에 저장된 userCode를 추출 
-//			String userCode = board.get().getUserCode();
-//			
-//			// 해당 userCode가 DB에 존재하는지 확인 후 일치하는 user 객체 추출
-//			Optional<User> user = userRepo.findByUserCode(getUserFromToken().getUserCode());
-//			// 존재하지 않으면, 예외 처리
-//			if (user.isEmpty()) throw new NoSuchElementException("해당 유저 코드를 찾을 수 없습니다.");
-//			// 해당 user 객체의 역할 추출
-//			Role role = user.get().getRole();
-//			
-//			if ((board.isPresent() && userCode.equals(getUserFromToken().getUserCode()))
-//					|| role == Role.ROLE_ADMIN) { // 게시물이 존재하면서 토큰에 저장된 userCode와 일치하거나, 권한이 관리자이면 이용 가능
-//				return HttpStatus.OK.value(); // 200 값 반환(요청 성공)
-//			} else {
-//				return HttpStatus.UNAUTHORIZED.value(); // 401값 반환(인증 처리 실패)
-//			}	
-//			} catch (Exception e) {
-//				return HttpStatus.UNAUTHORIZED.value();
-//			} 
-//	}
 }
