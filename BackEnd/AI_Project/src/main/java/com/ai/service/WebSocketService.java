@@ -49,7 +49,7 @@ public class WebSocketService {
 						}
 					}
 				} else if (role == Role.ROLE_USER) { // 사용자 권한
-					UserVitalSign nextVitalSign = vitalRepo.findFirstByUserCodeAndNoGreaterThan(userCode, lastNo)
+					UserVitalSign nextVitalSign = vitalRepo.findHeartbeatUserCode(userCode, lastNo)
 					                                       .orElse(null);
 					if (nextVitalSign != null) {
 						sendAndUpdate(session, nextVitalSign, userCode);
