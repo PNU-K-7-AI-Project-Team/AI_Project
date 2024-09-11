@@ -6,6 +6,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.client.HttpClientErrorException.Unauthorized;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.ai.domain.User;
 import com.ai.service.MyPageService;
@@ -28,15 +30,22 @@ public class MyPageController {
 		}	
 	}
 	
-	// 비밀번호 검증 
+
+	
 	@PostMapping("/mypage/checkpw")
 	public ResponseEntity<?> checkPasword(@RequestBody User user) {
-		if (ms.checkPW(user) == true) {
-			return ResponseEntity.ok("비밀번호 검증 성공");
-		} else {
-			return ResponseEntity.badRequest().body("비밀번호 검증 실패");
+		try {
+			if (ms.checkPW(user)) {
+				return ResponseEntity.ok("비밀번호 검증 성공");
+			} else {
+				return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("비밀번호 검증 실패");
+			}
+			
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("알 수 없는 에러 발생");
 		}
 	}
+	
 	
 	// 비밀번호 변경
 	@PostMapping("/mypage/changepw")

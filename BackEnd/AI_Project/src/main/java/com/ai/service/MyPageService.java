@@ -1,9 +1,11 @@
 package com.ai.service;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.ai.domain.User;
 import com.ai.dto.MyInfoDTO;
@@ -87,14 +89,11 @@ public class MyPageService {
 	// 회원정보 접근 시 비밀번호 검증
 	// 입력한 비밀번호 inputPW와 토큰에 있는 비밀번호와 일치하는지 검증
 	public boolean checkPW(User inputPW) {
-		try {
 			User tokenPW = userRepo.findByUserCode(getUserFromToken().getUserCode()).orElseThrow();
 			if (passwordEnc.matches(inputPW.getPassword(), tokenPW.getPassword())) {
-				return true;
-			}
-		} catch (Exception e) {
-			return false;
-		}
-		return false;
+		        return true;
+		    } else {
+		        return false;
+		    }
 	}
 }
