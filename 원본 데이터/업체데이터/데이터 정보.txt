@@ -1,0 +1,64 @@
+#생체정보
+create table UserVitalSign
+(
+    No                            int auto_increment comment '등록 순번 자동증가' primary key,
+    WorkDate                      varchar(8)                               not null,
+    UserCode                      int(8)                                   not null comment '자동발급등록일자순번',
+    AgencyCode                    varchar(12)                              not null comment '소속코드',
+    IsWear                        int                                      null comment '착용 유무 0 미착용 1 착용',
+    Heartbeat                     double                                   null comment '심박',
+    Temperature                   double                                   null comment '체온',
+    OutsideTemperature            double                                   null comment '외부온도',
+    Latitude                      double                                   null comment '위도',
+    Longitude                     double                                   null comment '경도',
+    DeviceBattery                 int                                      null comment '기기 배터리 잔량',
+    VitalDate                     datetime(3)                              null comment '생체신호 생성일시',
+    RegisterDate                  datetime(3) default current_timestamp(3) null comment '입력일시',
+    RegisterEmpID                 varchar(255)                             null comment '등록자',
+    ModifyDate                    datetime(3) default current_timestamp(3) null comment '수정일시',
+    ModifyEmpID                   varchar(255)                             null comment '수정자',
+    DeleteYN                      int         default 0                    null comment '삭제 유무(0:false, 1:true)'
+);
+
+#위치정보
+create table UserLocationLog
+(
+    No                       int auto_increment comment '순번' primary key,
+    WorkDate                 varchar(8)                               not null comment '근무일',
+    UserCode                 int                                      not null comment '근로자코드',
+    Latitude                 double                                   null comment '위도',
+    Longitude                double                                   null comment '경도',
+    Coordinate               point                                    null comment '좌표',
+    Satellite                int                                      null comment '위성수',
+    Accuracy                 float                                    null comment '오차범위',
+    Altitude                 double                                   null comment '고도',
+    VerticalAccuracy         float                                    null comment '고도 정확도',
+    Bearing                  float                                    null comment '방위각',
+    bearingAccuracy          float                                    null comment '방위각 정확도',
+    Direction                float                                    null comment '방향',
+    Speed                    float                                    null comment '속도',
+    SpeedAccuracy            float                                    null comment '시산당 속도 정확도-millisecond',
+    UnixTime                 bigint(13)                               null comment '데이터 가져온 시간 유닉스 시간',
+    CheckTime                datetime                                 null comment '데이터 가져온 시간',
+    LocationProvider         varchar(32)                              null comment '위치제공자',
+    ElapsedRealtimeAgeMillis int                                      null comment '위성정보제공시간',
+    NetworkOperator          varchar(32)                              null comment 'sk kt lg 별정',
+    NetworkProvider          varchar(32)                              null comment '3G 4G 5G wifi',
+    RegisterDate             datetime(6) default current_timestamp(6) null comment '등록일시',
+    RegisterEmpCode          int                                      null comment '등록자',
+    ModifyDate               datetime(6) default current_timestamp(6) null comment '수정일시',
+    ModifyEmpCode            int                                      null comment '수정자'
+) comment '근로자 위치 정보';
+
+#자이로데이터
+create table UserGyro
+(
+    No           int auto_increment primary key,
+    WorkDate     varchar(8)                               not null comment '근무일',
+    UserCode     int                                      not null comment '유저아이디',
+    X            float                                    null comment 'x 좌표',
+    Y            float                                    null comment 'Y 좌표',
+    Z            float                                    null comment 'Z 좌표',
+    VitalDate    timestamp(6)                             null comment '자이로 측정 시간',
+    RegisterDate datetime(6) default current_timestamp(6) null comment '등록일시'
+);
