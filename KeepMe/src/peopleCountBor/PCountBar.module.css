@@ -17,6 +17,10 @@
     
     color: rgba(0, 0, 0, 0.7);
 }
+.all:hover{
+    
+    color: rgb(0, 0, 0);
+}
 .Allbg{
     position: relative;
     left: 50px;
@@ -42,7 +46,9 @@
     
     color: rgba(0, 0, 0, 0.7);
 }
-
+.today:hover{
+    color: rgb(0, 0, 0);
+}
 .good{
     position: absolute;
     width: 350px;
@@ -60,6 +66,9 @@
     /* identical to box height */
     
     color: rgba(0, 0, 0, 0.7);
+}
+.good:hover{
+    color: rgb(0, 0, 0);
 }
 .bad{
     position: absolute;
@@ -80,45 +89,10 @@
     
     color: rgba(255, 255, 255, 0.9);
 }
+.bad:hover{
+    color: rgb(187, 255, 0);
+}
 
-/* 위험인원 */
-
-position: absolute;
-width: 280px;
-height: 80px;
-left: 1140px;
-top: 80px;
-
-
-
-/* 위험인원 */
-
-position: absolute;
-width: 280px;
-height: 80px;
-left: 1140px;
-top: 80px;
-
-background: rgba(247, 0, 0, 0.75);
-border-radius: 5px;
-
-
-/* 위험인원 */
-
-position: absolute;
-width: 59px;
-height: 19px;
-left: 1164px;
-top: 100px;
-
-font-family: 'Jura';
-font-style: normal;
-font-weight: 400;
-font-size: 16px;
-line-height: 19px;
-/* identical to box height */
-
-color: rgba(0, 0, 0, 0.5);
 
 
 

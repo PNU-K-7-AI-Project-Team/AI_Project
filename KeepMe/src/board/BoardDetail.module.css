@@ -71,6 +71,7 @@
 }
 .contentContainer{
     box-sizing: border-box;
+    padding-left: 20px;
     
     margin-left: 40px;
     margin-top: 20px;
@@ -87,8 +88,8 @@
     position: absolute;
     width: 100px;
     height: 40px;
-    left: 1410px;
-    top: 830px;
+    left: 1409px;
+    top: 840px;
     
     background: #143A52;
     border-radius: 5px;
@@ -110,8 +111,8 @@
     position: absolute;
     width: 100px;
     height: 40px;
-    left: 1200px;
-    top: 830px;
+    left: 1190px;
+    top: 840px;
     
     background: #143A52;
     border-radius: 5px;
@@ -133,9 +134,8 @@
     position: absolute;
     width: 100px;
     height: 40px;
-    left: 1305px;
-    top: 830px;
-    
+    left: 1300px;
+    top: 840px;
     background: #143A52;
     border-radius: 5px;
     border: none;

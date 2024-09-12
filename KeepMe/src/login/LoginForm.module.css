@@ -13,6 +13,8 @@
     left: 50%;
     transform: translate(-50%, -50%);
     background: #ECF2F4;
+    border-radius: 10px;
+    box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.3);
 }
 
 .name{
@@ -42,11 +44,11 @@
     height: 50px;
     left: 75px;
     top: 135px;
-    
+    margin-top: 10px;
     background: #FFFFFF;
-    border-radius: 50px;
+    border-radius: 10px;
     border: none;
-
+    padding-left: 10px;
     font-family: 'Inter';
     font-style: normal;
     font-weight: 400;
@@ -64,9 +66,9 @@
     height: 50px;
     left: 75px;
     top: 217px;
-    
+    padding-left: 10px;
     background: #FFFFFF;
-    border-radius: 50px;
+    border-radius: 10px;
     border: none;
 
     font-family: 'Inter';
@@ -88,13 +90,13 @@
     top: 315px;
     
     background: #143A52;
-    border-radius: 50px;
+    border-radius: 10px;
     border: none;
 
     font-family: 'Inter';
     font-style: normal;
     font-weight: 400;
-    font-size: 24px;
+    font-size: 20px;
     line-height: 29px;
     /* identical to box height */
     
@@ -111,13 +113,13 @@
     top: 315px;
     
     background: #143A52;
-    border-radius: 50px;
+    border-radius: 10px;
     border: none;
-
+    margin-left: 10px;
     font-family: 'Inter';
     font-style: normal;
     font-weight: 400;
-    font-size: 24px;
+    font-size: 20px;
     line-height: 29px;
     /* identical to box height */
     

@@ -1,32 +1,30 @@
 // Pagination.js
 import React from 'react';
-import { Link } from 'react-router-dom';
 import styles from './Pagination.module.css';
 
 export default function Pagination({ postsPerPage, totalPosts, paginate, currentPage }) {
   const pageNumbers = [];
-
-  // 전체 페이지 수 계산
   const totalPages = Math.ceil(totalPosts / postsPerPage);
-
-  // 페이지 번호 배열 생성
+  
+  // 총 페이지 수에 맞게 페이지 번호 배열 생성
   for (let i = 1; i <= totalPages; i++) {
     pageNumbers.push(i);
   }
 
-  // 표시할 페이지 번호 범위 계산
   const pageRange = 5; // 한 번에 표시할 페이지 번호 개수
-  const startPage = Math.max(1, currentPage - Math.floor(pageRange / 2));
-  const endPage = Math.min(totalPages, startPage + pageRange - 1);
-
+  // 현재 페이지에 따라 시작 페이지 번호 계산
+  const startPage = Math.floor((currentPage - 1) / pageRange) * pageRange + 1;
+  // 현재 페이지에 따라 끝 페이지 번호 계산, 총 페이지 수를 넘지 않도록 설정
+  const endPage = Math.min(startPage + pageRange - 1, totalPages);
+  
   return (
     <nav className={styles.paginationContainer}>
       <ul className={styles.pagination}>
         {/* 이전 페이지 버튼 */}
         <li>
           <button 
-            onClick={() => paginate(currentPage - 1)} 
-            disabled={currentPage === 1} 
+            onClick={() => paginate(Math.max(1, startPage - 1))} 
+            disabled={startPage === 1} 
             className={styles.paginationButton}
           >
             이전
@@ -48,8 +46,8 @@ export default function Pagination({ postsPerPage, totalPosts, paginate, current
         {/* 다음 페이지 버튼 */}
         <li>
           <button 
-            onClick={() => paginate(currentPage + 1)} 
-            disabled={currentPage === totalPages} 
+            onClick={() => paginate(Math.min(totalPages, endPage + 1))} 
+            disabled={endPage === totalPages} 
             className={styles.paginationButton}
           >
             다음

@@ -35,22 +35,32 @@
     border-collapse: collapse;
     border-radius: 5px;
 }
+
 .boardTable th {
     background-color: #CDE3EB;
     font-weight: bold;
     font-size: 18px;
     text-align: center;
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
     padding: 15px;
     height: 65px;
+    border-right: 1px solid #0a040413;
+
+}
+.boardTable th:last-child {
+    border-right: none;
+}
+.boardTable :nth-child(1){
+    border-top-left-radius: 5px;
+}
+.boardTable :nth-child(5){
+    border-top-right-radius: 5px;
 }
 
 
 .boardTable td {
     border-bottom: 1px solid #ddd;
     border-right: 1px solid #ddd;
-    padding: 15px;
+    height: 70px;
 }
 
 .boardTable th:nth-child(1),
@@ -62,11 +72,9 @@
 
 .boardTable th:nth-child(2), 
 .boardTable td:nth-child(2) {
-    width: 800px;
-    
+    width: 660px;
     /* 제목 열 */
-    padding-left: 20px;
-    
+    padding-left: 20px;  
     text-align: center left;
 
 }
@@ -76,7 +84,6 @@
     width: 200px;
     /* 부서 열 */
     text-align: center;
-    
 }
 
 .boardTable th:nth-child(4),
@@ -88,9 +95,10 @@
 }
 .boardTable th:nth-child(5) 
 .boardTable td:nth-child(5) {
-    width: 200px;
+    width: 100px;
     /* 작성일 열 */
     text-align: center;
+    padding-left: 20px;
     
 }
 .boardTable td:last-child {
@@ -100,7 +108,11 @@
 .boardTable tr:hover {
     background-color: #f5f5f5;
 }
-
+.createDate{
+    width: 200px;
+    /* 작성일 열 */
+    text-align: center;
+    }
 .pagination {
     position: absolute;
     width: 100%;
@@ -115,8 +127,8 @@
     position: absolute;
     width: 100px;
     height: 40px;
-    left: 1410px;
-    top: 845px;
+    left: 1409px;
+    top: 840px;
     
     background: #143A52;
     border-radius: 5px;
@@ -134,7 +146,28 @@
 .writeButton:hover{
     color: white;
 }
+.homeButton{
+    position: absolute;
+    width: 100px;
+    height: 40px;
+    left: 1300px;
+    top: 840px;
+    background: #143A52;
+    border-radius: 5px;
+    border: none;
 
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 29px;
+    /* identical to box height */
+    
+    color: rgba(255, 255, 255, 0.6);
+}
+.homeButton:hover{
+    color: white;
+}
   /* 페이지네이션 스타일 */
 .paginationContainer {
     position: absolute;

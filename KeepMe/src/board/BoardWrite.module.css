@@ -71,7 +71,7 @@
 
 }
 
-.writeEtcContainer span:last-child {
+.writeEtcContainer label:last-child {
     border-right: none;
 }
 .writeContentContainer{
@@ -97,40 +97,48 @@
     margin-top: 20px;
     font-size: 18px;
     padding-left: 10px;
-    
+    padding-top: 10px;
 }
-.buttonContainer{
-    position: absolute;
-    
-    left: 1305px;
-    top: 840px;
-}
+
 .submitButton{
+    position: absolute;
     width: 100px;
     height: 40px;
+    left: 1300px;
+    top: 840px;
     background: #143A52;
     border-radius: 5px;
     border: none;
-    color: rgba(255, 255, 255, 0.6);
+
     font-family: 'Inter';
     font-style: normal;
     font-weight: 400;
     font-size: 20px;
     line-height: 29px;
+    /* identical to box height */
+    
+    color: rgba(255, 255, 255, 0.6);
+    
 }
 .cancelButton{
+    position: absolute;
     width: 100px;
     height: 40px;
-    margin-left: 4px;
+    left: 1409px;
+    top: 840px;
+    
     background: #143A52;
     border-radius: 5px;
     border: none;
-    color: rgba(255, 255, 255, 0.6);
+
     font-family: 'Inter';
     font-style: normal;
     font-weight: 400;
     font-size: 20px;
     line-height: 29px;
+    /* identical to box height */
+    
+    color: rgba(255, 255, 255, 0.6);
 }
 
 .cancelButton:hover,

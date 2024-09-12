@@ -5,26 +5,29 @@ import { useState, useEffect } from 'react';
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
 export default function BoardEdit() {
   const { idx } = useParams();
-  const [title, setTitle] = useState('');
+  // const [title, setTitle] = useState('');
   const [editedTitle, setEditedTitle] = useState('');
   const [editedContent, setEditedContent] = useState('');
   const [userName, setUserName] = useState('');
   const [dept, setDept] = useState('');
-  const [content, setContent] = useState('');
+  // const [content, setContent] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
   const url = process.env.REACT_APP_BACKEND_URL;
+  const headers = {
+    'Content-Type': 'application/json',
+    'Authorization': sessionStorage.getItem('token')
+  };
 
-  useEffect(() => {
-    setUserName(localStorage.getItem('userName'));
-    setDept(localStorage.getItem('dept'));
-
+  useEffect(() => { 
     const fetchPost = async () => {
       try {
-        const response = await axios.get(`${url}board?idx=${idx}`);
+        const response = await axios.get(`${url}board?idx=${idx}`,{headers:headers});
         const post = response.data;
         setEditedTitle(post.title);
         setEditedContent(post.content);
+        setUserName(post.userName)
+        setDept(post.dept)
       } catch (error) {
         console.error('Error fetching the post:', error);
       }
@@ -40,16 +43,25 @@ export default function BoardEdit() {
       return;
     }
     try {
-     await axios.post(`${url}/board/edit?=${idx}`, 
-      {
-        title: editedTitle, content: editedContent }
+      await axios.post(`${url}board/edit?idx=${idx}`,
+        {
+          title: editedTitle, content: editedContent
+        }, { headers: headers }
       );
       alert("성공적으로 게시글을 수정하였습니다.");
       navigate("/board");
     } catch (error) {
-      setError("게시글 수정에 실패하였습니다.");
+      if(error.response.status===401){
+        console.error('Error deleting the post:', error);
+        alert('권한이 없는 사용자입니다.');
+        navigate('/board');
+      }else{
+        console.error('Error deleting the post:', error);
+        alert('알 수 없는 오류가 발생했습니다.');
+
+      }
     }
-    console.log({ title, userName, dept, content });
+    // console.log({ title, userName, dept, content });
     // 제출 후 게시판 목록 페이지로 이동
     navigate('/board');
   };
@@ -73,9 +85,8 @@ export default function BoardEdit() {
               required
             />
             <div className={styles.writeEtcContainer}>
-              <label htmlFor="dept">부서:{dept}</label>
-              <label htmlFor="userName">작성자:{userName}</label>
-              <label htmlFor="date">작성일:{new Date().toLocaleDateString()}</label>
+              <label htmlFor="dept">부서: {dept}</label>
+              <label htmlFor="userName">작성자: {userName}</label>
             </div>
           </div>
           <div>
@@ -87,7 +98,7 @@ export default function BoardEdit() {
               required
             />
           </div>
-          <div className={styles.buttonContainer}>
+          <div>
             <button type="submit" className={styles.submitButton} >확인</button>
             <button type="button" onClick={handleCancel} className={styles.cancelButton}>취소</button>
           </div>

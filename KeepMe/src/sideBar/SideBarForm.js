@@ -13,7 +13,7 @@ export default function SideBarForm() {
     navigate('/workerboard')
   }
   return (
-    <div className={styles.sidebar}>
+    <aside className={styles.sidebar}>
       <form>
         <div className={styles.formGroup}>
             <h1 className={styles.keepme} onClick={handleKeepMeClick}>Keep me</h1>
@@ -25,6 +25,6 @@ export default function SideBarForm() {
           <button className={styles.button2} onClick={handleWorkerClick}>작업자 관리</button>
         </div>
       </form>
-    </div>
+    </aside>
   )
 }

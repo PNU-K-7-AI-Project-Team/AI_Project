@@ -10,7 +10,7 @@
     left: 50%;
     transform: translate(-50%, -50%);
     background: #ECF2F4;
-
+    border-radius: 10px;box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.3);
 }
 
 .name{
@@ -30,14 +30,15 @@
 }
 
 .username{
+    margin-top: 10px;
     position: absolute;
-    width: 300px;
+    width: 200px;
     height: 50px;
     left: 75px;
     top: 135px;
-    
+    padding-left: 10px;
     background: #FFFFFF;
-    border-radius: 50px;
+    border-radius: 10px;
     border: none;
     font-family: 'Inter';
     font-style: normal;
@@ -48,17 +49,26 @@
     color: rgba(0, 0, 0, 0.6);
 }
 
+.gender{
+    position: absolute;
+    width: 300px;
+    height: 50px;
+    left: 290px;
+    top: 175px;
+    padding-left: 10px;
+}
+
 
 
 .userid{
     position: absolute;
-    width: 300px;
+    width: 240px;
     height: 50px;
     left: 75px;
     top: 217px;
-    
+    padding-left: 10px;
     background: #FFFFFF;
-    border-radius: 50px;
+    border-radius: 10px;
     border: none;
     font-family: 'Inter';
     font-style: normal;
@@ -70,29 +80,67 @@
 }
 .Idcheckbutton{
     position: absolute;
-    width: 140px;
-    height: 25px;
-    left: 235px;
-    top: 285px;
+    width: 50px;
+    height: 50px;
+    left: 325px;
+    top: 217px;
     color: rgba(255, 255, 255, 0.6); 
-    border-radius: 50px;
+    border-radius: 10px;
     border: none;
     background: #143A52;
+    margin-left: 10px;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 29px;
 
 }
 .Idcheckbutton:hover{
     color:white;
 }
-
+.region{
+    position: absolute;
+    width: 310px;
+    height: 50px;
+    left: 75px;
+    top: 290px;
+    padding-left: 10px;
+    border: none;
+    border-radius: 10px;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 24px;
+    color: rgba(0, 0, 0, 0.6);
+}
+.department{
+    position: absolute;
+    width: 310px;
+    height: 50px;
+    left: 75px;
+    top: 360px;
+    padding-left: 10px;
+    border: none;
+    border-radius: 10px;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 24px;
+    color: rgba(0, 0, 0, 0.6);
+}
 .password{
     position: absolute;
     width: 300px;
     height: 50px;
     left: 75px;
-    top: 330px;
+    top: 410px;
+    padding-left: 10px;
     border: none;
     background: #FFFFFF;
-    border-radius: 50px;
+    border-radius: 10px;
 
     font-family: 'Inter';
     font-style: normal;
@@ -109,16 +157,16 @@
     position: absolute;
     width: 140px;
     height: 50px;
-    left: 235px;
-    top: 412px;
-    
+    left: 237px;
+    top: 475px;
+    margin-left: 10px;
     background: #143A52;
-    border-radius: 50px;
+    border-radius: 10px;
     border: none;
     font-family: 'Inter';
     font-style: normal;
     font-weight: 400;
-    font-size: 24px;
+    font-size: 20px;
     line-height: 29px;
     /* identical to box height */
 
@@ -127,58 +175,5 @@
 .join:hover{
     color:white;
 }
-
-
-
-/* JoinT */
-
-position: absolute;
-width: 40px;
-height: 29px;
-left: 281px;
-top: 404px;
-
-
-
-
-
-/* UsernameT */
-
-position: absolute;
-width: 97px;
-height: 24px;
-left: 106px;
-top: 148px;
-
-
-
-
-
-/* useridT */
-
-position: absolute;
-width: 63px;
-height: 24px;
-left: 106px;
-top: 231px;
-
-
-
-
-
-/* PasswordT */
-
-position: absolute;
-width: 93px;
-height: 24px;
-left: 106px;
-top: 307px;
-
-
-
-
-
-/* join */
-
 
 

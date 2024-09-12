@@ -1,6 +1,6 @@
 .bg{
     /* Desktop - 1 */
-   
+    display: flex;
     position: fixed;
     overflow-y: auto;
     overflow-x: hidden;
@@ -10,4 +10,6 @@
     background: #ECF2F4
 
 }
-
+.LoginForm{
+    background: #ffffff;
+}

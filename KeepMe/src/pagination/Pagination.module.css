@@ -51,7 +51,10 @@
   cursor: pointer;
   background-color: #f9f9f9;
 }
-
+.paginationButton:hover {
+  background-color: #CDE3EB;
+  color: white;
+}
 .paginationButton:disabled {
   cursor: not-allowed;
   background-color: #eaeaea;

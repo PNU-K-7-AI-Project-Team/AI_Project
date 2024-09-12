@@ -18,5 +18,7 @@
     color: rgba(0, 0, 0, 0.7);
 }
 
-
+.bg:hover{
+    color: rgb(0, 0, 0);
+}
 

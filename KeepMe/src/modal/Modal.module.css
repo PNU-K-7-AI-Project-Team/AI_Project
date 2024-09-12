@@ -1,0 +1,33 @@
+/* Modal.module.css */
+.modalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+  }
+  
+  .modalContent {
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    width: 90vw; /* 화면 너비의 90% */
+    max-width: 300px; /* 최대 너비는 600px로 제한 */
+    min-width: 300px; /* 최소 너비를 300px로 제한 */
+    max-height: 80vh; /* 화면 높이의 80%로 제한 */
+    overflow-y: auto; /* 컨텐츠가 많을 경우 스크롤 */
+  }
+  
+  .closeButton {
+    margin-top: 10px;
+    padding: 5px 10px;
+    background-color: #f0f0f0;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+  }

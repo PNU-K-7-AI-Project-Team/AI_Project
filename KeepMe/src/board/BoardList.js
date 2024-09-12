@@ -1,45 +1,35 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
-import styles from './BoardList.module.css'
-import Pagination from '../pagination/Pagination'
-import axios from 'axios'; 
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import styles from './BoardList.module.css';
+import axios from 'axios';
+
 export default function BoardList() {
-  const [currentPage, setCurrentPage] = useState(1);
+  const navigate = useNavigate();
   const [dataBoard, setDataBoard] = useState([]);
-  const [postsPerPage] = useState(5); 
-  const [page, setPage] = useState({
-    size: 5,
-    number: 0,
-    totalElements: 0,
-    totalPages: 0,
-  })
+
   const url = process.env.REACT_APP_BACKEND_URL;
+
   useEffect(() => {
     const loadBoard = async () => {
       try {
-        const response = (await axios.get(`${url}boards`,{
+        const response = (await axios.get(`${url}boards`, {
           params: {
-            page: currentPage - 1,
-            size: postsPerPage,
+            size: 1000, // 한 번에 충분히 많은 게시물을 가져오기
           }
         })).data;
-        setDataBoard(response.content);
-        setPage({
-          size: response.page.size,
-            number: response.page.number,
-            totalElements: response.page.totalElements,
-            totalPages: response.page.totalPages,
-        })
+        setDataBoard(response.content); // 가져온 데이터를 상태에 저장
         console.log(response);
       } catch (error) {
         console.log('Error fetching posts:', error);
       }
     }
     loadBoard();
-  }, [currentPage, url, postsPerPage]);
+  }, [url]);
 
-  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+  const handleRowClick = (idx) => {
+    navigate(`/boarddetail/${idx}`);
+  };
+
   return (
     <div className={styles.bg}>
       <h3>공지사항</h3>
@@ -47,27 +37,15 @@ export default function BoardList() {
         <table className={styles.boardTable}>
           <tbody>
             {dataBoard.map((post) => (
-              <tr key={post.idx}>
+              <tr key={post.idx} onClick={() => handleRowClick(post.idx)}>
                 <td>{post.idx}</td>
-                <td>
-                  <Link to={`/boarddetail/${post.idx}`}>{post.title}</Link>
-                </td>
-                <td>{post.createDate}</td>
+                <td>{post.title}</td>
+                <td>{new Date(post.createDate).toLocaleDateString('ko-KR')}</td>
               </tr>
             ))}
           </tbody>
         </table>
-        <div className={styles.paginationContainer}>
-        <Pagination
-            postsPerPage={postsPerPage}
-            totalPosts={page.totalElements}
-            paginate={paginate}
-            currentPage={currentPage}
-            totalPages={page.totalPages}
-          />
-
-        </div>
       </div>
     </div>
-  )
+  );
 }

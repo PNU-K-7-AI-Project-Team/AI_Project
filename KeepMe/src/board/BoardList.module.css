@@ -17,23 +17,24 @@
 
     color: rgba(0, 0, 0, 0.7);
 }
-
+.bg:hover{
+    color: rgb(0, 0, 0);
+}
 .boardContainer {
-
-    position: absolute;
-    width: 482px;
-    height: 50px;
-    
-    background: #FFFFFF;
-    border-radius: 5px;
-
+  max-height: 150px; /* 스크롤바가 생길 수 있도록 최대 높이 설정 */
+  overflow-y: scroll; /* 세로 스크롤바 추가 */
+  border: none;
+  
+  margin-right: 20px;
 }
 .boardTable {
     width: 100%;
     table-layout: fixed;
    
   }
-  
+  .boardTable tr:hover {
+    background-color: #f5f5f5;
+}
 
   .boardTable td {
     border-bottom: 1px solid #ddd;
@@ -42,13 +43,13 @@
   }  
   .boardTable td:nth-child(1) {
     /* 번호 열 */
-    width: 20px;
+    width: 30px;
     text-align: center;
     border-right: 1px solid #ddd;
   }
   .boardTable td:nth-child(2) {
     /* 제목 열 */
-    
+    width: 300px;
     padding-left: 15px;
     border-right: 1px solid #ddd;
     text-align: left;
@@ -65,7 +66,9 @@
   }
   .paginationContainer {
     display: flex;
+    position: absolute;
     justify-content: center;
-    top: 100px;
+    top: 120px;
+    left: 100px;
   }
  

@@ -1,12 +1,14 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
 import styles from './BoardMain.module.css'
 import Pagination from '../pagination/Pagination'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 export default function BoardMain() {
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(()=>{
+    const savedPage = localStorage.getItem('currentBoardPage');
+    return savedPage ? parseInt(savedPage, 10) : 1;
+  });
   const [dataBoard, setDataBoard] = useState([]);
   const [postsPerPage] = useState(10);
   const [page, setPage] = useState({
@@ -45,21 +47,28 @@ export default function BoardMain() {
     };
     // 컴포넌트가 렌더링될 때와 currentPage 또는 url이 변경될 때마다 loadBoard 함수 호출
     loadBoard();
+    localStorage.setItem('currentBoardPage', currentPage.toString());
   }, [currentPage, url, postsPerPage]); // currentPage와 url이 변경될 때마다 effect 실행
 
   const handleWrite = () => {
     navigate('/boardwrite');
   }
-
+  const handleHome = () => {
+    navigate('/');
+  }
   // 페이지 변경 핸들러
-  const paginate = (pageNumber) => {setCurrentPage(pageNumber);}
+  const paginate = (pageNumber) => {setCurrentPage(pageNumber);
+    localStorage.setItem('currentBoardPage', pageNumber.toString());
+  }
 
   const dept = {
     HR: '인사',
     IT: '전산관리',
     QM: '품질관리',
   };
-
+  const handleRowClick = (idx) => {
+    navigate(`/boardDetail/${idx}`);
+  };
   return (
     <div className={styles.bg}>
       <h3 className={styles.text}>공지사항</h3>
@@ -76,17 +85,18 @@ export default function BoardMain() {
           </thead>
           <tbody>
             {dataBoard.map((post) => (
-              <tr key={post.idx}>
+              <tr key={post.idx} onClick={() => handleRowClick(post.idx)}>
                 <td>{post.idx}</td>
-                <td><Link to={`/boardDetail/${post.idx}`}>{post.title}</Link></td>
+                <td>{post.title}</td>
                 <td>{dept[post.dept]}</td> 
                 <td>{post.userName}</td>
-                <td>{post.createDate}</td>
+                <td className={styles.createDate}>{new Date(post.createDate).toLocaleDateString('ko-KR')}</td>
               </tr>
             ))}
           </tbody>
         </table>
         <button onClick={handleWrite} className={styles.writeButton}>작성</button>
+        <button onClick={handleHome} className={styles.homeButton}>메인</button>
          {/* 페이지네이션 컴포넌트 */}
          <div className={styles.paginationContainer}>
          <Pagination
@@ -99,7 +109,5 @@ export default function BoardMain() {
         </div>
       </div>
     </div>
-
-
   )
 }
