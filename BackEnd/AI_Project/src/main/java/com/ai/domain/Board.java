@@ -44,5 +44,6 @@ public class Board {
 	
 	@Enumerated(EnumType.STRING)
 	private Dept dept;
+	
 
 }

@@ -11,8 +11,10 @@ import org.springframework.web.socket.WebSocketSession;
 import com.ai.config.WebSocketConfig;
 import com.ai.domain.Role;
 import com.ai.domain.User;
-import com.ai.domain.UserVitalSign;
+
 import com.ai.dto.PushDTO;
+import com.ai.dto.UserVitalSignProjection;
+
 import com.ai.persistence.UserRepository;
 import com.ai.persistence.UserVitalSignRepository;
 
@@ -42,14 +44,13 @@ public class WebSocketService {
 					List<User> users = userRepo.findAll();
 					for (User user : users) {
 						String currentUserCode = user.getUserCode();
-						UserVitalSign nextVitalSign = vitalRepo.findFirstByNoGreaterThan(lastNo)
-                                .orElse(null);	
+						List<UserVitalSignProjection>nextVitalSign = vitalRepo.AllUserHeartbeat(lastNo);	
 						if (nextVitalSign != null) {
 							sendAndUpdate(session, nextVitalSign, currentUserCode);
 						}
 					}
 				} else if (role == Role.ROLE_USER) { // 사용자 권한
-					UserVitalSign nextVitalSign = vitalRepo.findHeartbeatUserCode(userCode, lastNo)
+					UserVitalSignProjection nextVitalSign = vitalRepo.UserHearbeat(userCode, lastNo)
 					                                       .orElse(null);
 					if (nextVitalSign != null) {
 						sendAndUpdate(session, nextVitalSign, userCode);
@@ -59,12 +60,22 @@ public class WebSocketService {
 		}
 	}
 	
-	private void sendAndUpdate(WebSocketSession session, UserVitalSign vitalSign, String userCode) {
-		PushDTO pushDto = PushDTO.builder()
-		                         .userCode(userCode)
-		                         .heartbeat(vitalSign.getHeartbeat())
-		                         .build();
-		wsConfig.sendPushMessage(pushDto);
-		lastNoMap.put(userCode, vitalSign.getNo());
+	// 단일 `UserVitalSignProjection` 처리 (오버로딩)
+	private void sendAndUpdate(WebSocketSession session, UserVitalSignProjection vitalSign, String userCode) {
+	    PushDTO pushDto = PushDTO.builder()
+	                             .userCode(userCode)
+	                             .heartbeat(vitalSign.getHeartbeat())
+	                             .build();
+	    wsConfig.sendPushMessage(pushDto);
+	    lastNoMap.put(userCode, vitalSign.getNo());
 	}
+	
+	// 다수의 `UserVitalSignProjection` 처리 (오버로딩)
+	private void sendAndUpdate(WebSocketSession session, List<UserVitalSignProjection> vitalSigns, String userCode) {
+	    for (UserVitalSignProjection vitalSign : vitalSigns) {
+	        sendAndUpdate(session, vitalSign, userCode); // 기존 단일 메서드 재사용
+	    }
+	}
+	
+	
 }

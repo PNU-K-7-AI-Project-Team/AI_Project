@@ -63,11 +63,11 @@ public class LoginService {
 	// 중복 아이디 체크
 	public ResponseEntity<?> checkId(User user) {
 		// ResponseEntity 요청에 대한 응답 객체
-		if (userRepo.findByUserCode(user.getUserCode()).isPresent()) { 
+		if (userRepo.findByUserId(user.getUserId()).isPresent()) { 
 			return ResponseEntity.status(HttpStatus.CONFLICT).body("중복된 ID");
 			// 응답 객체의 상태가 CONFLICT(충돌)상태로 body(본문)의 내용 "중복된 ID"를 화면에 출력하도록 반환
 		} else {
-			return ResponseEntity.ok("사용 가능한 ID");
+			return ResponseEntity.ok("사용 가능한 아이디");
 		}
 	}
 

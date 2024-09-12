@@ -41,6 +41,7 @@ public class SecurityConfig {
 				// hasRole: 해당 경로로 시작하는 모든 요청은 ADMIN 역할을 가진 사용자만 접근 가능
 				// 주의: hasRole, hasAnyRole은 ADMIN이면 ROLE_ADMIN으로 앞에 접두사 "ROLE_ADMIN"을 추가한다
 				// 그래서 DB에도 ROLE_"권한이름" 이런식으로 지정해야됨
+				.requestMatchers("/board/**").authenticated()
 				.anyRequest().permitAll() // 위 지정한 경로말고 모든 경로는 누구나 접근 가능
 				);
 		http.csrf(cf->cf.disable()); // CSRF 보호 비활성화
@@ -54,12 +55,8 @@ public class SecurityConfig {
 		http.sessionManagement(sm->sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 		// 세션이 응답할때까지만 유지되고 삭제됨(주로 JWT 토큰방식에서 사용)
 
-//		http.logout(logout->logout
-//				.invalidateHttpSession(true) // 세션을 유효하지않게함
-//				.deleteCookies("JSESSIONID") // JSESSIONID(세션아이디) 쿠키 삭제
-//				.logoutSuccessUrl("/")); // 로그아웃 성공시 리디렉션할 경로
-//		
 		http.cors(c->{});
+		
 		
 		// addFilterBefore: JWTAuthorFilter가 AuthorizationFilter보다 먼저 실행됨
 		http.addFilterBefore(new JWTAuthorFilter(userRepo), AuthorizationFilter.class);

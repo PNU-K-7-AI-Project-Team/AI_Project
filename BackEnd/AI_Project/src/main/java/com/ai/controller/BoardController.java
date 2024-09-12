@@ -60,8 +60,11 @@ public class BoardController {
     public ResponseEntity<?> writeBoard(@RequestBody Board board) {
     	try {
     		boardService.writeBoard(board);
-    	} catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("글쓰기 실패");
+    		
+    	} catch (Unauthorized e) {
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("권한이 없는 사용자입니다.");
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("알 수 없는 오류 발생");
 		}
     	return ResponseEntity.ok("글쓰기 성공");
     }

@@ -38,7 +38,10 @@
 //		User dd = userRepo.findByUserId("dd")
 //				.orElseThrow(()->new UsernameNotFoundException("User Not Found"));
 //		
-//		for (int i=1; i<=2; i++) {
+//		User ee = userRepo.findByUserId("ee")
+//				.orElseThrow(()->new UsernameNotFoundException("User Not Found"));
+//		
+//		for (int i=1; i<=20; i++) {
 //			boardRepo.save(Board.builder()
 //							.userCode(admin.getUserCode())
 //							.title("제목" + i)
@@ -47,52 +50,57 @@
 //							.userName(admin.getUserName())
 //							.dept(admin.getDept())
 //							.build());
+//			
+//			boardRepo.save(Board.builder()
+//					.userCode(aa.getUserCode())
+//					.title("제목" + i)
+//					.content("내용" + i)
+//					.userId(aa.getUserId())
+//					.userName(aa.getUserName())
+//					.dept(aa.getDept())
+//					.build());
+//			
+//			boardRepo.save(Board.builder()
+//					.userCode(bb.getUserCode())
+//					.title("제목" + i)
+//					.content("내용" + i)
+//					.userId(bb.getUserId())
+//					.userName(bb.getUserName())
+//					.dept(bb.getDept())
+//					.build());
+//			
+//			boardRepo.save(Board.builder()
+//					.userCode(cc.getUserCode())
+//					.title("제목" + i)
+//					.content("내용" + i)
+//					.userId(cc.getUserId())
+//					.userName(cc.getUserName())
+//					.dept(cc.getDept())
+//					.build());
+//			
+//			boardRepo.save(Board.builder()
+//					.userCode(dd.getUserCode())
+//					.title("제목" + i)
+//					.content("내용" + i)
+//					.userId(dd.getUserId())
+//					.userName(dd.getUserName())
+//					.dept(dd.getDept())
+//					.build());
+//			
+//			boardRepo.save(Board.builder()
+//					.userCode(ee.getUserCode())
+//					.title("제목" + i)
+//					.content("내용" + i)
+//					.userId(ee.getUserId())
+//					.userName(ee.getUserName())
+//					.dept(ee.getDept())
+//					.build());
+//			
 //		}
 //		
-//		for (int i=1; i<=2; i++) {
-//			boardRepo.save(Board.builder()
-//							.userCode(aa.getUserCode())
-//							.title("제목" + i)
-//							.content("내용" + i)
-//							.userId(aa.getUserId())
-//							.userName(aa.getUserName())
-//							.dept(aa.getDept())
-//							.build());
-//		}
-//		
-//		for (int i=1; i<=2; i++) {
-//			boardRepo.save(Board.builder()
-//							.userCode(bb.getUserCode())
-//							.title("제목" + i)
-//							.content("내용" + i)
-//							.userId(bb.getUserId())
-//							.userName(bb.getUserName())
-//							.dept(bb.getDept())
-//							.build());
-//		}
-//		
-//		for (int i=1; i<=2; i++) {
-//			boardRepo.save(Board.builder()
-//							.userCode(cc.getUserCode())
-//							.title("제목" + i)
-//							.content("내용" + i)
-//							.userId(cc.getUserId())
-//							.userName(cc.getUserName())
-//							.dept(cc.getDept())
-//							.build());
-//		}
-//		
-//		for (int i=1; i<=2; i++) {
-//			boardRepo.save(Board.builder()
-//							.userCode(dd.getUserCode())
-//							.title("제목" + i)
-//							.content("내용" + i)
-//							.userId(dd.getUserId())
-//							.userName(dd.getUserName())
-//							.dept(dd.getDept())
-//							.build());
-//		}
 //	}
+//	
+//
 //	
 //	
 //}
