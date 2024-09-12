@@ -41,7 +41,7 @@ public class SecurityConfig {
 				// hasRole: 해당 경로로 시작하는 모든 요청은 ADMIN 역할을 가진 사용자만 접근 가능
 				// 주의: hasRole, hasAnyRole은 ADMIN이면 ROLE_ADMIN으로 앞에 접두사 "ROLE_ADMIN"을 추가한다
 				// 그래서 DB에도 ROLE_"권한이름" 이런식으로 지정해야됨
-				.requestMatchers("/board/**").authenticated()
+				.requestMatchers("/board/detail/**").authenticated()
 				.anyRequest().permitAll() // 위 지정한 경로말고 모든 경로는 누구나 접근 가능
 				);
 		http.csrf(cf->cf.disable()); // CSRF 보호 비활성화
