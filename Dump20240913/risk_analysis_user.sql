@@ -1,0 +1,62 @@
+-- MySQL dump 10.13  Distrib 8.0.38, for Win64 (x86_64)
+--
+-- Host: 127.0.0.1    Database: risk_analysis
+-- ------------------------------------------------------
+-- Server version	8.0.39
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!50503 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `user`
+--
+
+DROP TABLE IF EXISTS `user`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `user` (
+  `user_code` varchar(8) NOT NULL,
+  `user_id` varchar(45) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `role` enum('ROLE_ADMIN','ROLE_USER') NOT NULL,
+  `user_name` varchar(45) NOT NULL,
+  `dept` enum('IT','HR','QM') DEFAULT NULL,
+  `position` enum('JUNIOR','SENIOR','MANAGER','DIRECTOR') DEFAULT NULL,
+  `region` enum('HQ','BOS') DEFAULT NULL,
+  `date_of_birth` date DEFAULT NULL,
+  `gender` enum('M','F') DEFAULT NULL,
+  `create_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`user_code`),
+  UNIQUE KEY `user_id_UNIQUE` (`user_id`),
+  UNIQUE KEY `user_name_UNIQUE` (`user_name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `user`
+--
+
+LOCK TABLES `user` WRITE;
+/*!40000 ALTER TABLE `user` DISABLE KEYS */;
+INSERT INTO `user` VALUES ('-1','manager','$2a$10$eDTsP9ELBZOdbb6qWu8eUOmLFIBxiOVIZ/ruHEm9vhD7T2G49hUMy','ROLE_ADMIN','관리자2','IT','MANAGER','HQ','2024-09-13','M','2024-09-13 16:54:58'),('0','admin','$2a$10$nQWJtgkUpkuJz01raqKKzuTPB43qfSkB1LiInQM3RE.fuvctsxcyG','ROLE_ADMIN','관리자1','IT','MANAGER','HQ','2024-09-13','M','2024-09-13 16:54:58'),('1','u1','$2a$10$4NCC.Xib4DZBtURMZYKOy.DrT5YMN4zf31DHOB3KFzJjpDWPp6iFC','ROLE_USER','정승현','IT','JUNIOR','HQ','2024-09-13','M','2024-09-13 16:54:58'),('12','u12','$2a$10$TiTswKkwah7NUs/VPN5uu.LL9p58JUdHkI5JEndsMrPJeIWQXolcy','ROLE_USER','이승우','IT','JUNIOR','HQ','2024-09-13','M','2024-09-13 16:54:58'),('13','u13','$2a$10$dTlNW8sdGUQ/lP0yzfEU7.C9hkvlsaEZQDX3E59zFOIr326u9yyuy','ROLE_USER','김진수','IT','JUNIOR','HQ','2024-09-13','M','2024-09-13 16:54:58'),('14','u14','$2a$10$e6.bpprE22zS3HAVHspY9uUFtpmH2cjVvQpZSNBbFcFs4gEDqmIC.','ROLE_USER','박성배','IT','JUNIOR','HQ','2024-09-13','M','2024-09-13 16:54:58'),('15','u15','$2a$10$yKDQI1kpZJVQUXEpBM6A9.lbGGUMNO8VtNKvBVje/4AeP8dhF.mTG','ROLE_USER','김보경','IT','JUNIOR','HQ','2024-09-13','M','2024-09-13 16:54:58'),('16','u16','$2a$10$Ji4Y.N8tlLXkzTpIQ9LMGu4XK9BbsDFvegwxaQkniUC4tZcFIdtXG','ROLE_USER','기성용','IT','JUNIOR','HQ','2024-09-13','M','2024-09-13 16:54:58'),('17','u17','$2a$10$3/Ixb2SOn4j/GgI218LEIOX4uGAC1Sh17CHvkc1ZEajs2NG.I3BrO','ROLE_USER','김신욱','IT','JUNIOR','HQ','2024-09-13','M','2024-09-13 16:54:58'),('18','u18','$2a$10$MphFm2uOjQHe1Gp.VSlQnetIlELHd6wXGZipeGgTZBsvpS7vSVdsa','ROLE_USER','구자철','IT','JUNIOR','HQ','2024-09-13','M','2024-09-13 16:54:58'),('19','u19','$2a$10$PuLbsCQk.ALHkRzenyh91Oygenm8ShJB2Bg5QVaC48vooIJNASOPy','ROLE_USER','손흥민','IT','JUNIOR','HQ','2024-09-13','M','2024-09-13 16:54:59'),('20','u20','$2a$10$NYnijAqI6ha1C8spYKWgseoeW6tD.ex68DWvoweA8dgHl6uPSfhIm','ROLE_USER','손준호','IT','JUNIOR','HQ','2024-09-13','M','2024-09-13 16:54:59'),('21','u21','$2a$10$A7PtXxOJ0ZkivihjHKomC.1IUdSSE0eJwNkYQyUFtqs5nydeHwt1m','ROLE_USER','황의조','IT','JUNIOR','HQ','2024-09-13','M','2024-09-13 16:54:59'),('22','u22','$2a$10$FjBAtYEwxqRiaxwIhGjFEeLkl4j450pRW1fk8FE3WFuVoIcAtsiqO','ROLE_USER','이광연','IT','JUNIOR','HQ','2024-09-13','M','2024-09-13 16:54:59'),('23','u23','$2a$10$ok1mwKcT/GShuYBX6G7tbeqI1RtoMP0/wF1RgXZqlm1Gs7wMbPmBG','ROLE_USER','박지수','IT','JUNIOR','HQ','2024-09-13','M','2024-09-13 16:54:59'),('24','u24','$2a$10$3yKnrz7REDoBGnW7e9cwau314lzL9wIQSLjeoQeM1eS.ea9beBScK','ROLE_USER','이동국','IT','JUNIOR','HQ','2024-09-13','M','2024-09-13 16:54:59'),('25','u25','$2a$10$qZrD64jtbHjqjFLCMHuk3eEk6EjY1kCzn8vgnFmFy6WUrpcK1CZYO','ROLE_USER','이상호','IT','JUNIOR','HQ','2024-09-13','M','2024-09-13 16:54:59'),('26','u26','$2a$10$456vE4FKytJeSR8L4awgU.pSpK79.pvOUTfTV4Om2wAoN60Fd/Hcm','ROLE_USER','김영빈','IT','JUNIOR','HQ','2024-09-13','M','2024-09-13 16:54:59'),('27','u27','$2a$10$6FEbAu5pQqStA4j5U1W6u.dzkgNEg1AS/YyTk5HazlZ2fZWUhrBwO','ROLE_USER','황인범','IT','JUNIOR','HQ','2024-09-13','M','2024-09-13 16:54:59'),('28','u28','$2a$10$OFla4P45cEXbpSojjF1yYuc0avJECQVCK3abv6c.WazjSF5cfQX8W','ROLE_USER','정재용','IT','JUNIOR','HQ','2024-09-13','M','2024-09-13 16:54:59'),('29','u29','$2a$10$rxqczyfU9/vybxPMTKo1vO95iriYpho0yTHd9XFqXqAX31evNfVpO','ROLE_USER','김민재','IT','JUNIOR','HQ','2024-09-13','M','2024-09-13 16:54:59'),('3','u3','$2a$10$tdY9REtwL8A2FJ017ryUte79ITFg16XV6VPla2moJ0DjSd./T0iRC','ROLE_USER','정우영','IT','JUNIOR','HQ','2024-09-13','M','2024-09-13 16:54:58'),('30','u30','$2a$10$/h0VxoedieUjGEW/9zkt3OGRjvrjp6zry6dkg5s11e1JpcSW7IIpi','ROLE_USER','이동현','IT','JUNIOR','HQ','2024-09-13','M','2024-09-13 16:54:59'),('31','u31','$2a$10$.L2mKfR8lQNjdu6KRP0ST.j3NbtSBXocKUNU4iXPM.QHCc6gPw0T2','ROLE_USER','황희찬','IT','JUNIOR','HQ','2024-09-13','M','2024-09-13 16:54:59'),('32','u32','$2a$10$e7225Ro17yFm/xOYBKIpuuWfKrE.fhkU98GbJfP1aaC7r8VcJsCSm','ROLE_USER','이호준','IT','JUNIOR','HQ','2024-09-13','M','2024-09-13 16:54:59'),('33','u33','$2a$10$qqndGlMhnG73sx/mlADi9e8k.2zuaKCbCUQWvFdic4EuIz4wiDJKO','ROLE_USER','이강인','IT','JUNIOR','HQ','2024-09-13','M','2024-09-13 16:55:00'),('34','u34','$2a$10$cYu4zpMfquQ3p4dehlmzPucd0cooPPWZMOg2Pdn0a8NHk0JEjIhh.','ROLE_USER','장현수','IT','JUNIOR','HQ','2024-09-13','M','2024-09-13 16:55:00'),('35','u35','$2a$10$Hswt56rkNZ1VMQ91DwcFzuT76UgVRzWjVNgibOPKnhW4QVHSq1x8C','ROLE_USER','이명주','IT','JUNIOR','HQ','2024-09-13','M','2024-09-13 16:55:00'),('36','u36','$2a$10$sCIV2oABkyJfqNRJGtVgUe8ohdKBiBRh1esCtCjC36f.LYwh8eaPu','ROLE_USER','조현우','IT','JUNIOR','HQ','2024-09-13','M','2024-09-13 16:55:00'),('37','u37','$2a$10$qrXg7QXDka80bUCxKrwAdukFwMPfmNhbIYCCBUZKv3v3aMWjVx8WK','ROLE_USER','이용','IT','JUNIOR','HQ','2024-09-13','M','2024-09-13 16:55:00'),('38','u38','$2a$10$faDzNbt/S65pRq3uXBsXc.t0Ud585vkI6LmQEPgy6rhaDCibJDJDO','ROLE_USER','김영권','IT','JUNIOR','HQ','2024-09-13','M','2024-09-13 16:55:00'),('39','u39','$2a$10$Y0d/TFSu27Veh22y.YZJfuIVDLUzErT5xcKADxYseinF3NH01qi.W','ROLE_USER','이청용','IT','JUNIOR','HQ','2024-09-13','M','2024-09-13 16:55:00'),('40','u40','$2a$10$9/6yIxpudytsDls0wTcv..j7zdisxm2YKoET20PvboiOFFmx9yd8O','ROLE_USER','이기제','IT','JUNIOR','HQ','2024-09-13','M','2024-09-13 16:55:00'),('41','u41','$2a$10$PzUZXStILe2pW7xi5pFQ8.8T63OmJn/dvo1EBobD.owqnffQpJR.m','ROLE_USER','윤석영','IT','JUNIOR','HQ','2024-09-13','M','2024-09-13 16:55:00'),('42','u42','$2a$10$OqHXZyepnH3KaTzD7K93HOBX1xgjrUx1OrG6gh71l96GRCjcMWZp2','ROLE_USER','김문환','IT','JUNIOR','HQ','2024-09-13','M','2024-09-13 16:55:00'),('43','u43','$2a$10$d.JR7BB.XOK7DmNLxpHlWOKo59klTdVk/Tk/JaPHdfGejxI71/vhO','ROLE_USER','이호익','IT','JUNIOR','HQ','2024-09-13','M','2024-09-13 16:55:00'),('44','u44','$2a$10$yNiEv.5u07yEKdodIPSqNe0DE/0h.gUw900JllxQFKpcgzOSi2m4C','ROLE_USER','김태환','IT','JUNIOR','HQ','2024-09-13','M','2024-09-13 16:55:00'),('45','u45','$2a$10$ZhH5lCLiTp4nqSxw3nhywOQctd1uKHf4n.tPUANo35bskybuftSwq','ROLE_USER','박주호','IT','JUNIOR','HQ','2024-09-13','M','2024-09-13 16:55:00'),('46','u46','$2a$10$FaG3VkFRQnTsWDxhvPomIO3I3w5Vr08C0eFML3sxbsQjbkfCKjOoW','ROLE_USER','이기영','IT','JUNIOR','HQ','2024-09-13','M','2024-09-13 16:55:00'),('47','u47','$2a$10$UjE3niYBtm8Eogi3cSzveulIihn07WYF7tV.D7zLP00byE864Noam','ROLE_USER','김호남','IT','JUNIOR','HQ','2024-09-13','M','2024-09-13 16:55:01'),('48','u48','$2a$10$B1j5RoWembQGiXBMJrL8Zuqtv3XMtgRTaQvUttKQ7IoDuehM/O0LO','ROLE_USER','황재균','IT','JUNIOR','HQ','2024-09-13','M','2024-09-13 16:55:01'),('49','u49','$2a$10$O.H.wzUdBBpQWDe3AHhWmONMO0kmsPj49GoH7wFU.6/EqTqVi92Qi','ROLE_USER','김지현','IT','JUNIOR','HQ','2024-09-13','M','2024-09-13 16:55:01'),('50','u50','$2a$10$.WUkLNhV3slmIojMfjrN2eF8yCG.ljKcVdz0yPT7974F0BygoXW7C','ROLE_USER','문선민','IT','JUNIOR','HQ','2024-09-13','M','2024-09-13 16:55:01'),('51','u51','$2a$10$AzWwNWOP1WMf37453TEbVufVVjFw1LLp7u1wkCh12mZusYMumydxe','ROLE_USER','이재성','IT','JUNIOR','HQ','2024-09-13','M','2024-09-13 16:55:01');
+/*!40000 ALTER TABLE `user` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2024-09-13 17:58:23
