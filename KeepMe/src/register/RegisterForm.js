@@ -25,6 +25,10 @@ export default function RegisterForm() {
                 userId: userId
             });
             console.log(response.data);
+            if(userId === ''){
+                alert('아이디를 입력해주세요.');
+                return;
+            }
             if (response.data === '사용 가능한 아이디') {//백엔드에서 true, false받아옴
                 alert('사용 가능한 아이디입니다.');
                 setIsIdAvailable(true);
@@ -42,13 +46,13 @@ export default function RegisterForm() {
             }
         }
     }
-    const gender ={
+    const genderOption ={
         M: '남',
         F: '여',
     }
     const handleChange = (event) => {
-        const { name } = event.target;
-        setSelectedGender(name); // 선택된 성별로 상태를 업데이트
+        const { value } = event.target;
+        setSelectedGender(value); // 선택된 성별로 상태를 업데이트
     };
 
     const region ={
@@ -61,13 +65,7 @@ export default function RegisterForm() {
         IT: '개발부',
         QM: '품질관리부'
     }
-    const formData = new FormData();
-formData.append('userName', userName);
-formData.append('userId', userId);
-formData.append('dept', department);
-formData.append('password', password);
-formData.append('region', Region);
-formData.append('gender', selectedGender);
+
     const register = async (e) => {
         e.preventDefault();//기본 동작(페이지 새로고침)을 막음
         console.log({
@@ -142,26 +140,34 @@ formData.append('gender', selectedGender);
                 <input
                     type="checkbox"
                     name='남'
-                    checked={selectedGender === '남'}
+                    value="M"
+                    checked={selectedGender === 'M'}
                     onChange={handleChange}
                 />
-                {gender.M}
+                남
             </label>
             <label>
                 <input
                     type="checkbox"
                     name='여'
-                    checked={selectedGender === '여'}
+                    value="F"
+                    checked={selectedGender === 'F'}
                     onChange={handleChange}
                 />
-                {gender.F}
+                여
             </label>
         </div>
                 <div>
                     <input type='userid' className={styles.userid} placeholder='아이디' value={userId} onChange={(e) => { setUserId(e.target.value); }} />
-                    <button type="button" className={styles.Idcheckbutton} onClick={checkUserid}>
-                        중복확인
-                    </button>
+                        <button type="button" className={styles.Idcheckbutton} onClick={checkUserid}>
+                            {isIdChecked ?(
+                                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="M268-240 42-466l57-56 170 170 56 56-57 56Zm226 0L268-466l56-57 170 170 368-368 56 57-424 424Zm0-226-57-56 198-198 57 56-198 198Z"/></svg>
+                            ) : (
+                                <svg xmlns="http://www.w3.org/2000/svg" height="26px" viewBox="0 -960 960 960" width="26px" fill="#e8eaed"><path d="M382-240 154-468l57-57 171 171 367-367 57 57-424 424Z"/></svg>
+                            )}
+                    
+                        
+                        </button>
                 </div>
                 <div>
                     <select className={styles.region} value={Region} onChange={(e) => setRegion(e.target.value)}>

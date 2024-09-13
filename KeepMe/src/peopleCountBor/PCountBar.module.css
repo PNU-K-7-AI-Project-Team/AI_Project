@@ -1,14 +1,31 @@
-.all{
+.container{
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    flex-grow: 1;
+    align-items: center;
+    justify-content: space-around;
     position: absolute;
-    width: 350px;
-    height: 80px;
-    left: 270px;
-    top: 80px;
-    margin-left: 40px;
-    margin: 20px;
+    width: 19vw;
+    height: 8.5vh;
+    z-index: 600;
+}
+.all{
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    flex-grow: 1;
+    align-items: center;
+    justify-content: space-around;
+    position: absolute;
+    width: 19vw;
+    height: 8.5vh;
+    left: 15vw;
+    top: 5vw;
+    
     background: #FFFFFF;
     border-radius: 5px;
-    padding-left: 20px;
+    
     font-style: normal;
     font-weight: 400;
     font-size: 14px;
@@ -21,27 +38,28 @@
     
     color: rgb(0, 0, 0);
 }
-.Allbg{
-    position: relative;
-    left: 50px;
-    top: 80px;
-    color: black;
-}
+
 
 .today{
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    flex-grow: 1;
+    align-items: center;
+    justify-content: space-around;
     position: absolute;
-    width: 350px;
-    height: 80px;
-    left: 663px;
-    top: 80px;
-    margin: 20px;
+    width: 19vw;
+    height: 8.5vh;
+    left: 35vw;
+    top: 5vw;
+    
     background: #FFFFFF;
     border-radius: 5px;
-    padding-left: 20px;
+    
     font-style: normal;
     font-weight: 400;
     font-size: 14px;
-    line-height: 19px;
+   
     /* identical to box height */
     
     color: rgba(0, 0, 0, 0.7);
@@ -50,19 +68,25 @@
     color: rgb(0, 0, 0);
 }
 .good{
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    flex-grow: 1;
+    align-items: center;
+    justify-content: space-around;
     position: absolute;
-    width: 350px;
-    height: 80px;
-    left: 1056px;
-    top: 80px;
-    margin: 20px;
+    width: 19vw;
+    height: 8.5vh;
+    left: 55vw;
+    top: 5vw;
+    
     background: #FFFFFF;
     border-radius: 5px;
-    padding-left: 20px;
+    
     font-style: normal;
     font-weight: 400;
     font-size: 14px;
-    line-height: 19px;
+   
     /* identical to box height */
     
     color: rgba(0, 0, 0, 0.7);
@@ -71,12 +95,18 @@
     color: rgb(0, 0, 0);
 }
 .bad{
+    display: flex;
+    flex-wrap: wrap-reverse;
+    flex-direction: column;
+    flex-grow: 1;
+    align-items: center;
+    justify-content: space-around;
     position: absolute;
-    width: 350px;
-    height: 80px;
-    left: 1449px;
-    top: 80px;
-    margin: 20px;
+    width: 19vw;
+    height: 8.5vh;
+    left: 75vw;
+    top: 5vw;
+    
     background: rgba(247, 0, 0, 0.75);
     border-radius: 5px;
     padding-left: 20px;

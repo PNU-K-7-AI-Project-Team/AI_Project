@@ -1,33 +1,35 @@
-/* SideBarForm.module.css */
-
+/* 기본 사이드바 스타일 */
 .sidebar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   position: fixed;
   width: 220px;
-  height: 1024px;
-  left: 0px;
-  top: 0px;
+  height: 100vh;
+  left: 0;
+  top: 0;
   z-index: 900;
   background: #143A52;
+  transition: transform 0.3s ease;  /* 슬라이드 애니메이션 */
 }
-
-.formGroup {
-  margin-bottom: 15px;
-}
-
-
-.keepme {
-/* Keep me */
-position: fixed;
-width: 146px;
-height: 43px;
-left: 35px;
-top: 5px;
-margin-top: 2px;
-font-family: 'Jura', sans-serif;
-font-style: normal;
-font-weight: 100;
-font-size: 36px;
-line-height: 43px;
+.keepme{
+  
+  
+  flex-grow: 1;
+  align-items: center;
+  justify-content: space-around;
+  position: absolute;
+  margin: 0px;
+  width: 20vw;
+  height: 10vh;
+  left:35px;
+  top: 0px;
+  font-family: 'Jura', sans-serif;
+  font-style: normal;
+  font-weight: 100;
+  font-size: 36px;
+  
 /* identical to box height */
 
 color: #ffffffd0;
@@ -35,57 +37,84 @@ color: #ffffffd0;
 .keepme:hover{
   color: white;
 }
-
-.button1 {
+.button1{
   position: absolute;
-  width: 150px;
-  height: 30px;
+  width: 4vw;
+  height: 3vh;
+  
+  left: 35px;
   top: 400px;
+  background-color: #143A52;
+  color: rgba(255, 255, 255, 0.63);
+  border: none;
+  border-radius: 5px;
   
-  padding-left: 6px;
-  background: #143A52;
-  border-radius: 50px;
-  border : none;
-  font-style: normal;
-  font-weight: 400;
   font-size: 15px;
-  
-  color: rgba(255, 255, 255, 0.6);
-  /* identical to box height */
+  z-index: 1000;  /* 사이드바 위에 표시되도록 */
+  cursor: pointer;
 }
-
-.button1:hover {
+.button1:hover{
   color: white;
 }
-
-.button2 {
+.button2{
   position: absolute;
-  width: 150px;
-  height: 30px;
+  width: 5vw;
+  height: 3vh;
+  
+  left: 35px;
   top: 450px;
+  background-color: #143A52;
+  color: rgba(255, 255, 255, 0.63);
+  border: none;
+  border-radius: 5px;
   
-  padding-left: 23px;
-  background: #143A52;
-  border-radius: 50px;
-  border : none;
-  font-style: normal;
-  font-weight: 400;
   font-size: 15px;
-  
-  color: rgba(255, 255, 255, 0.6);
-  /* identical to box height */
-}
-
-.button2:hover {
+  z-index: 1000;  /* 사이드바 위에 표시되도록 */
+  cursor: pointer;
+} 
+.button2:hover{
   color: white;
 }
 
+/* 사이드바 숨김 상태 */
+.hideSidebar {
+  transform: translateX(-100%);  /* 사이드바를 왼쪽으로 숨김 */
+}
 
+/* 사이드바 보여지는 상태 */
+.showSidebar {
+  transform: translateX(0);  /* 사이드바가 보이도록 설정 */
+}
 
+/* 사이드바 토글 버튼 스타일 */
+.toggleButton {
+  position: fixed;
+  top: 20px;
+  left: 10px;
+  background-color: #143A52;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 15px;
+  font-size: 16px;
+  z-index: 1000;  /* 사이드바 위에 표시되도록 */
+  cursor: pointer;
+}
 
+/* 작은 화면에서 사이드바 숨기기 (미디어 쿼리) */
+@media (max-width: 768px) {
+  .sidebar {
+    transform: translateX(-100%);  /* 기본적으로 사이드바를 숨김 */
+  }
 
+  .toggleButton {
+    display: block;  /* 작은 화면에서 토글 버튼 보이기 */
+  }
+}
 
-
-
-
-
+/* 큰 화면에서는 항상 사이드바 보이기 */
+@media (min-width: 769px) {
+  .toggleButton {
+    display: none;  /* 큰 화면에서는 토글 버튼 숨기기 */
+  }
+}

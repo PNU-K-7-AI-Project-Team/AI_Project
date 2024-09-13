@@ -1,18 +1,23 @@
 .bg {
-
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    flex-grow: 1;
+    align-items: center;
+    justify-content: center;
     position: absolute;
-    width: 482px;
-    height: 230px;
-    left: 1317px;
-    top: 750px;
-    margin: 20px;
+    width: 26vw;
+    height: 25vh;
+    left: 69vw;
+    top: 41vw;
+    
     background: #ffffff;
     border-radius: 5px;
-    padding-left: 20px;
+    
     font-style: normal;
     font-weight: 400;
     font-size: 14px;
-    line-height: 19px;
+    z-index: 600;
     /* identical to box height */
 
     color: rgba(0, 0, 0, 0.7);
@@ -21,6 +26,10 @@
     color: rgb(0, 0, 0);
 }
 .boardContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   max-height: 150px; /* 스크롤바가 생길 수 있도록 최대 높이 설정 */
   overflow-y: scroll; /* 세로 스크롤바 추가 */
   border: none;
@@ -28,6 +37,10 @@
   margin-right: 20px;
 }
 .boardTable {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
     width: 100%;
     table-layout: fixed;
    
@@ -37,6 +50,10 @@
 }
 
   .boardTable td {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     border-bottom: 1px solid #ddd;
     font-size: 12px;
     
@@ -64,11 +81,5 @@
 .boardTable td:last-child {
     border-right: none;
   }
-  .paginationContainer {
-    display: flex;
-    position: absolute;
-    justify-content: center;
-    top: 120px;
-    left: 100px;
-  }
+
  

@@ -8,8 +8,8 @@
     justify-items: center;
     position: fixed;
     width: 450px;
-    height: 550px;
-    top : 50%;
+    height: 450px;
+    top : 45%;
     left: 50%;
     transform: translate(-50%, -50%);
     background: #ECF2F4;

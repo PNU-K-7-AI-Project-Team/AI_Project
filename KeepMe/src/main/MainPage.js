@@ -14,22 +14,24 @@ export default function MainPage() {
   // 페이지 변경 핸들러
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
   return (
-    <div className={styles.bg}>
+    <div>
         <h3 className={styles.text}>전체 현장 관리</h3>
-        <div>
+        <div className={styles.fourcontainer}>
           <PCountBar/>
         </div>
-        <div>
+        <div className={styles.mapcontainer}>
           <NaverMap/>
         </div>
-        <div>
-          <UserGraph/>
-        </div>
-        <div>
-          <DangerList/>
-        </div>
-        <div>
-          <BoardList />
+        <div className={styles.threecontainer}>
+          <div>
+            <UserGraph/>
+          </div>
+          <div>
+            <DangerList/>
+          </div>
+          <div>
+            <BoardList />
+          </div>
         </div>
     </div>
   )

@@ -1,21 +1,30 @@
 /* Rectangle 4 */
 .headerbar{
     display: flex;
+    flex-grow: 1;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
     position: absolute;
-    width: 100%;
-    height: 40px;
-    left: 220px;
-    top: 0px;
-    
+    width: 100vw;
+    height: 4vh;
+    top: 0;
     background: #ffffff;
 }
 
 .logout{
+    display: flex;
+    flex-wrap: wrap;
+    flex-grow: 1;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     position: absolute;
-    width: 100px;
-    height: 30px;
-    left: 1540px;
-    top: 5px;
+    width: 5vw;
+    height: 2.5vh;
+    left: 90vw;
+    top: 0.5vh;
     background: #ffffff;
     border: none;
     cursor: pointer;
@@ -27,11 +36,17 @@
     color: #000000;
 }
 .mypage{
+    display: flex;
+    flex-wrap: wrap;
+    flex-grow: 1;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     position: absolute;
-    width: 100px;
-    height: 30px;
-    left: 1450px;
-    top: 5px;
+    width: 5vw;
+    height: 2.5vh;
+    left: 85vw;
+    top: 0.5vh;
     background: #ffffff;
     color: #0000007c;
     border: none;

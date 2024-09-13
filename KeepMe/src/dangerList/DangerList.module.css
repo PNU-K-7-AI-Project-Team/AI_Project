@@ -1,19 +1,32 @@
 /* 위험 작업자 리스트 */
+.container{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: flex-start;
+    
+    
+}
 .bg{
-
+    
+    flex-wrap: wrap;
+    flex-direction: column;
+    
+    justify-content: space-between;
+    width: 26vw;
+    height: 25vh;
     position: absolute;
-    width: 482px;
-    height: 230px;
-    left: 792px;
-    top: 750px;
-    margin: 20px;
+    left: 42vw;
+    top: 41vw;
+    box-sizing: border-box;
     background: #ffffff;
     border-radius: 5px;
-    padding-left: 20px;
+    z-index: 600;
     font-style: normal;
     font-weight: 400;
     font-size: 14px;
     color: rgba(0, 0, 0, 0.7);
+    
 }
 .bg:hover{
     color: rgb(0, 0, 0);

@@ -1,6 +1,11 @@
 
 /* 전체 현장 관리 */
 .text{
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     position: absolute;
     width: 120px;
     height: 19px;
@@ -17,7 +22,24 @@
     color: #000000;
 
 }
-
-
+.fourcontainer{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    
+}
+.mapcontainer{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+.threecontainer{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
 
 

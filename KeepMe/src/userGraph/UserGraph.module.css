@@ -1,14 +1,19 @@
 .bg{
-
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    flex-grow: 1;
+    align-items: center;
+    justify-content: space-around;
     position: absolute;
-    width: 482px;
-    height: 230px;
-    left: 267px;
-    top: 750px;
-    margin: 20px;
+    width: 26vw;
+    height: 25vh;
+    left: 15vw;
+    top: 41vw;
+    z-index: 600;
     background: #ffffff;
     border-radius: 5px;
-    padding-left: 20px; 
+    
     font-style: normal;
     font-weight: 400;
     font-size: 14px;
