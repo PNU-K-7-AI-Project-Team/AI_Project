@@ -14,6 +14,7 @@ import BoardWrite from './board/BoardWrite';
 import Logout from './logout/Logout';
 import BoardEdit from './board/BoardEdit';
 import MyPage from './myPage/Mypage';
+import BoardList from './board/BoardList';
 function Layout() {
   return (
     <div className={styles.bg}>
@@ -85,16 +86,17 @@ function App() {
       <Router>
         <Routes>
           <Route path="/login" element={<LoginForm setAuth={setAuth} />} className={styles.LoginForm} />
-          <Route path="/register" element={<RegisterForm />} />
+          <Route path="/signup" element={<RegisterForm />} />
           <Route path="/" element={<Layout />}>
             <Route index element={<MainPage />} />
-            <Route path="board" element={<BoardMain />} />
-            <Route path="workerboard" element={<WorkerBoard />} />
-            <Route path="mypage" element={<MyPage />} />
-            <Route path="boarddetail/:idx" element={<BoardDetail />} />
-            <Route path="boardwrite" element={<BoardWrite />} />
-            <Route path="board/edit/:idx" element={<BoardEdit/>} />
-            <Route path="logout" element={<Logout onLogout={handleLogout} />} />
+            <Route path="/boards" element={<BoardMain />} />
+            <Route path="/workerboard" element={<WorkerBoard />} />
+            <Route path="/mypage" element={<MyPage />} />
+            <Route path="/board" element={<BoardDetail />} />
+            <Route path="/board/write" element={<BoardWrite />} />
+            <Route path="/board/edit" element={<BoardEdit/>} />
+            <Route path="/logout" element={<Logout onLogout={handleLogout} />} />
+            <Route path="/boardlist" element={<BoardList />} />
           </Route>
         </Routes>
       </Router>

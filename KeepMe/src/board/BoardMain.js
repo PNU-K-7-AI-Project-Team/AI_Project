@@ -30,7 +30,8 @@ export default function BoardMain() {
           params: {
             page: currentPage - 1,
             size: postsPerPage,
-          }
+          },
+          headers: {'Authorization': sessionStorage.getItem('token')}
         })).data;
         setDataBoard(response.content);
         setPage({
@@ -51,7 +52,7 @@ export default function BoardMain() {
   }, [currentPage, url, postsPerPage]); // currentPage와 url이 변경될 때마다 effect 실행
 
   const handleWrite = () => {
-    navigate('/boardwrite');
+    navigate('/board/write');
   }
   const handleHome = () => {
     navigate('/');
@@ -67,7 +68,7 @@ export default function BoardMain() {
     QM: '품질관리',
   };
   const handleRowClick = (idx) => {
-    navigate(`/boardDetail/${idx}`);
+    navigate(`/board?idx=${idx}`);
   };
   return (
     <div className={styles.bg}>

@@ -1,10 +1,9 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useSearchParams, useLocation } from 'react-router-dom';
 import styles from './BoardDetail.module.css';
 import axios from 'axios';
 export default function BoardDetail() {
-    const { idx } = useParams();
     const navigate = useNavigate();
     const [post, setPost] = useState(null);
     const url = process.env.REACT_APP_BACKEND_URL;
@@ -12,16 +11,19 @@ export default function BoardDetail() {
         'Content-Type': 'application/json',
         'Authorization': sessionStorage.getItem('token')
       };
-
+      const location = useLocation();
+      const query = new URLSearchParams(location.search);
+      const idx = query.get('idx');
 
     useEffect(() => {
         const fetchPost = async () => {
           try {
-            const response = await axios.get(`${url}board?idx=${idx}`);
+            const response = await axios.get(`${url}board?idx=${idx}`,{headers : headers});
             setPost(response.data);     
             console.log(response.data);
           } catch (error) {
             console.error('Error fetching the post:', error);
+            navigate('/boards');
             
           }
         };
@@ -41,7 +43,7 @@ export default function BoardDetail() {
        } catch (error) {
            if (error.response.status === 401) {
                alert('게시물 작성자가 아니므로 해당 게시물을 수정 할 수 없습니다.');
-               navigate('/board');
+               navigate('/boards');
            }
        }
    }
@@ -56,7 +58,7 @@ export default function BoardDetail() {
               const response = await axios.post(`${url}board/delete?idx=${idx}`,'',{headers:headers});
               if(response.status===200){
                 alert('게시글이 삭제되었습니다.');
-                navigate('/board');
+                navigate('/boards');
               }else{
                 alert('알 수 없는 오류가 발생했습니다.');
               }
@@ -66,13 +68,13 @@ export default function BoardDetail() {
             }
             else{
               alert('권한이 없는 사용자입니다.');
-              navigate('/board');
+              navigate('/boards');
             }
            } catch (error) {
               if(error.response.status===401){
                 console.error('Error deleting the post:', error);
                 alert('권한이 없는 사용자입니다.');
-                navigate('/board');
+                navigate('/boards');
               }else{
                 console.error('Error deleting the post:', error);
                 alert('알 수 없는 오류가 발생했습니다.');
@@ -102,7 +104,7 @@ export default function BoardDetail() {
                     <p>{post.content}</p>
 
                 </div>
-                <button className={styles.BackbuttonContainer} onClick={() => navigate('/board')}>목록</button>
+                <button className={styles.BackbuttonContainer} onClick={() => navigate('/boards')}>목록</button>
                 <button className={styles.EditbuttonContainer} onClick={handleEditButton}>수정</button>
                 <button className={styles.DeletebuttonContainer} onClick={handleDeleteButton}>삭제</button>
             </div>

@@ -2,9 +2,8 @@ import React from 'react'
 import styles from './BoardEdit.module.css';
 import axios from 'axios';
 import { useState, useEffect } from 'react';
-import { useNavigate, useParams, useLocation } from 'react-router-dom';
+import { useNavigate, useParams, useLocation, useSearchParams } from 'react-router-dom';
 export default function BoardEdit() {
-  const { idx } = useParams();
   // const [title, setTitle] = useState('');
   const [editedTitle, setEditedTitle] = useState('');
   const [editedContent, setEditedContent] = useState('');
@@ -18,6 +17,9 @@ export default function BoardEdit() {
     'Content-Type': 'application/json',
     'Authorization': sessionStorage.getItem('token')
   };
+  const location = useLocation();
+  const query = new URLSearchParams(location.search);
+  const idx = query.get('idx');
 
   useEffect(() => { 
     const fetchPost = async () => {
@@ -49,12 +51,12 @@ export default function BoardEdit() {
         }, { headers: headers }
       );
       alert("성공적으로 게시글을 수정하였습니다.");
-      navigate("/board");
+      navigate("/boards");
     } catch (error) {
       if(error.response.status===401){
         console.error('Error deleting the post:', error);
         alert('권한이 없는 사용자입니다.');
-        navigate('/board');
+        navigate('/boards');
       }else{
         console.error('Error deleting the post:', error);
         alert('알 수 없는 오류가 발생했습니다.');
@@ -63,11 +65,11 @@ export default function BoardEdit() {
     }
     // console.log({ title, userName, dept, content });
     // 제출 후 게시판 목록 페이지로 이동
-    navigate('/board');
+    navigate('/boards');
   };
 
   const handleCancel = () => {
-    navigate('/board');
+    navigate('/boards');
   };
   return (
     <div className={styles.bg}>

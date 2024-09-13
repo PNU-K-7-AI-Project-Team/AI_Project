@@ -29,9 +29,7 @@ export default function MainPage() {
           <DangerList/>
         </div>
         <div>
-          <BoardList currentPage={currentPage}
-          postsPerPage={postsPerPage}
-          paginate={paginate}/>
+          <BoardList />
         </div>
     </div>
   )

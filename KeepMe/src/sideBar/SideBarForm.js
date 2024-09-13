@@ -7,7 +7,7 @@ export default function SideBarForm() {
     navigate('/');
   };
   const handleBoardClick = () => {
-    navigate('/board')
+    navigate('/boards')
   }
   const handleWorkerClick = () => {
     navigate('/workerboard')

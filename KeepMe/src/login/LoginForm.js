@@ -44,7 +44,7 @@ export default function LoginForm({ setAuth }) {
         }
     }
     const joinclick = () => {
-        navigate('/register')
+        navigate('/signup')
     }
 
 

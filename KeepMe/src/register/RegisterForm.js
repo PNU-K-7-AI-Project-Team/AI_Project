@@ -14,6 +14,10 @@ export default function RegisterForm() {
     const url = process.env.REACT_APP_BACKEND_URL;
     const [selectedGender, setSelectedGender] = useState('');
     const [Region, setRegion] = useState('');
+    const [checkPassword, setCheckPassword] = useState('');
+    const headers = {
+        'Content-Type': 'application/json',
+      };
     const checkUserid = async (e) => {
         e.preventDefault();
         try {
@@ -57,8 +61,23 @@ export default function RegisterForm() {
         IT: '개발부',
         QM: '품질관리부'
     }
+    const formData = new FormData();
+formData.append('userName', userName);
+formData.append('userId', userId);
+formData.append('dept', department);
+formData.append('password', password);
+formData.append('region', Region);
+formData.append('gender', selectedGender);
     const register = async (e) => {
         e.preventDefault();//기본 동작(페이지 새로고침)을 막음
+        console.log({
+            userName,
+            userId,
+            department,
+            password,
+            Region,
+            selectedGender,
+        });
         if (!isIdChecked) {
             alert('아이디 중복 확인을 해주세요.');
             return;
@@ -71,19 +90,43 @@ export default function RegisterForm() {
             alert('부서를 선택해주세요.');
             return;
         }
-        
+        if (password !== checkPassword) {
+            alert('비밀번호가 일치하지 않습니다.');
+            setPassword('');
+            setCheckPassword('');
+            return;
+        }
+        if (!userName) {
+            alert('이름을 입력해주세요.');
+            return;
+        }
+        if (!selectedGender) {
+            alert('성별을 선택해주세요.');
+            return;
+        }
+        if (!Region) {
+            alert('지역을 선택해주세요.');
+            return;
+        }
         try {
-            const response = await axios.post(`${url}signup`, {
+            const response = await axios.post(`${url}signup`,  {
                 userName: userName,
                 userId: userId,
-                department: department,
+                dept: department,
                 password: password,
-            });
+                region: Region,
+                gender: selectedGender,
+            }, 
+            { headers: headers }
+            );
+            console.log(response.data);
             if (response.status === 200) {
+                alert('회원가입이 완료되었습니다.');
                 navigate('/login')
             }
         } catch (error) {
             console.error('Register failed:', error)
+            console.log(error.response.data);
         };
     };
 
@@ -98,8 +141,8 @@ export default function RegisterForm() {
             <label>
                 <input
                     type="checkbox"
-                    name="male"
-                    checked={selectedGender === 'male'}
+                    name='남'
+                    checked={selectedGender === '남'}
                     onChange={handleChange}
                 />
                 {gender.M}
@@ -107,8 +150,8 @@ export default function RegisterForm() {
             <label>
                 <input
                     type="checkbox"
-                    name="female"
-                    checked={selectedGender === 'female'}
+                    name='여'
+                    checked={selectedGender === '여'}
                     onChange={handleChange}
                 />
                 {gender.F}
@@ -119,9 +162,6 @@ export default function RegisterForm() {
                     <button type="button" className={styles.Idcheckbutton} onClick={checkUserid}>
                         중복확인
                     </button>
-                </div>
-                <div>
-                    <input type='password' className={styles.password} placeholder='비밀번호' value={password} onChange={(e) => setPassword(e.target.value)} />
                 </div>
                 <div>
                     <select className={styles.region} value={Region} onChange={(e) => setRegion(e.target.value)}>
@@ -137,6 +177,12 @@ export default function RegisterForm() {
                         <option value="IT">{dept.IT}</option>
                         <option value="QM">{dept.QM}</option>
                     </select>
+                </div>
+                <div>
+                    <input type='password' className={styles.password} placeholder='비밀번호' value={password} onChange={(e) => setPassword(e.target.value)} />
+                </div>
+                <div>
+                    <input type='password' className={styles.passwordcheck} placeholder='비밀번호 확인' value={checkPassword} onChange={(e) => setCheckPassword(e.target.value)} />
                 </div>
                 <div>
                     <button className={styles.join} type="submit">
