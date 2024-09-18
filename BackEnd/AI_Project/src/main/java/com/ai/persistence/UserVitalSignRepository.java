@@ -23,18 +23,11 @@ public interface UserVitalSignRepository extends JpaRepository<UserVitalSign, In
 			 "WHERE uvs.user_code = ? AND uvs.no > ? " +
 			 "ORDER BY uvs.no ASC " +
 			 "LIMIT 1",
-	 nativeQuery = true)
-	Optional<UserVitalSignProjection> UserHearbeat(String userCode, int no);
+	 nativeQuery = true) // 현재 No보다 큰 첫번째 No를 한개만 조회 LIMIT 1이니까 
+	Optional<UserVitalSignProjection> userHearbeat(String userCode, int lastNo);
+	
 
-	// 현재 No보다 큰 첫번째 No 값을 반환
-	@Query
-	(value = "SELECT uvs.no, uvs.heartbeat, uvs.user_code " +
-			 "FROM user_vital_sign uvs " +
-			 "WHERE uvs.no > ?1 " +
-			 "ORDER BY uvs.no ASC " +
-			 "LIMIT 1",
-	 nativeQuery = true)
-	List<UserVitalSignProjection> AllUserHeartbeat(int no);
+//	List<UserVitalSignProjection> findTop1ByUserCodeAndNoGreaterThanOrderByNoAsc(String userCode, int no);
 	
 }
 

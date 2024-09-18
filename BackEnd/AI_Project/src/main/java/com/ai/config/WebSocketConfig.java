@@ -55,7 +55,7 @@ public class WebSocketConfig extends TextWebSocketHandler implements WebSocketCo
 		clients.remove(session);
 	}		
 
-	// Client에서 메시지가 왔을 때 호출되는 메서드 ==> 채팅과 같은 형태의 기능을 추가하지 않는다면 필요없는 메소드이다.
+	// Client에서 메시지가 왔을 때 호출되는 메서드 -> 채팅과 같은 형태의 기능을 추가하지 않는다면 필요없는 메소드이다.
 	@Override // 클라이언트가 보낸 메시지를 처리하는 용도
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
 		System.out.println("Message : " + message.getPayload());
@@ -95,6 +95,7 @@ public class WebSocketConfig extends TextWebSocketHandler implements WebSocketCo
 				}
 	}
 	
+	// 현재 웹소켓 서버에 연결된 모든 클라이언트 세션을 반환
     public static Set<WebSocketSession> getClients() {
         return clients;
     }
