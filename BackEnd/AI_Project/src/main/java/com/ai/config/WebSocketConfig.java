@@ -3,6 +3,7 @@ package com.ai.config;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import org.springframework.context.annotation.Configuration;
@@ -85,12 +86,17 @@ public class WebSocketConfig extends TextWebSocketHandler implements WebSocketCo
 				synchronized (clients) {
 				    for(WebSocketSession sess: clients) {
 						// 모든 클라이언트 세션에 sendMessage를 통해 해당 직렬화한 msg를 전송
-				    	try {
-				    		sess.sendMessage(message);
-				    	} catch (IOException e) {
-				    		System.out.println(sess.getRemoteAddress() + ":" + e.getMessage());
-				    		// 예외 발생 시 클라이언트의 원격 주소와 예외 메시지를 콘솔에 출력
-				    	}
+				    	Map<String, Object> map = sess.getAttributes(); // 
+				    	String userCode = (String) map.get("userCode"); // 
+				    	if (userCode.equals(pushDto.getUserCode())  || userCode.equals("0")) {
+					    	try {
+					    		System.out.println(userCode + ", " + msg);
+					    		sess.sendMessage(message);
+					    	} catch (IOException e) {
+					    		System.out.println(sess.getRemoteAddress() + ":" + e.getMessage());
+					    		// 예외 발생 시 클라이언트의 원격 주소와 예외 메시지를 콘솔에 출력
+					    	}
+					    }
 				    }
 				}
 	}

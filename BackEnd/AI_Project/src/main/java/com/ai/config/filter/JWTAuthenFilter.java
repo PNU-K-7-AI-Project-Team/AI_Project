@@ -44,7 +44,7 @@ public class JWTAuthenFilter extends UsernamePasswordAuthenticationFilter{
 		ObjectMapper mapper = new ObjectMapper();
 		// ObjectMapper: JSON 데이터를 Java 객체로 변환
 		try { // 요청 데이터를 JSON으로 읽어 Mapper(Java 객체)로 변환하고 user 객체에 저장
-			com.ai.domain.User user = mapper.readValue(request.getInputStream(), com.ai.domain.User.class);
+			com.ai.domain.User user = mapper.readValue(request.getInputStream(), com.ai.domain.User.class);	
 			// UsernamePasswordAuthenticationToken:토큰에 자격증명(ID,PW)를 포함해서 토큰생성
 			Authentication authToken = new UsernamePasswordAuthenticationToken(user.getUserId(), user.getPassword());
 			
