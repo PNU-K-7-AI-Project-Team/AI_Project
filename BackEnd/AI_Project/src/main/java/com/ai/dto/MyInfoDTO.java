@@ -2,10 +2,10 @@ package com.ai.dto;
 
 import java.util.Date;
 
-import com.ai.domain.Dept;
-import com.ai.domain.Gender;
-import com.ai.domain.Position;
-import com.ai.domain.Region;
+import com.ai.dao.Dept;
+import com.ai.dao.Gender;
+import com.ai.dao.Position;
+import com.ai.dao.Region;
 
 import lombok.Builder;
 import lombok.Getter;

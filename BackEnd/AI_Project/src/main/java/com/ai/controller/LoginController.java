@@ -5,7 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import com.ai.domain.User;
+import com.ai.dao.User;
 import com.ai.service.LoginService;
 
 import lombok.RequiredArgsConstructor;

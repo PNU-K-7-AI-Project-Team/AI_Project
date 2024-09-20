@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.HttpClientErrorException.Unauthorized;
 
-import com.ai.domain.Board;
+import com.ai.dao.Board;
 import com.ai.dto.WriteUserDTO;
 import com.ai.service.BoardService;
 

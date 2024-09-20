@@ -1,4 +1,4 @@
-package com.ai.domain;
+package com.ai.dao;
 
 // 성별
 public enum Gender {

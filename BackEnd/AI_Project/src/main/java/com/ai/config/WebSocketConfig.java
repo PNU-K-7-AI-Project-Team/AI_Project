@@ -83,16 +83,21 @@ public class WebSocketConfig extends TextWebSocketHandler implements WebSocketCo
 		TextMessage message = new TextMessage(msg);
 
 		// 블럭안에 코드를 수행하는 동안 map 객체에 대한 다른 스레드의 접근을 방지한다.
-				synchronized (clients) {
+				synchronized (clients) { // 연결된 모든 세션을 담은 컬렉션
+					// 연결된 모든 세션을 WebsockSession 객체에 반복문으로 저장
 				    for(WebSocketSession sess: clients) {
 						// 모든 클라이언트 세션에 sendMessage를 통해 해당 직렬화한 msg를 전송
-				    	Map<String, Object> map = sess.getAttributes(); // 
-				    	String userCode = (String) map.get("userCode"); // 
+				    	Map<String, Object> map = sess.getAttributes(); // 각 세션에 있는 속성을 키-밸류로 저장
+				    	String userCode = (String) map.get("userCode"); // 해당 세션 속성의 userCode 추출
+				    	// DB에 보내는 현재 데이터의 userCode와 연결된 세션의 userCode가 같거나,
+				    	// userCode가 0(관리자)이면 해당 try문 실행
 				    	if (userCode.equals(pushDto.getUserCode())  || userCode.equals("0")) {
 					    	try {
 					    		System.out.println(userCode + ", " + msg);
-					    		sess.sendMessage(message);
+					    		// 해당 세션의 클라이언트에게 미시지 전송
+					    		sess.sendMessage(message); 
 					    	} catch (IOException e) {
+					    		// 예외 발생시 나오는 메시지
 					    		System.out.println(sess.getRemoteAddress() + ":" + e.getMessage());
 					    		// 예외 발생 시 클라이언트의 원격 주소와 예외 메시지를 콘솔에 출력
 					    	}

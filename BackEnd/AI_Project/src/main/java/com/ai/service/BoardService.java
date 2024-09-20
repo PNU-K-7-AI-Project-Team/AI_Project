@@ -10,9 +10,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import com.ai.domain.Board;
-import com.ai.domain.Role;
-import com.ai.domain.User;
+import com.ai.dao.Board;
+import com.ai.dao.Role;
+import com.ai.dao.User;
 import com.ai.dto.GetBoardsDTO;
 import com.ai.dto.WriteUserDTO;
 import com.ai.persistence.BoardRepository;

@@ -10,12 +10,12 @@
 //import org.springframework.security.crypto.password.PasswordEncoder;
 //import org.springframework.stereotype.Component;
 //
-//import com.ai.domain.Dept;
-//import com.ai.domain.Gender;
-//import com.ai.domain.Position;
-//import com.ai.domain.Region;
-//import com.ai.domain.Role;
-//import com.ai.domain.User;
+//import com.ai.dao.Dept;
+//import com.ai.dao.Gender;
+//import com.ai.dao.Position;
+//import com.ai.dao.Region;
+//import com.ai.dao.Role;
+//import com.ai.dao.User;
 //import com.ai.persistence.UserRepository;
 //import com.ai.service.LoginService;
 //

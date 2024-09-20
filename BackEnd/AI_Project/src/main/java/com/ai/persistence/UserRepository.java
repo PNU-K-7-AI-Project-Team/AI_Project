@@ -4,7 +4,7 @@ import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.ai.domain.User;
+import com.ai.dao.User;
 
 //JPARepository: CRUD 메서드를 상속해줌
 //JPARepository<첫번째인자, 두번째인자>

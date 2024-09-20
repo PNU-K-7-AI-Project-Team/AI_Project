@@ -7,8 +7,7 @@ import org.springframework.stereotype.Service;
 
 
 import com.ai.config.WebSocketConfig;
-
-import com.ai.domain.UserVitalSign;
+import com.ai.dao.UserVitalSign;
 import com.ai.dto.PushDTO;
 import com.ai.persistence.UserVitalSignRepository;
 
@@ -64,12 +63,13 @@ public class WebSocketService {
 //			}
 //		}
 //	}
-	@Scheduled(fixedRate = 500)
+	@Scheduled(fixedRate = 200) // 0.2초 간격으로 전송
 	public void pushData() {
 		
 		System.out.println("no: " + no);
 		
-		UserVitalSign vitalSign = vitalRepo.findById(no++);
+		// DB의 vitalSign에서 no를 1씩 증가시키며 해당 행 조회 후 vitalSign에 저장
+		UserVitalSign vitalSign = vitalRepo.findById(no++); 
 		
 		
 		

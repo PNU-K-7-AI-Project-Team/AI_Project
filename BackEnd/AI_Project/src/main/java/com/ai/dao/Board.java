@@ -1,4 +1,4 @@
-package com.ai.domain;
+package com.ai.dao;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.socket.WebSocketHandler;
 import org.springframework.web.socket.server.HandshakeInterceptor;
 
-import com.ai.domain.User;
+import com.ai.dao.User;
 import com.ai.persistence.UserRepository;
 
 import lombok.RequiredArgsConstructor;
