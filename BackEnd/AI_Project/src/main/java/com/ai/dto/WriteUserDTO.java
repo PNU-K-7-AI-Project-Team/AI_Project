@@ -1,6 +1,6 @@
 package com.ai.dto;
 
-import com.ai.dao.Dept;
+import com.ai.domain.Dept;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

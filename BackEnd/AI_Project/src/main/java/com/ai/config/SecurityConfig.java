@@ -13,7 +13,7 @@ import org.springframework.security.web.access.intercept.AuthorizationFilter;
 
 import com.ai.config.filter.JWTAuthenFilter;
 import com.ai.config.filter.JWTAuthorFilter;
-import com.ai.persistence.UserRepository;
+import com.ai.dao.UserRepository;
 
 import lombok.RequiredArgsConstructor;
 

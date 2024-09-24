@@ -16,8 +16,12 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 public class PushDTO {
-	// private int no;
 	private String userCode;
 	private double heartbeat;
+	private double temeprature;
+	private double latitude;
+	private double longitude;
+	
+	
 
 }

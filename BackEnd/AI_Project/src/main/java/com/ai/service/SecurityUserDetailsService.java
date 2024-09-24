@@ -6,8 +6,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.ai.dao.User;
-import com.ai.persistence.UserRepository;
+import com.ai.dao.UserRepository;
+import com.ai.domain.User;
 
 import lombok.RequiredArgsConstructor;
 

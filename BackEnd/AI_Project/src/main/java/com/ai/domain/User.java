@@ -1,4 +1,4 @@
-package com.ai.dao;
+package com.ai.domain;
 
 import java.util.Date;
 

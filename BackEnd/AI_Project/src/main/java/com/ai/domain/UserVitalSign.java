@@ -1,10 +1,16 @@
-package com.ai.dao;
+package com.ai.domain;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Date;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -22,34 +28,29 @@ public class UserVitalSign {
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int no;
 	
-	@Column(length = 8, nullable = false)
-	private String workDate;
+	@Column(nullable = false)
+	private LocalDate workDate;
 	
 	@Column(length = 8, nullable = false)
 	private String userCode;
-	
-	@Column
-	private int isWear;
-	
-	@Column
+
+	@Column(nullable = false)
 	private double heartbeat;
 	
-	@Column
+	@Column(nullable = false)
 	private double temperature;
 	
-	@Column
+	@Column(nullable = false)
 	private double outsideTemperature;
 	
-	@Column
+	@Column(nullable = false)
 	private double latitude;
 	
-	@Column
+	@Column(nullable = false)
 	private double longitude;
 	
-	@Column
-	private int deviceBattery;
+	@Column(nullable = false)
+	private LocalDateTime vitalDate; 
 	
-	@Column
-	private int deleteYn;
 	
 }

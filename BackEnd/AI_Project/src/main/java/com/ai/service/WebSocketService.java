@@ -7,9 +7,9 @@ import org.springframework.stereotype.Service;
 
 
 import com.ai.config.WebSocketConfig;
-import com.ai.dao.UserVitalSign;
+import com.ai.dao.UserVitalSignRepository;
+import com.ai.domain.UserVitalSign;
 import com.ai.dto.PushDTO;
-import com.ai.persistence.UserVitalSignRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -19,7 +19,7 @@ public class WebSocketService {
 	
 	private final UserVitalSignRepository vitalRepo;
 	private final WebSocketConfig wsConfig;
-	private int no = 1722608;
+	private int no = 1;
 //	private int no = 1915326;
 	
 	// userCode별로 마지막 처리된 no 값을 저장하는 맵
@@ -75,8 +75,11 @@ public class WebSocketService {
 		
 		PushDTO pushDto = PushDTO.builder() // 보낼 데이터 값들
 				//.no(vitalSign.getNo()) // 해당 객체의 현재 No 
-                  .userCode(vitalSign.getUserCode())  // 접속한 세션에서 추출한 userCode
+                  .userCode(vitalSign.getUserCode())  // user_vital_sign DB에서 추출한 userCode
                   .heartbeat(vitalSign.getHeartbeat()) // 해당 객체의 heartbeat
+                  .latitude(vitalSign.getLatitude())
+                  .longitude(vitalSign.getLongitude())
+                  .temeprature(vitalSign.getTemperature())
                   .build();
 		wsConfig.sendPushMessage(pushDto); // FE에 웹소켓으로 정보를 보냄
 	}

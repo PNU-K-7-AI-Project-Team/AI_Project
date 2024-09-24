@@ -92,23 +92,39 @@
 //                  .build()  
 //        );
 //
-//        for (int i = 1; i <= 51; i++) {
-//            // 1과 3, 그리고 12에서 51까지만 작업을 수행
-//            if (i == 1 || i == 3 || (i >= 12 && i <= 51)) {
-//                userRepo.save(User.builder()
-//                      .userCode(String.valueOf(i))
-//                      .userId("u"+i)
-//                      .password(passwordEnc.encode("11"))
-//                      .userName(generateUniqueUserName()) // Ensure unique user name
-//                      .role(Role.ROLE_USER)
-//                      .position(Position.JUNIOR)
-//                      .dept(Dept.IT)
-//                      .region(Region.HQ)
-//                      .dateOfBirth(new Date())
-//                      .gender(Gender.M)
-//                      .build()  
+////        for (int i = 1; i <= 51; i++) {
+////            // 1과 3, 그리고 12에서 51까지만 작업을 수행
+////            if (i == 1 || (i >= 12 && i <= 51)) {
+////                userRepo.save(User.builder()
+////                      .userCode(String.valueOf(i))
+////                      .userId("u"+i)
+////                      .password(passwordEnc.encode("11"))
+////                      .userName(generateUniqueUserName()) // Ensure unique user name
+////                      .role(Role.ROLE_USER)
+////                      .position(Position.JUNIOR)
+////                      .dept(Dept.IT)
+////                      .region(Region.HQ)
+////                      .dateOfBirth(new Date())
+////                      .gender(Gender.M)
+////                      .build()  
+////            );
+////            }
+////        }
+//        
+//        for (int i = 1; i <= 38; i++) {
+//            userRepo.save(User.builder()
+//                  .userCode(String.valueOf(i))
+//                  .userId("u"+i)
+//                  .password(passwordEnc.encode("11"))
+//                  .userName(generateUniqueUserName()) // Ensure unique user name
+//                  .role(Role.ROLE_USER)
+//                  .position(Position.JUNIOR)
+//                  .dept(Dept.IT)
+//                  .region(Region.HQ)
+//                  .dateOfBirth(new Date())
+//                  .gender(Gender.M)
+//                  .build()  
 //            );
-//            }
 //        }
 //    }
 //}

@@ -1,4 +1,4 @@
-package com.ai.persistence;
+package com.ai.dao;
 
 import java.util.Optional;
 
@@ -7,7 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-import com.ai.dao.Board;
+import com.ai.domain.Board;
 import com.ai.dto.GetBoardsDTO;
 
 public interface BoardRepository extends JpaRepository<Board, Integer> {

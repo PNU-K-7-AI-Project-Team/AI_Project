@@ -2,7 +2,7 @@ package com.ai.dto;
 
 import java.util.Date;
 
-import com.ai.dao.Dept;
+import com.ai.domain.Dept;
 
 
 // 프로젝션 인터페이스: 해당 인터페이스는 DB SQL 쿼리의 결과를 매핑할때 사용하는 DTO 
