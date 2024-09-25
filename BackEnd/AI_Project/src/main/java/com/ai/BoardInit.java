@@ -9,10 +9,10 @@
 //import org.springframework.security.core.userdetails.UsernameNotFoundException;
 //import org.springframework.stereotype.Component;
 //
-//import com.ai.dao.Board;
-//import com.ai.dao.User;
-//import com.ai.persistence.BoardRepository;
-//import com.ai.persistence.UserRepository;
+//import com.ai.domain.Board;
+//import com.ai.domain.User;
+//import com.ai.dao.BoardRepository;
+//import com.ai.dao.UserRepository;
 //
 //import lombok.RequiredArgsConstructor;
 //

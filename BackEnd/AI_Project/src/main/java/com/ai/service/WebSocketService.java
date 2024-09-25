@@ -2,15 +2,22 @@ package com.ai.service;
 
 
 
+import java.io.IOException;
+
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 
 import com.ai.config.WebSocketConfig;
+import com.ai.dao.TestGyroRepository;
 import com.ai.dao.UserVitalSignRepository;
+import com.ai.domain.TestGyro;
 import com.ai.domain.UserVitalSign;
 import com.ai.dto.PushDTO;
+import com.ai.dto.RiskPredictionDTO;
+import com.ai.dto.TestGyroDTO;
 
+import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -18,7 +25,9 @@ import lombok.RequiredArgsConstructor;
 public class WebSocketService {
 	
 	private final UserVitalSignRepository vitalRepo;
+	private final TestGyroRepository gyroRepo;
 	private final WebSocketConfig wsConfig;
+//	private final TestGyroService testGyroService;
 	private int no = 1;
 //	private int no = 1915326;
 	
@@ -64,16 +73,17 @@ public class WebSocketService {
 //		}
 //	}
 	@Scheduled(fixedRate = 200) // 0.2초 간격으로 전송
-	public void pushData() {
+	public void pushData() throws IOException {
 		
 		System.out.println("no: " + no);
 		
-		// DB의 vitalSign에서 no를 1씩 증가시키며 해당 행 조회 후 vitalSign에 저장
+		// DB의 user_vital_sign 테이블에서 no를 1씩 증가시키며 해당 행 조회 후 vitalSign 인스턴스에 저장
 		UserVitalSign vitalSign = vitalRepo.findById(no++); 
 		
+		// DB의 test_gyro 테이블에서 no를 1씩 증가시키며 해당 행 조회후 testGyro 인스턴스에 저장
+//		TestGyro testGyro = gyroRepo.findById(no++).orElse(null);
 		
-		
-		PushDTO pushDto = PushDTO.builder() // 보낼 데이터 값들
+		PushDTO pushDTO = PushDTO.builder() // 보낼 데이터 값들
 				//.no(vitalSign.getNo()) // 해당 객체의 현재 No 
                   .userCode(vitalSign.getUserCode())  // user_vital_sign DB에서 추출한 userCode
                   .heartbeat(vitalSign.getHeartbeat()) // 해당 객체의 heartbeat
@@ -81,7 +91,25 @@ public class WebSocketService {
                   .longitude(vitalSign.getLongitude())
                   .temeprature(vitalSign.getTemperature())
                   .build();
-		wsConfig.sendPushMessage(pushDto); // FE에 웹소켓으로 정보를 보냄
+		
+		// TestGyro 엔티티 데이터를 기반으로 TestGyroDTO 생성
+//		TestGyroDTO gyroDTO = TestGyroDTO.builder()
+//				.userCode(testGyro.getUserCode())
+//				.x(testGyro.getX())
+//				.y(testGyro.getY())
+//				.z(testGyro.getZ())
+//				.vitalDate(testGyro.getVitalDate())
+//				.build();
+		
+		// gyroDto 데이터를 파라미터에 넣어,
+		// TestGyroService의 sendToFlask 메서드를 호출해서,
+		// Flask 서버로 데이터 전송 및 응답 수신
+//		RiskPredictionDTO riskPredictionDTO = testGyroService.sendDataToFlask(gyroDTO);
+				
+		
+
+		wsConfig.sendPushMessage(pushDTO); // FE에 웹소켓으로 정보를 보냄
+//		wsConfig.sendPushMessage(gyroDTO);
 	}
 	
 //	// UserVitalSignProjection 처리 
