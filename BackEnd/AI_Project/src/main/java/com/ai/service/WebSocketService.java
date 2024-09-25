@@ -3,10 +3,13 @@ package com.ai.service;
 
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
-
+import org.springframework.web.socket.WebSocketSession;
 
 import com.ai.config.WebSocketConfig;
 import com.ai.dao.TestGyroRepository;
@@ -28,7 +31,8 @@ public class WebSocketService {
 	private final TestGyroRepository gyroRepo;
 	private final WebSocketConfig wsConfig;
 //	private final TestGyroService testGyroService;
-	private int no = 1;
+	private int vitalNo = 1;
+	private int gyroNo = 1;
 //	private int no = 1915326;
 	
 	// userCode별로 마지막 처리된 no 값을 저장하는 맵
@@ -72,25 +76,35 @@ public class WebSocketService {
 //			}
 //		}
 //	}
-	@Scheduled(fixedRate = 200) // 0.2초 간격으로 전송
+	@Scheduled(fixedRate = 1500) // 0.2초 간격으로 전송
 	public void pushData() throws IOException {
 		
-		System.out.println("no: " + no);
+//		System.out.println("no: " + no);
+		
+		List<String> connectedUsers = getConnectedUsers();
 		
 		// DB의 user_vital_sign 테이블에서 no를 1씩 증가시키며 해당 행 조회 후 vitalSign 인스턴스에 저장
-		UserVitalSign vitalSign = vitalRepo.findById(no++); 
+		UserVitalSign vitalSign = vitalRepo.findById(vitalNo++).orElse(null);
 		
 		// DB의 test_gyro 테이블에서 no를 1씩 증가시키며 해당 행 조회후 testGyro 인스턴스에 저장
-//		TestGyro testGyro = gyroRepo.findById(no++).orElse(null);
+		TestGyro testGyro = gyroRepo.findById(gyroNo++).orElse(null);
 		
-		PushDTO pushDTO = PushDTO.builder() // 보낼 데이터 값들
-				//.no(vitalSign.getNo()) // 해당 객체의 현재 No 
-                  .userCode(vitalSign.getUserCode())  // user_vital_sign DB에서 추출한 userCode
-                  .heartbeat(vitalSign.getHeartbeat()) // 해당 객체의 heartbeat
-                  .latitude(vitalSign.getLatitude())
-                  .longitude(vitalSign.getLongitude())
-                  .temeprature(vitalSign.getTemperature())
-                  .build();
+		if (connectedUsers.contains(vitalSign.getUserCode())) {
+			PushDTO pushDTO = PushDTO.builder() // 보낼 데이터 값들
+					//.no(vitalSign.getNo()) // 해당 객체의 현재 No 
+	                  .userCode(vitalSign.getUserCode())  // user_vital_sign DB에서 추출한 userCode
+	                  .heartbeat(vitalSign.getHeartbeat()) // 해당 객체의 heartbeat
+	                  .latitude(vitalSign.getLatitude())
+	                  .longitude(vitalSign.getLongitude())
+	                  .temeprature(vitalSign.getTemperature())
+	                  .build();
+			
+			// 해당 사용자에게 데이터 전송
+	        wsConfig.sendPushMessage(pushDTO);
+		} else {
+	        System.out.println("Skipping user: " + vitalSign.getUserCode() + " (not connected)");
+	    }
+		
 		
 		// TestGyro 엔티티 데이터를 기반으로 TestGyroDTO 생성
 //		TestGyroDTO gyroDTO = TestGyroDTO.builder()
@@ -108,8 +122,22 @@ public class WebSocketService {
 				
 		
 
-		wsConfig.sendPushMessage(pushDTO); // FE에 웹소켓으로 정보를 보냄
+//		wsConfig.sendPushMessage(pushDTO); // FE에 웹소켓으로 정보를 보냄
 //		wsConfig.sendPushMessage(gyroDTO);
+	}
+	
+	
+	// 현재 접속 중인 사용자들의 userCode를 WebSocket 세션에서 추출하는 메소드
+	private List<String> getConnectedUsers() {
+	    List<String> userCodes = new ArrayList<>();
+	    synchronized (WebSocketConfig.getClients()) { // 연결된 모든 세션을 관리하는 clients
+	        for (WebSocketSession sess : WebSocketConfig.getClients() ) {
+	            Map<String, Object> map = sess.getAttributes();
+	            String userCode = (String) map.get("userCode");
+	            userCodes.add(userCode); // 모든 접속한 사용자의 userCode를 추출
+	        }
+	    }
+	    return userCodes;
 	}
 	
 //	// UserVitalSignProjection 처리 

@@ -1,6 +1,7 @@
 package com.ai.dao;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -20,7 +21,7 @@ public interface UserVitalSignRepository extends JpaRepository<UserVitalSign, In
 //	 nativeQuery = true) // 현재 No보다 큰 첫번째 No를 한개만 조회 LIMIT 1이니까 
 //	Optional<UserVitalSignProjection> userHearbeat(String userCode, int lastNo);
 
-	UserVitalSign findById(int no);
+	Optional<UserVitalSign> findById(int no);
 	
 
 //	List<UserVitalSignProjection> findTop1ByUserCodeAndNoGreaterThanOrderByNoAsc(String userCode, int no);

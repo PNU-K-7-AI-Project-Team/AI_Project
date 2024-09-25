@@ -50,7 +50,6 @@ public class SecurityConfig {
 				
 		http.formLogin(fm->fm.loginPage("/login").permitAll());
 		
-		
 		http.httpBasic(basic->basic.disable());
 		// HTTP Basic 인증 사용안함
 		

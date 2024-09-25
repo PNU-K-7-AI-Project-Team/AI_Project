@@ -8,6 +8,7 @@ import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.WebSocketHandler;
 import org.springframework.web.socket.server.HandshakeInterceptor;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import com.ai.dao.UserRepository;
 import com.ai.domain.User;
@@ -29,10 +30,15 @@ public class CustomHandshakeInterceptor implements HandshakeInterceptor{
 
 		 	// 요청 url의 id 추출(ws://localhost:8080/pushservice?userId=u1)
 		  	// substring(7): ?userId="아이디" 0~6번째까지 건너뛰고 7번째인 아이디부터 추출
-		 	String userId = request.getURI().getQuery().substring(7);
-		 	Optional<User> user = userRepo.findByUserId(userId);
-		 	
-	       if (user.isPresent()) {
+//		 	String userId = UriComponentsBuilder.fromUri(request.getURI())
+//		            .build()
+//		            .getQueryParams()
+//		            .getFirst("userid"); // 대소문자에 주의
+
+		 String userId = request.getURI().getQuery().substring(7);
+		 Optional<User> user = userRepo.findByUserId(userId);
+		 
+		 if (user.isPresent()) {
 	    	   attributes.put("userCode", user.get().getUserCode());
 	    	   attributes.put("role", user.get().getRole());
 	    	   return true;
