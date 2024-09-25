@@ -1,7 +1,7 @@
 .bg {
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: column;
+    display: block;
+    
+    flex-direction: row;
     flex-grow: 1;
     align-items: center;
     justify-content: center;
@@ -17,7 +17,7 @@
     font-style: normal;
     font-weight: 400;
     font-size: 14px;
-    z-index: 600;
+    
     /* identical to box height */
 
     color: rgba(0, 0, 0, 0.7);
@@ -81,5 +81,9 @@
 .boardTable td:last-child {
     border-right: none;
   }
-
+@media (max-width: 1100px) {
+  .bg{
+    display: none;
+  }
+}
  

@@ -9,6 +9,7 @@ export default function LoginForm({ setAuth }) {
     const navigate = useNavigate();
     
     const url = process.env.REACT_APP_BACKEND_URL;
+    console.log(url)
     
     let token = "";
 
@@ -29,12 +30,11 @@ export default function LoginForm({ setAuth }) {
               );
             if (response.status === 200) {//서버가 성공적인 응답을 반환했는지 확인, HTTP 상태 코드 200은 성공을 의미
                 token = response.headers.get("Authorization");
-                console.log("response.data.userId",response.data.userId)
-                
-                sessionStorage.setItem("userid", userId);
+                sessionStorage.setItem("userId", userId);
                 sessionStorage.setItem("token", token);
                 console.log("sessionStorage",sessionStorage)
                 setAuth(true);//인증 상태를 true로 설정
+                
                 navigate('/')
             } else {
                 console.error('Login Failed');

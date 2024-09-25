@@ -11,11 +11,9 @@
   top: 0;
   z-index: 900;
   background: #143A52;
-  transition: transform 0.3s ease;  /* 슬라이드 애니메이션 */
+  transition: transform 0.2s ease;  /* 슬라이드 애니메이션 */
 }
 .keepme{
-  
-  
   flex-grow: 1;
   align-items: center;
   justify-content: space-around;
@@ -38,11 +36,11 @@ color: #ffffffd0;
   color: white;
 }
 .button1{
-  position: absolute;
-  width: 4vw;
+  position: fixed;
+  width: 100px;
   height: 3vh;
   
-  left: 35px;
+  left: 26px;
   top: 400px;
   background-color: #143A52;
   color: rgba(255, 255, 255, 0.63);
@@ -57,8 +55,8 @@ color: #ffffffd0;
   color: white;
 }
 .button2{
-  position: absolute;
-  width: 5vw;
+  position: fixed;
+  width: 100px;
   height: 3vh;
   
   left: 35px;
@@ -89,8 +87,9 @@ color: #ffffffd0;
 /* 사이드바 토글 버튼 스타일 */
 .toggleButton {
   position: fixed;
-  top: 20px;
-  left: 10px;
+  width: 100px;
+  top: 200px;
+  left: 200px;
   background-color: #143A52;
   color: white;
   border: none;
@@ -113,7 +112,7 @@ color: #ffffffd0;
 }
 
 /* 큰 화면에서는 항상 사이드바 보이기 */
-@media (min-width: 769px) {
+@media (min-width: 2000px) {
   .toggleButton {
     display: none;  /* 큰 화면에서는 토글 버튼 숨기기 */
   }

@@ -27,6 +27,7 @@ export default function HeaderForm({ onClose }) {
   const handleLogout = () => {
     if(window.confirm('정말로 로그아웃 하시겠습니까?')){
       window.location.href = '/logout';
+      sessionStorage.clear();
     }
   };
 

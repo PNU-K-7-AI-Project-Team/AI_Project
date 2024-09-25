@@ -29,7 +29,6 @@ export default function SideBarForm() {
           Open Sidebar
         </button>
       )}
-
       {/* 사이드바 */}
       <aside className={`${styles.sidebar} ${isSidebarOpen ? styles.showSidebar : styles.hideSidebar}`}>
         <form>

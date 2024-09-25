@@ -1,7 +1,7 @@
 .bg{
     display: flex;
     flex-wrap: wrap;
-    flex-direction: column;
+    flex-direction: row;
     flex-grow: 1;
     align-items: center;
     justify-content: space-around;
@@ -10,7 +10,7 @@
     height: 25vh;
     left: 15vw;
     top: 41vw;
-    z-index: 600;
+    
     background: #ffffff;
     border-radius: 5px;
     
@@ -26,4 +26,8 @@
 .bg:hover{
     color: rgb(0, 0, 0);
 }
-
+@media (max-width: 1100px) {
+    .bg{
+      display: none;
+    }
+  }
