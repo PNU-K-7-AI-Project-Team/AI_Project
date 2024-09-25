@@ -98,18 +98,17 @@ function App() {
           <Route path="/login" element={<LoginForm setAuth={setAuth} />} className={styles.LoginForm} />
           <Route path="/signup" element={<RegisterForm />} />
           <Route path="/" element={auth ? <Layout /> : <LoginForm setAuth={setAuth} />}>
-            <Route index element={<MainPage />} >
-            </Route>
-              <Route path="/boards" element={<BoardMain />} />
-              <Route path="/map" element={<NaverMap  />} />
-              <Route path="/workerboard" element={<WorkerBoard />} />
-              <Route path="/mypage" element={<MyPage />} />
-              <Route path="/board" element={<BoardDetail />} />
-              <Route path="/board/write" element={<BoardWrite />} />
-              <Route path="/board/edit" element={<BoardEdit />} />
-              <Route path="/logout" element={<Logout onLogout={() => setAuth(false)} />} />
-              <Route path="/boardlist" element={<BoardList />} />
-              <Route path="/risk" element={<RiskAnalysis/>}/>
+            <Route index element={<MainPage />} />
+            <Route path="/boards" element={<BoardMain />} />
+            <Route path="/map" element={<NaverMap />} />
+            <Route path="/workerboard" element={<WorkerBoard />} />
+            <Route path="/mypage" element={<MyPage />} />
+            <Route path="/board" element={<BoardDetail />} />
+            <Route path="/board/write" element={<BoardWrite />} />
+            <Route path="/board/edit" element={<BoardEdit />} />
+            <Route path="/logout" element={<Logout onLogout={() => setAuth(false)} />} />
+            <Route path="/boardlist" element={<BoardList />} />
+            <Route path="/risk" element={<RiskAnalysis />} />
           </Route>
         </Routes>
       </Router>

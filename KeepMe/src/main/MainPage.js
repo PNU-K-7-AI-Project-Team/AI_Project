@@ -6,7 +6,7 @@ import DangerList from '../dangerList/DangerList'
 import UserGraph from '../userGraph/UserGraph'
 import BoardList from '../board/BoardList'
 import { useRecoilState } from 'recoil';
-import {socketDataState } from '../recoil/Atoms'; // WebSocket에서 가져온 심박수 데이터
+import { socketDataState } from '../recoil/Atoms'; // WebSocket에서 가져온 심박수 데이터
 
 export default function MainPage() {
   const wsRef = useRef(null);
@@ -25,9 +25,17 @@ export default function MainPage() {
     // WebSocket 메시지 수신 시 실행되는 이벤트
     wsRef.current.onmessage = (e) => {
       const newData = JSON.parse(e.data);
-      setSocketData((prevData)=>[...prevData, newData]);
-      console.log('WebSocket 메시지 수신:', newData);  // 데이터 수신 확인
-
+      console.log('newData', newData)
+      setSocketData((prevData) => ({
+        ...prevData,
+        [newData.userCode]: {
+          heartbeat: [...(prevData[newData.userCode]?.heartbeat || []), newData.heartbeat].slice(-10),
+          temperature: [...(prevData[newData.userCode]?.temperature || []),  Number(newData.temeprature.toFixed(1))].slice(-10),
+          latitude: newData.latitude,
+          longitude: newData.longitude,
+          timestamp: new Date().getTime()
+        }
+      }));
       // // Recoil 상태 업데이트: 각 userCode에 해당하는 데이터 추가
       // setHeartbeatData((prevData) => {
       //   const updatedData = {

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect,useMemo } from "react";
 import { Line } from 'react-chartjs-2';
 import { useRecoilValue,useSetRecoilState } from "recoil";
 import {selectedUserCodeState, socketDataState } from "../recoil/Atoms";
@@ -23,11 +23,13 @@ Chart.register(
   Tooltip,
   Legend
 );
-const RiskAnalysis = () => {
+const RiskAnalysis = ({}) => {
   const socketData = useRecoilValue(socketDataState); // Recoil 상태 설정
   // const heartbeatData = useRecoilValue(heartbeatState); // 전역 상태에서 데이터 가져오기
   const selectedUserCode = useRecoilValue(selectedUserCodeState);
-  const filteredData = socketData.filter((data)=>data.usercode === selectedUserCode);
+  const filteredData = useMemo(()=>socketData.filter((data)=>data.usercode === selectedUserCode),[socketData,selectedUserCode]);
+  console.log('filteredData',filteredData)
+  
   // const userHeartbeat = heartbeatData[selectedUserCode] || []; // 선택된 유저의 데이터
   
   //  // 컴포넌트가 마운트될 때 세션스토리지에서 데이터 읽기
@@ -54,9 +56,11 @@ const RiskAnalysis = () => {
   // }, [userHeartbeat,selectedUserCode]);
 
   // 데이터가 없는 경우 안내 메시지를 표시하거나, 로딩 상태를 처리
-  
+  if (filteredData.length === 0) {
+    return <p>데이터가 없습니다. 심박수 데이터를 확인하세요.</p>;
+  }
   const chartdata = {
-    labels: filteredData.map((item) => item.timestamp),
+    labels: filteredData.map((item) => new Date(item.timestamp).toLocaleTimeString()),
     datasets: [
       {
         label: `User ${selectedUserCode} Heartbeat`,

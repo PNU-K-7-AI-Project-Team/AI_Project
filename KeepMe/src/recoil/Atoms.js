@@ -14,3 +14,7 @@ export const selectedUserCodeState = atom({
   key: 'selectedUserCodeState',
   default: null, // 선택된 usercode
 });
+export const userIdState = atom({
+  key: 'userIdState',
+  default: '', // 선택된 usercode
+});

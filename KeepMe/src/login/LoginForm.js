@@ -3,6 +3,9 @@ import React from 'react'
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom'
 import styles from './LoginForm.module.css'
+import { useRecoilState } from 'recoil';
+import { userIdState } from '../recoil/Atoms';
+
 export default function LoginForm({ setAuth }) {
     const [userId, setUserId] = useState('');
     const [password, setPassword] = useState('');
@@ -10,7 +13,9 @@ export default function LoginForm({ setAuth }) {
     
     const url = process.env.REACT_APP_BACKEND_URL;
     console.log(url)
-    
+    // const instance = axios.create({
+    //     baseURL: url
+    // });    
     let token = "";
 
 
