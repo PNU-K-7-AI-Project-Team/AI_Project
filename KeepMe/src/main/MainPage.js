@@ -11,12 +11,12 @@ import { socketDataState ,userIdState} from '../recoil/Atoms'; // WebSocket에�
 export default function MainPage() {
   const wsRef = useRef(null);
   const [socketData, setSocketData] = useRecoilState(socketDataState);
-  const userId = useRecoilValue(userIdState);
+  const userRole = useRecoilValue(userIdState);
 
   useEffect(() => {
     if (!wsRef.current) {
       const url = process.env.REACT_APP_BACKEND_URL;
-      wsRef.current = new WebSocket(`${url}pushservice?userId=${userId}`);
+      wsRef.current = new WebSocket(`${url}pushservice?userId=${userRole}`);
     }
     // WebSocket 연결 성공 시 실행되는 이벤트
     wsRef.current.onopen = () => {

@@ -1,10 +1,8 @@
 import { BrowserRouter as Router, Route, Routes, Outlet, Navigate } from 'react-router-dom'
 import { RecoilRoot, useSetRecoilState, useRecoilValue } from 'recoil';
-import { authState } from './recoil/Atoms';
-
+import { authState, userRoleState } from './recoil/Atoms';
 import styles from './App.module.css'
 import { useState, useEffect } from 'react';
-import { useRef } from 'react';
 import MainPage from './main/MainPage';
 import LoginForm from './login/LoginForm';
 import RegisterForm from './register/RegisterForm';
@@ -20,8 +18,7 @@ import BoardEdit from './board/BoardEdit';
 import MyPage from './myPage/Mypage';
 import BoardList from './board/BoardList';
 import NaverMap from './map/NaverMap';
-import RiskAnalysis from './Risk/RiskAnalysis';
-
+import UserMainPage from './user/UserMainPage';
 function Layout() {
   return (
     <div className={styles.bg}>
@@ -42,21 +39,18 @@ function AuthInitializer() {
   }, [setAuth]);
   return null;
 }
-function App() {
-  const [auth, setAuth] = useState(false);
 
-  function ProtectedRoute({ children }) {
-    const auth = useRecoilValue(authState);
-    return auth ? children : <Navigate to="/login" />;
-  }
+function App() {
+  const setAuth = useSetRecoilState(authState);
 
   return (
     <RecoilRoot>
       <AuthInitializer />
       <Router>
         <Routes>
-          <Route path="/login" element={<LoginForm setAuth={setAuth} />} className={styles.LoginForm} />
+          <Route path="/login" element={<LoginForm/>} className={styles.LoginForm} />
           <Route path="/signup" element={<RegisterForm />} />
+          <Route path="/user" element={<UserMainPage />} />
           <Route path="/" element={<Layout />}>
             <Route index element={<MainPage />} />
             <Route path="/boards" element={<BoardMain />} />
@@ -68,7 +62,6 @@ function App() {
             <Route path="/board/edit" element={<BoardEdit />} />
             <Route path="/logout" element={<Logout onLogout={() => setAuth(false)} />} />
             <Route path="/boardlist" element={<BoardList />} />
-            <Route path="/risk" element={<RiskAnalysis />} />
           </Route>
         </Routes>
       </Router>

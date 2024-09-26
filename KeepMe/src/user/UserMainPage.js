@@ -2,15 +2,17 @@ import React from 'react'
 import styles from './UserMainPage.module.css'
 import { useRecoilState } from 'recoil';
 import { socketDataState } from '../recoil/Atoms'; // WebSocket에서 가져온 심박수 데이터
-
+import { useEffect, useRef } from 'react';
+import { userIdState } from '../recoil/Atoms';
+import { useRecoilValue } from 'recoil';
 export default function UserMainPage() {
   const wsRef = useRef(null);
   const [socketData, setSocketData] = useRecoilState(socketDataState);
-
+  const userRole = useRecoilValue(userIdState);
   useEffect(() => {
     if (!wsRef.current) {
       const url = process.env.REACT_APP_BACKEND_URL;
-      wsRef.current = new WebSocket(`${url}pushservice?userId=admin`);
+      wsRef.current = new WebSocket(`${url}pushservice?userId=${userRole}`);
     }
     wsRef.current.onopen = () => {
       console.log('WebSocket 연결 성공');
@@ -31,14 +33,23 @@ export default function UserMainPage() {
       }));
     };
 
+    
     return () => {
       wsRef.current.close(); // 컴포넌트가 언마운트될 때 웹소켓 연결 종료
     };
   }, [setSocketData]);
 
-
+  const handleLogout = () => {
+    if(window.confirm('정말로 로그아웃 하시겠습니까?')){
+      window.location.href = '/logout';
+      sessionStorage.clear();
+      localStorage.removeItem('auth');
+    }
+  };
+  
   return (
     <div className={styles.container}>
+      <button onClick={handleLogout}>로그아웃</button>
     <header className={styles.header}>
       <div className={styles.userInfo}>
         <div className={styles.avatar}></div>
