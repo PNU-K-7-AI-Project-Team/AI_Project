@@ -16,14 +16,18 @@
     background-color: white;
     padding: 20px;
     border-radius: 5px;
-    width: 90vw; /* 화면 너비의 90% */
-    max-width: 300px; /* 최대 너비는 600px로 제한 */
-    min-width: 300px; /* 최소 너비를 300px로 제한 */
-    max-height: 80vh; /* 화면 높이의 80%로 제한 */
-    overflow-y: auto; /* 컨텐츠가 많을 경우 스크롤 */
+    width: 70%; /* 화면 너비의 90% */
+    max-width: 800px; /* 최대 너비는 600px로 제한 */
+    height: 40%;
+    max-height: 600px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    
   }
   
   .closeButton {
+    align-self: flex-end;
     margin-top: 10px;
     padding: 5px 10px;
     background-color: #f0f0f0;

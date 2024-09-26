@@ -1,5 +1,6 @@
-import { BrowserRouter as Router, Route, Routes, Outlet } from 'react-router-dom'
-import { RecoilRoot, useSetRecoilState } from 'recoil';
+import { BrowserRouter as Router, Route, Routes, Outlet, Navigate } from 'react-router-dom'
+import { RecoilRoot, useSetRecoilState, useRecoilValue } from 'recoil';
+import { authState } from './recoil/Atoms';
 
 import styles from './App.module.css'
 import { useState, useEffect } from 'react';
@@ -31,73 +32,32 @@ function Layout() {
     </div>
   );
 }
-
+function AuthInitializer() {
+  const setAuth = useSetRecoilState(authState);
+  useEffect(() => {
+    const storedAuth = localStorage.getItem('auth');
+    if (storedAuth === 'true') {
+      setAuth(true);
+    }
+  }, [setAuth]);
+  return null;
+}
 function App() {
   const [auth, setAuth] = useState(false);
 
-  // useEffect(() => {
-  //   const token = sessionStorage.getItem('token');
-  //   const expirationTime = sessionStorage.getItem('tokenExpiration');
-  //   if (token && expirationTime && Date.now() < expirationTime) {
-  //     setAuth(true);//토큰이 유효하면 로그인 상태로 설정
-  //   } else {
-  //     sessionStorage.clear();//토큰 만료 또는 유효하지 않으면 로그아웃 처리 
-  //   }
-  // }, []);
-
-  // WebSocket 연결 설정
-  // useEffect(() => {
-  //   console.log('auth', auth)
-  //   if(wsRef.current){
-  //     wsRef.current.close();
-  //   }
-
-  //   if (auth) {
-  //     const url = process.env.REACT_APP_BACKEND_URL;
-  //     wsRef.current = new WebSocket(`${url}pushservice?userId=admin`);
-
-  //     // WebSocket 연결 성공 시 실행되는 이벤트
-  //     wsRef.current.onopen = () => {
-  //       console.log('WebSocket 연결 성공');
-  //     };
-  //     // WebSocket 메시지 수신 시 실행되는 이벤트
-  //     wsRef.current.onmessage = (e) => {
-  //       const data = JSON.parse(e.data);
-  //       console.log('WebSocket 메시지 수신:', data);  // 데이터 수신 확인
-
-  //       // Recoil 상태 업데이트: 각 userCode에 해당하는 데이터 추가
-  //       setHeartbeatData((prevData) => {
-  //         const updatedData = {
-  //           ...prevData,
-  //           [data.userCode]: [...(prevData[data.userCode] || []), data.heartbeat],
-  //         };
-  //         console.log('업데이트된 Recoil 상태:', updatedData);
-  //         console.log('setheartbeatdata',setHeartbeatData)
-  //         console.log('heartbeatState',heartbeatState)
-  //         return updatedData;
-  //       });
-  //     };
-  //     wsRef.current.onerror = (error) => {
-  //       console.error('WebSocket 오류 발생:', error);
-  //     };
-  //     wsRef.current.onclose = (event) => {
-  //       console.log('WebSocket 연결 종료:', event);
-  //     };
-  //   }
-  //   return () => {
-  //     if (wsRef.current) {
-  //       wsRef.current.close();
-  //     }
-  //   };
-  // }, [auth, setHeartbeatData,heartbeatState]);
+  function ProtectedRoute({ children }) {
+    const auth = useRecoilValue(authState);
+    return auth ? children : <Navigate to="/login" />;
+  }
 
   return (
     <RecoilRoot>
+      <AuthInitializer />
       <Router>
         <Routes>
           <Route path="/login" element={<LoginForm setAuth={setAuth} />} className={styles.LoginForm} />
           <Route path="/signup" element={<RegisterForm />} />
-          <Route path="/" element={auth ? <Layout /> : <LoginForm setAuth={setAuth} />}>
+          <Route path="/" element={<Layout />}>
             <Route index element={<MainPage />} />
             <Route path="/boards" element={<BoardMain />} />
             <Route path="/map" element={<NaverMap />} />

@@ -4,18 +4,18 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom'
 import styles from './LoginForm.module.css'
 import { useRecoilState } from 'recoil';
-import { userIdState } from '../recoil/Atoms';
+import { userIdState, authState } from '../recoil/Atoms';
+import { useSetRecoilState } from 'recoil';
 
-export default function LoginForm({ setAuth }) {
-    const [userId, setUserId] = useState('');
+export default function LoginForm() {
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
-    
+    const setAuth = useSetRecoilState(authState);
+    const setUserId = useSetRecoilState(userIdState);
+    const setUserRole = useSetRecoilState(userRoleState);
     const url = process.env.REACT_APP_BACKEND_URL;
     console.log(url)
-    // const instance = axios.create({
-    //     baseURL: url
-    // });    
+
     let token = "";
 
 
@@ -39,7 +39,11 @@ export default function LoginForm({ setAuth }) {
                 sessionStorage.setItem("token", token);
                 console.log("sessionStorage",sessionStorage)
                 setAuth(true);//인증 상태를 true로 설정
-                
+                setUserId(response.userId);
+                setUserRole(response.userRole);
+                localStorage.setItem("auth", true);
+                localStorage.setItem("userId", response.userId);
+                localStorage.setItem("userRole", response.userRole);
                 navigate('/')
             } else {
                 console.error('Login Failed');

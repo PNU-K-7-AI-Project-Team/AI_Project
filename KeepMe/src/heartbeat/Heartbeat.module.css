@@ -1,0 +1,16 @@
+.container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+  }
+  
+  .infoSection {
+    flex: 1;
+    padding-right: 20px;
+  }
+  
+  .graphSection {
+    flex: 2;
+    height: 300px;
+  }

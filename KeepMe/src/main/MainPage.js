@@ -5,18 +5,18 @@ import PCountBar from '../peopleCountBor/PCountBar'
 import DangerList from '../dangerList/DangerList'
 import UserGraph from '../userGraph/UserGraph'
 import BoardList from '../board/BoardList'
-import { useRecoilState } from 'recoil';
-import { socketDataState } from '../recoil/Atoms'; // WebSocket에서 가져온 심박수 데이터
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { socketDataState ,userIdState} from '../recoil/Atoms'; // WebSocket에서 가져온 심박수 데이터
 
 export default function MainPage() {
   const wsRef = useRef(null);
   const [socketData, setSocketData] = useRecoilState(socketDataState);
-
+  const userId = useRecoilValue(userIdState);
 
   useEffect(() => {
     if (!wsRef.current) {
       const url = process.env.REACT_APP_BACKEND_URL;
-      wsRef.current = new WebSocket(`${url}pushservice?userId=admin`);
+      wsRef.current = new WebSocket(`${url}pushservice?userId=${userId}`);
     }
     // WebSocket 연결 성공 시 실행되는 이벤트
     wsRef.current.onopen = () => {
@@ -36,23 +36,15 @@ export default function MainPage() {
           timestamp: new Date().getTime()
         }
       }));
-      // // Recoil 상태 업데이트: 각 userCode에 해당하는 데이터 추가
-      // setHeartbeatData((prevData) => {
-      //   const updatedData = {
-      //     ...prevData,
-      //     [data.userCode]: [...(prevData[data.userCode] || []), data.heartbeat],
-      //   };
-      //   console.log('업데이트된 Recoil 상태:', updatedData);
-      //   console.log('setheartbeatdata', setHeartbeatData)
-      //   console.log('heartbeatState', heartbeatState)
-      //   return updatedData;
-      // });
     };
 
     return () => {
-      wsRef.current.close(); // 컴포넌트가 언마운트될 때 웹소켓 연결 종료
+      if (wsRef.current && wsRef.current.readyState === WebSocket.OPEN) {
+        wsRef.current.close(); // 컴포넌트가 언마운트될 때 웹소켓 연결 종료
+        console.log("WebSocket 연결 종료");
+      }
     };
-  }, [setSocketData]);
+  }, [setSocketData,userIdState]);
 
   return (
     <div className={styles.bg}>
