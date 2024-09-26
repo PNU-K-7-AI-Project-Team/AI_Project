@@ -9,9 +9,11 @@ import com.ai.config.WebSocketConfig;
 import com.ai.dao.RiskPredictionRepository;
 import com.ai.dao.TestGyroRepository;
 import com.ai.dao.UserVitalSignRepository;
+import com.ai.domain.RiskPrediction;
 import com.ai.domain.TestGyro;
 import com.ai.domain.UserVitalSign;
 import com.ai.dto.VitalSignDTO;
+import com.ai.dto.RiskPredictionDTO;
 import com.ai.dto.TestGyroDTO;
 
 import lombok.RequiredArgsConstructor;
@@ -43,17 +45,16 @@ public class WebSocketService {
 				.vitalDate(testGyro.getVitalDate())
 				.build();
 		
-//		// flask 요청 및 응답
-//		flaskService.sendDataToFlask(testGyroDTO);
-//		
-//		// 위험예측결과 전송
-//		RiskPrediction rp = riskRepo.findById(no).orElse(null);
-//		RiskPredictionDTO rpDTO = RiskPredictionDTO.builder()
-//				.userCode(rp.getUserCode())
-//				.registerDate(rp.getRegisterDate())
-//				.predictionRiskLevel(rp.getPredictionRiskLevel())
-//				.build();
-//		wsConfig.sendPushMessage(rpDTO);
+		// flask 요청 및 응답
+		RiskPrediction rp = flaskService.sendDataToFlask(testGyroDTO);
+		
+		// 위험예측결과 전송
+		RiskPredictionDTO rpDTO = RiskPredictionDTO.builder()
+				.userCode(rp.getUserCode())
+				.registerDate(rp.getRegisterDate())
+				.predictionRiskLevel(rp.getPredictionRiskLevel())
+				.build();
+		wsConfig.sendPushMessage(rpDTO);
 		
 
 		// 생체 데이터 전송
@@ -66,6 +67,9 @@ public class WebSocketService {
                 .temperature(vs.getTemperature())
                 .build();
 		wsConfig.sendPushMessage(vitalSignDTO);
+		
+		// 프론트에 메시지전송을 마친 후 riskRepo를 DB에 저장
+		riskRepo.save(rp);
 			
 	}
 }

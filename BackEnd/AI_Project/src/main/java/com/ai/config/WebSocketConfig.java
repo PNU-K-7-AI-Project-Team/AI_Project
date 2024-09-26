@@ -91,7 +91,6 @@ public class WebSocketConfig extends TextWebSocketHandler implements WebSocketCo
 			return;
 		}
 		
-		
 		// FE에 전송할 JSON 메시지객체 생성
 		// TextMessage는 WebSocket을 통해 클라이언트에게 전송할 수 있는 메시지 포맷
 		TextMessage message = new TextMessage(msg);
