@@ -15,10 +15,10 @@ import lombok.ToString;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class PushDTO {
+public class VitalSignDTO {
 	private String userCode;
 	private double heartbeat;
-	private double temeprature;
+	private double temperature;
 	private double latitude;
 	private double longitude;
 	
