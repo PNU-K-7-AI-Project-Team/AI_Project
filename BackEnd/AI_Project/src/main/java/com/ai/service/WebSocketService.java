@@ -32,12 +32,12 @@ public class WebSocketService {
 	private final RiskPredictionRepository riskRepo;
 	private final ConnectNoRepository ConnectNoRepo;
 	
-	private final NoSingleton noSingleton; // 싱글톤
+	private final NoSingleton noSingleton; // 싱글톤: DB에서 한행씩 읽는 no
 	private final WebSocketConfig wsConfig;
 	private final FlaskService flaskService;
 //	private int no = 1;
 	
-	@Scheduled(fixedRate = 1000)
+	@Scheduled(fixedRate = 300)
 	public void pushData() throws IOException {
 		// DB의 user_vital_sign 테이블에서 no를 1씩 증가시키며 해당 행 조회 후 vitalSign 인스턴스에 저장
 		int no = noSingleton.getNo();
