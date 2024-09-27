@@ -1,5 +1,7 @@
 package com.ai.dto;
 
+import com.ai.domain.Role;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

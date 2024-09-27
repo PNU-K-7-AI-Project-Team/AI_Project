@@ -1,4 +1,4 @@
-package com.ai.dao;
+package com.ai.repository;
 
 import java.util.Optional;
 

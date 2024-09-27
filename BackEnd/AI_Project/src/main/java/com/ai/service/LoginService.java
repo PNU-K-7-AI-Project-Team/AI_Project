@@ -7,9 +7,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.ai.dao.UserRepository;
 import com.ai.domain.Role;
 import com.ai.domain.User;
+import com.ai.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
 

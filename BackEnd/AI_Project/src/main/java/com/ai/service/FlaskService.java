@@ -4,9 +4,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
-import com.ai.dao.RiskPredictionRepository;
 import com.ai.domain.RiskPrediction;
 import com.ai.dto.TestGyroDTO;
+import com.ai.repository.RiskPredictionRepository;
 
 import lombok.RequiredArgsConstructor;
 

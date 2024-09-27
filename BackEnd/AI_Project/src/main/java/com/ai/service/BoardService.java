@@ -10,13 +10,13 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import com.ai.dao.BoardRepository;
-import com.ai.dao.UserRepository;
 import com.ai.domain.Board;
 import com.ai.domain.Role;
 import com.ai.domain.User;
 import com.ai.dto.GetBoardsDTO;
 import com.ai.dto.WriteUserDTO;
+import com.ai.repository.BoardRepository;
+import com.ai.repository.UserRepository;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
