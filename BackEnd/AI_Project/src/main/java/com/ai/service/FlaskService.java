@@ -5,7 +5,8 @@ import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import com.ai.domain.RiskPrediction;
-import com.ai.dto.TestGyroDTO;
+import com.ai.dto.GyroDTO;
+import com.ai.dto.VitalAndGyroDTO;
 import com.ai.repository.RiskPredictionRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -18,10 +19,7 @@ public class FlaskService {
 	// 서버의 요청하고 응답을 받는 역할을 동시에 수행하는 객체
 	private final RestTemplate restTemplate; 
 
-//	private final RiskPredictionRepository riskRepo;
-	
-	
-	public RiskPrediction sendDataToFlask(TestGyroDTO dto) {
+	public RiskPrediction sendDataToFlask(VitalAndGyroDTO dto) {
 		String flaskUrl = "http://192.168.0.127:5000";
 		
 		try {
@@ -39,9 +37,6 @@ public class FlaskService {
 						.build();
 				
 				return rp;
-				
-//				// Repository를 사용해 DB에 저장
-//				riskRepo.save(riskPrediction);
 			} else {
 				// 로그 또는 예외 처리: Flask로부터 응답이 없는 경우
 	            System.out.println("Flask 서버로부터 응답을 받지 못했습니다.");

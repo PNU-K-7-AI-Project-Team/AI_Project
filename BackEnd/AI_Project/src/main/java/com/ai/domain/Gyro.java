@@ -22,7 +22,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class TestGyro {
+public class Gyro {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

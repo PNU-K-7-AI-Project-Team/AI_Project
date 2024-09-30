@@ -144,6 +144,7 @@ public class WebSocketConfig extends TextWebSocketHandler implements WebSocketCo
 	
 	
 
+	// 이전 데이터 전송
 	private void sendPreviousData(List<UserVitalSign> vsList, List<RiskPrediction> rpList) {
 		// UserVitalSign 리스트를 VitalSignDTO 리스트로 변환
 		List<VitalSignDTO> vDTOs = vsList.stream()
@@ -208,39 +209,5 @@ public class WebSocketConfig extends TextWebSocketHandler implements WebSocketCo
 	        System.out.println(sess.getRemoteAddress() + ": " + e.getMessage());
 	    }
 	}
-	
-//	// 이전 사용자별 데이터 전송 메서드
-//	public void sendPreviousUserData(String userCode, int currentNo) {
-//		List<UserVitalSign> vsList = vitalRepo.findPreviousUserNo(userCode, currentNo);
-////		List<RiskPrediction> rpList = riskRepo.findPreviousNo(userCode, currentNo);
-//		
-//		// UserVitalSign 리스트를 VitalSignDTO 리스트로 변환
-//		List<VitalSignDTO> vDTOs = vsList.stream()
-//		    .map(vs -> VitalSignDTO.builder()
-//		            .userCode(vs.getUserCode())
-//		            .heartbeat(vs.getHeartbeat())
-//		            .latitude(vs.getLatitude())
-//		            .longitude(vs.getLongitude())
-//		            .temperature(vs.getTemperature())
-//		            .build())
-//		    .collect(Collectors.toList());
-//		
-//		// RiskPrediction 리스트를 RiskpredictionDTO 리스트로 변환
-////		List<RiskPredictionDTO> rDTOs = rpList.stream()
-////				.map(rp -> RiskPredictionDTO.builder()
-////						.userCode(rp.getUserCode())
-////						.no(rp.getNo())
-////						.build())
-////				.collect(Collectors.toList());
-//		
-//		// 이전 vitalSign 데이터 전송
-//		for (VitalSignDTO vDTO : vDTOs ) {
-//			sendPushMessage(vDTO);
-//		}
-//		// 이전 위험 예측 데이터 전송
-////		for (RiskPredictionDTO rDTO : rDTOs) {
-////			wsConfig.sendPushMessage(rDTO);
-////		}
-//	}
 	
 }
