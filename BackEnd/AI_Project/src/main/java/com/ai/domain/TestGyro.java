@@ -22,7 +22,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Gyro {
+public class TestGyro {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -49,4 +49,9 @@ public class Gyro {
 	
 	@Column(nullable = false)
 	private LocalDateTime vitalDate;
+	
+	@Column(length = 45, nullable = false)
+	private String predictedActivity;
+	
+
 }
