@@ -1,102 +1,140 @@
+.bg {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .container {
-    display: flex;
-    flex-wrap: wrap;
-    
-    flex-direction: column;
-    width: 30%;
-    height: 100%;
-    justify-content: center;
-    
-    background: #ACDEAA;
-    padding: 20px;
-    box-sizing: border-box;
-    margin-left: 35%;
-    
-    
-  }
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-items: center;
+  position: absolute;
+  width: 20%;
+  height: 85%;
+  justify-content: center;
+
+  background: #ACDEAA;
+  padding: 20px;
+  box-sizing: border-box;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.logoutIcon {
+  background: none;
+  border: none;
+  cursor: pointer;
+  margin-top: 30px;
+  margin-left: 20px;
+}
+.logoutIcon:hover {
+  transform: scale(1.05);
+}
+.userInfo {
+  display: flex;
+  align-items: center;
+  margin-right: 90px;
+  border-radius: 20px;
+  margin-top: 60px;
   
-  .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-  }
   
-  .userInfo {
-    display: flex;
-    align-items: center;
-    background: #FFFFFF;
-    border-radius: 20px;
-    padding: 15px;
-    margin-bottom: 20px;
-  }
+}
+
+.avatar {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background: #FFFFFF;
+  margin-right: 10px;
+}
+
+
+.userDetails{
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: center;
+}
+
+.userName {
+  display: flex;
+  /* flex-direction: column; */
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 5px;
   
-  .avatar {
-    width: 70px;
-    height: 70px;
-    border-radius: 50%;
-    background: #FFFFFF;
-    margin-right: 15px;
-  }
+}
+
+.userRole {
   
-  .userDetails {
-    flex: 1;
-  }
+  background: #8FBBAF;
+  border-radius: 20px;
+  padding: 2px 10px;
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.8);
+  margin-left: 5px;
+}
+.userCompany {
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.6);
   
-  .userName {
-    font-size: 20px;
-    font-weight: bold;
-    margin-bottom: 5px;
-  }
+}
+
+
+.mainContent {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.card {
+  flex: 1 1 calc(50% - 15px);
+  min-width: 140px;
+  height: 140px;
+  background: #FFFFFF;
+  border-radius: 20px;
   
-  .userCompany {
-    font-size: 14px;
-    color: rgba(0, 0, 0, 0.6);
-  }
+  box-sizing: border-box;
+
+}
+.card p {
+  font-size: 16px;
+  font-weight: bold;
+  color: rgba(0, 0, 0, 0.8);
   
-  .userRole {
-    display: inline-block;
-    background: #8FBBAF;
-    border-radius: 20px;
-    padding: 2px 10px;
-    font-size: 14px;
-    color: rgba(0, 0, 0, 0.8);
+  padding-left: 13px;
+}
+.card:hover {
+  transform: scale(1.03);
+}
+.fullWidthCard {
+  flex-basis: 100%;
+}
+
+.footer {
+  margin-top: auto;
+  text-align: center;
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.4);
+}
+
+@media (max-width: 360px) {
+  .container {
+    padding: 10px;
   }
-  
-  .mainContent {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 15px;
-    margin-bottom: 20px;
-  }
-  
+
   .card {
-    flex: 1 1 calc(50% - 15px);
-    min-width: 140px;
-    height: 140px;
-    background: #FFFFFF;
-    border-radius: 20px;
-    padding: 15px;
-    box-sizing: border-box;
-  }
-  
-  .fullWidthCard {
     flex-basis: 100%;
   }
-  
-  .footer {
-    margin-top: auto;
-    text-align: center;
-    font-size: 14px;
-    color: rgba(0, 0, 0, 0.4);
-  }
-  
-  @media (max-width: 360px) {
-    .container {
-      padding: 10px;
-    }
-  
-    .card {
-      flex-basis: 100%;
-    }
-  }
+}

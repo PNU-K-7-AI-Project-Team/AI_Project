@@ -10,21 +10,6 @@
     justify-content: center;
     z-index: 1000;
 }
-.boardMain{
-    display: flex;
-    flex-direction: column;
-    justify-items: center;
-    position: fixed;
-    width: 1550px;
-    height: 900px;
-    left: 288px;
-    top: 50px;
-    background: #FFFFFF;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    z-index: 999;
-    
-    
-}
 
 .boardWriteContainer{
     display: flex;

@@ -51,7 +51,7 @@ export default function BoardWrite({ onClose }) {
         }
         console.log({ title, userName, dept, content });
         // 제출 후 게시판 목록 페이지로 이동
-        navigate("/main");
+        
 
     };
 

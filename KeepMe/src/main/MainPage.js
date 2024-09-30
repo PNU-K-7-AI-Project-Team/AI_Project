@@ -39,7 +39,9 @@ export default function MainPage() {
             longitude: newData.longitude,
             timestamp: new Date().getTime()
           }
+          
         }));
+        
       };
     }
     return () => {

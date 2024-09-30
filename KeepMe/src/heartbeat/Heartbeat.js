@@ -31,7 +31,7 @@ export default function HeartbeatGraph({ userCode }) {
     // 최고 심박수와 최저 심박수 계산
     const maxHeartbeat = Math.max(...userData.heartbeat);
     const minHeartbeat = Math.min(...userData.heartbeat);
-
+    console.log('userData',userData)
     const data = {
         labels: userData.heartbeat.map((_, index) => index + 1),
         datasets: [{
@@ -48,7 +48,8 @@ export default function HeartbeatGraph({ userCode }) {
                 beginAtZero: false,
                 suggestedMin: Math.min(...userData.heartbeat) - 5,
                 suggestedMax: Math.max(...userData.heartbeat) + 5
-            }
+            },
+            
         },
         animation: {
             duration: 0
@@ -62,7 +63,7 @@ export default function HeartbeatGraph({ userCode }) {
             <div className={styles.infoSection}>
                 <h2>{userCode}의 건강 상태</h2>
                 <p>체온 : {userData.temperature[userData.temperature.length - 1].toFixed(1)}°C</p>
-                 <p>현재 심박수 : {userData.heartbeat[userData.heartbeat.length - 1]} bpm</p>
+                <p>현재 심박수 : {userData.heartbeat[userData.heartbeat.length - 1]} bpm</p>
                 <p>최고 심박수 : {maxHeartbeat} bpm</p>
                 <p>최저 심박수 : {minHeartbeat} bpm</p>
             </div>

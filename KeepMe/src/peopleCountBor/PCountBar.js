@@ -11,7 +11,7 @@ export default function PCountBar({userCount, todayCount}) {
             </div>
             <div className={styles.today}>
                 <h3>금일 투입 인원</h3>
-                <p className={styles.pToday}>{todayCount}</p>
+                <p className={styles.pToday}>{userCount}</p>
             </div>
             <div className={styles.good}>
                 <h3>정상 인원</h3>

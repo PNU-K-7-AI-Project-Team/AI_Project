@@ -40,8 +40,8 @@ export default function LoginForm() {
                     setUserRole('admin');
                     navigate('/main');
                 }else{
-                    
                     setUserRole(userId);
+                    console.log('userrole',userId)
                     navigate('/user');
                 }
             } else {
