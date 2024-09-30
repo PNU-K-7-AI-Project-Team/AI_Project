@@ -11,7 +11,7 @@ export default function Logout({onLogout}) {
         if (onLogout) {
           onLogout();
         }
-        navigate('/login');
+        navigate('/');
     }, [navigate, onLogout]);
     
     useEffect(() => {

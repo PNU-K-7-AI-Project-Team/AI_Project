@@ -34,7 +34,7 @@ export default function BoardList() {
   return (
   
       <div className={styles.bg}>
-        <h3>공지사항</h3>
+        <h3 className={styles.h3Board}>공지사항</h3>
         <div className={styles.boardContainer}>
           <table className={styles.boardTable}>
             <tbody>

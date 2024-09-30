@@ -11,7 +11,7 @@ export default function LoginForm() {
     const [userId, setUserId] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
-    const [, setAuth] = useRecoilState(authState);
+    const [auth, setAuth] = useRecoilState(authState);
     const url = process.env.REACT_APP_BACKEND_URL;
     console.log(url)
     let token = "";
@@ -33,14 +33,14 @@ export default function LoginForm() {
                 token = response.headers.get("Authorization");
                 sessionStorage.setItem("userId", userId);
                 sessionStorage.setItem("token", token);
-                console.log("sessionStorage",sessionStorage)
-                setAuth(true);//인증 상태를 true로 설정
-                localStorage.setItem("auth", true);
-                
+                console.log('afaaf',response.status)
+                setAuth(true);
                 if(userId === 'admin'){
+                    console.log('setauth',setAuth)
                     setUserRole('admin');
-                    navigate('/');
+                    navigate('/main');
                 }else{
+                    
                     setUserRole(userId);
                     navigate('/user');
                 }

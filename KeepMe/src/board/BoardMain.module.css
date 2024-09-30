@@ -1,34 +1,32 @@
 
-
-/* Rectangle 10 */
-.boardContainer {
-    position: absolute;
+.modalOverlay{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5); /* 배경 오버레이 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+.boardMain{
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
+    position: fixed;
     width: 1550px;
     height: 900px;
     left: 288px;
-    top: 100px;
-
+    top: 50px;
     background: #FFFFFF;
-    border-radius: 5px;
-
-}
-
-.text {
-    position: absolute;
-    width: 120px;
-    height: 19px;
-    left: 290px;
-    top: 47px;
-
-    font-style: normal;
-    font-weight: 600;
-    font-size: 16px;
-    line-height: 19px;
-    /* identical to box height */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 999;
     
-    color: #000000;
     
 }
+
 .boardTable {
     width: 100%;
     justify-content: space-between; /* 항목 간격 일정하게 */

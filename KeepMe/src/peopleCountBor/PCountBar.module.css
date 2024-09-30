@@ -8,7 +8,7 @@
     position: absolute;
     width: 19vw;
     height: 8.5vh;
-    z-index: 500;
+    
 }
 .all{
     display: flex;
@@ -33,6 +33,13 @@
     /* identical to box height */
     
     color: rgba(0, 0, 0, 0.7);
+}
+.h3All{
+    margin : 0px;
+}
+.pAll{
+    font-family: 'Jura', sans-serif;
+    font-size: 25px;
 }
 .all:hover{
     
@@ -63,6 +70,17 @@
     /* identical to box height */
     
     color: rgba(0, 0, 0, 0.7);
+}
+.h3Today{
+    margin-top: 1;
+    margin-bottom: 0px;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+}
+.pToday{
+    font-family: 'Jura', sans-serif;
+    font-size: 25px;
 }
 .today:hover{
     color: rgb(0, 0, 0);

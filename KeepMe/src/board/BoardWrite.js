@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import styles from './BoardWrite.module.css';
 import axios from 'axios';
 
-export default function BoardWrite() {
+export default function BoardWrite({ onClose }) {
     const [title, setTitle] = useState('');
     const [userName, setUserName] = useState('');
     const [dept, setDept] = useState('');
@@ -45,23 +45,20 @@ export default function BoardWrite() {
         try{
             await axios.post(`${url}board/write`, { title:title, content:content},{ headers: headers });
             alert("성공적으로 게시글을 등록하였습니다.");
-            navigate("/board");
+            navigate("/main");
         }catch(error){
             setError("게시글 등록에 실패하였습니다.");
         }
         console.log({ title, userName, dept, content });
         // 제출 후 게시판 목록 페이지로 이동
-        navigate('/board');
+        navigate("/main");
+
     };
 
-    const handleCancel = () => {
-        navigate('/board');
-    };
 
     return (
-        <div className={styles.bg}>
-            <h3 className={styles.text}>게시글 작성</h3>
-            <div className={styles.boardWriteContainer}>
+        <div className={styles.modalOverlay}>
+            <div className={styles.boardWriteContainer} onClick={e => e.stopPropagation()}>
                 <form onSubmit={handleSubmit}>
                     {/* {error && <p className={styles.error}>{error}</p>} */}
                     <div className={styles.postWriteContainer}>
@@ -89,7 +86,7 @@ export default function BoardWrite() {
                     </div>
                     <div className={styles.buttonContainer}>
                         <button type="submit" className={styles.submitButton} >확인</button>
-                        <button type="button" onClick={handleCancel} className={styles.cancelButton}>취소</button>
+                        <button type="button" onClick={onClose} className={styles.cancelButton}>취소</button>
                     </div>
                 </form>
             </div>

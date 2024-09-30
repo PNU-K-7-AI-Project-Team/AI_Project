@@ -18,7 +18,11 @@ export const userIdState = atom({
   key: 'userIdState',
   default: '', // 선택된 usercode
 });
-// export const userRoleState = atom({
-//   key: 'userRoleState',
-//   default: '', // 'admin' 또는 'user'
-// });
+export const webSocketState = atom({
+  key: 'webSocketState',
+  default: null,
+});
+export const wsState = atom({
+  key: 'wsState',
+  default: null,
+});

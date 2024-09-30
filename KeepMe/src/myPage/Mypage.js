@@ -69,7 +69,6 @@ function MyPage({ onClose }) {
   return (
     <div className={styles.modalOverlay} onClick={onClose}>
       <div className={styles.mypage} onClick={e => e.stopPropagation()}>
-
         <div className={styles.passwordContainer}>
           <button className={styles.closeButton} onClick={onClose}><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#143A52"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z" /></svg></button>
           <h3>비밀번호 변경</h3>

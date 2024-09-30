@@ -59,7 +59,7 @@ export default function NaverMap({onLocationClick}) {
           map: mapRef.current,
           markers: [],
           disableClickZoom: false,
-          gridSize: 200,
+          gridSize: 120,
           icons: [
             {
               content: '<div style="cursor:pointer;width:40px;height:40px;line-height:42px;font-size:10px;color:white;text-align:center;font-weight:bold;background:rgba(255,90,90,0.9);border-radius:50%;">${count}</div>',

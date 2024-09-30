@@ -3,6 +3,27 @@ import { socketDataState } from "../recoil/Atoms";
 import { useRef } from "react";
 import { Line } from 'react-chartjs-2';
 import styles from './Heartbeat.module.css';
+import {
+    Chart,
+    CategoryScale, // 여기에 'category' 스케일 추가
+    LinearScale,    // y축에 필요한 'linear' 스케일
+    PointElement,
+    LineElement,
+    Title,
+    Tooltip,
+    Legend,
+  } from 'chart.js';
+  
+  // 필요한 컴포넌트와 스케일을 등록
+  Chart.register(
+    CategoryScale,
+    LinearScale,
+    PointElement,
+    LineElement,
+    Title,
+    Tooltip,
+    Legend
+  );
 export default function HeartbeatGraph({ userCode }) {
     const socketData = useRecoilValue(socketDataState);
     const userData = socketData[userCode] || { heartbeat: [], temperature: [] };

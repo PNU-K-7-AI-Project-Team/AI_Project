@@ -6,13 +6,13 @@
     width: 30%;
     height: 100%;
     justify-content: center;
-    min-height: 100vh;
+    
     background: #ACDEAA;
     padding: 20px;
     box-sizing: border-box;
     margin-left: 35%;
     
-    margin-bottom: 5%;
+    
   }
   
   .header {

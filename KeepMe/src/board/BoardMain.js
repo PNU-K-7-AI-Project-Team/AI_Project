@@ -4,7 +4,8 @@ import styles from './BoardMain.module.css'
 import Pagination from '../pagination/Pagination'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-export default function BoardMain() {
+import BoardWrite from './BoardWrite';
+export default function BoardMain({ onClose }) {
   const [currentPage, setCurrentPage] = useState(()=>{
     const savedPage = localStorage.getItem('currentBoardPage');
     return savedPage ? parseInt(savedPage, 10) : 1;
@@ -19,6 +20,7 @@ export default function BoardMain() {
   })
   const navigate = useNavigate();
   // 현재 페이지의 게시글 가져오기
+  const [isWrite, setIsWrite] = useState(false);
 
   const url = process.env.REACT_APP_BACKEND_URL;
   useEffect(() => {
@@ -51,12 +53,13 @@ export default function BoardMain() {
     localStorage.setItem('currentBoardPage', currentPage.toString());
   }, [currentPage, url, postsPerPage]); // currentPage와 url이 변경될 때마다 effect 실행
 
-  const handleWrite = () => {
-    navigate('/board/write');
+  const handleWrite = (e) => {
+    e.preventDefault();
+    setIsWrite(true);
   }
-  const handleHome = () => {
-    navigate('/');
-  }
+  // const handleHome = () => {
+  //   navigate('/');
+  // }
   // 페이지 변경 핸들러
   const paginate = (pageNumber) => {setCurrentPage(pageNumber);
     localStorage.setItem('currentBoardPage', pageNumber.toString());
@@ -71,9 +74,8 @@ export default function BoardMain() {
     navigate(`/board?idx=${idx}`);
   };
   return (
-    <div className={styles.bg}>
-      <h3 className={styles.text}>공지사항</h3>
-      <div className={styles.boardContainer}>
+    <div className={styles.modalOverlay} onClick={onClose}>
+      <div className={styles.boardMain} onClick={e => e.stopPropagation()}>
         <table className={styles.boardTable}>
           <thead>
             <tr>
@@ -97,7 +99,9 @@ export default function BoardMain() {
           </tbody>
         </table>
         <button onClick={handleWrite} className={styles.writeButton}>작성</button>
-        <button onClick={handleHome} className={styles.homeButton}>메인</button>
+        {isWrite && <BoardWrite onClose={onClose} />}
+        <button onClick={onClose} className={styles.homeButton}>닫기</button>
+        {/* <button onClick={handleHome} className={styles.homeButton}>메인</button> */}
          {/* 페이지네이션 컴포넌트 */}
          <div className={styles.paginationContainer}>
          <Pagination
@@ -110,5 +114,6 @@ export default function BoardMain() {
         </div>
       </div>
     </div>
+    
   )
 }

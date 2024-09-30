@@ -10,16 +10,19 @@
     justify-content: center;
     z-index: 1000;
   }
-.mycontainer {
+  .mypage{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-items: center;
     position: absolute;
-    width: 1550px;
-    height: 900px;
-    left: 288px;
-    top: 100px;
-
-    background: #FFFFFF;
-    border-radius: 5px;
-
+    width: 450px;
+    height: 600px;
+    top : 45%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #ECF2F4;
+    border-radius: 10px;
 }
 
 .text {
@@ -57,20 +60,7 @@
         
     }
 }
-.mypage{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-items: center;
-    position: absolute;
-    width: 450px;
-    height: 600px;
-    top : 45%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: #ECF2F4;
-    border-radius: 10px;
-}
+
 .mypage h3{
     font-size: 20px;
     font-weight: 600;

@@ -9,7 +9,7 @@
   height: 100vh;
   left: 0;
   top: 0;
-  z-index: 900;
+  z-index: 100;
   background: #143A52;
   transition: transform 0.2s ease;  /* 슬라이드 애니메이션 */
 }
@@ -48,7 +48,7 @@ color: #ffffffd0;
   border-radius: 5px;
   
   font-size: 15px;
-  z-index: 1000;  /* 사이드바 위에 표시되도록 */
+  /* 사이드바 위에 표시되도록 */
   cursor: pointer;
 }
 .button1:hover{

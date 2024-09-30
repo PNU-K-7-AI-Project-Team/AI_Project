@@ -3,7 +3,7 @@ import styles from './HeaderForm.module.css';
 import Mypage from '../myPage/Mypage';
 import MyPageAuth from '../myPage/MypageAuth';
 
-export default function HeaderForm({ onClose }) {
+export default function HeaderForm() {
   const [isMypageOpen, setIsMypageOpen] = useState(false);
   const [isMypageAuthOpen, setIsMypageAuthOpen] = useState(false);
 

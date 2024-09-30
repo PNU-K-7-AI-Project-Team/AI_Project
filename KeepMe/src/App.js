@@ -19,50 +19,40 @@ import MyPage from './myPage/Mypage';
 import BoardList from './board/BoardList';
 import NaverMap from './map/NaverMap';
 import UserMainPage from './user/UserMainPage';
-function Layout() {
-  return (
-    <div className={styles.bg}>
-      <Footer />
-      <HeaderForm />
-      <SideBarForm />
-      <Outlet />
-    </div>
-  );
-}
-function AuthInitializer() {
-  const setAuth = useSetRecoilState(authState);
-  useEffect(() => {
-    const storedAuth = localStorage.getItem('auth');
-    if (storedAuth === 'true') {
-      setAuth(true);
-    }
-  }, [setAuth]);
-  return null;
-}
+
+
+// function AuthInitializer() {
+//   const setAuth = useSetRecoilState(authState);
+//   useEffect(() => {
+//     const storedAuth = localStorage.getItem('auth') === 'true' || sessionStorage.getItem('auth') === 'true';
+//     setAuth(storedAuth);
+//   }, [setAuth]);
+//   return null;
+// }
 
 function App() {
-  const setAuth = useSetRecoilState(authState);
+  const setAuth = useRecoilValue(authState);
+  console.log('setAuth', setAuth)
 
   return (
     <RecoilRoot>
-      <AuthInitializer />
+      {/* <AuthInitializer /> */}
       <Router>
         <Routes>
-          <Route path="/login" element={<LoginForm/>} className={styles.LoginForm} />
+          <Route path="/" element={<LoginForm />} className={styles.LoginForm} />
           <Route path="/signup" element={<RegisterForm />} />
           <Route path="/user" element={<UserMainPage />} />
-          <Route path="/" element={<Layout />}>
-            <Route index element={<MainPage />} />
-            <Route path="/boards" element={<BoardMain />} />
-            <Route path="/map" element={<NaverMap />} />
-            <Route path="/workerboard" element={<WorkerBoard />} />
-            <Route path="/mypage" element={<MyPage />} />
-            <Route path="/board" element={<BoardDetail />} />
-            <Route path="/board/write" element={<BoardWrite />} />
-            <Route path="/board/edit" element={<BoardEdit />} />
-            <Route path="/logout" element={<Logout onLogout={() => setAuth(false)} />} />
-            <Route path="/boardlist" element={<BoardList />} />
-          </Route>
+          <Route path="/main" element={<MainPage />} />
+          <Route path="/boards" element={<BoardMain />} />
+          <Route path="/map" element={<NaverMap />} />
+          <Route path="/workerboard" element={<WorkerBoard />} />
+          <Route path="/mypage" element={<MyPage />} />
+          <Route path="/board" element={<BoardDetail />} />
+          <Route path="/board/write" element={<BoardWrite />} />
+          <Route path="/board/edit" element={<BoardEdit />} />
+          <Route path="/logout" element={<Logout />} />
+          <Route path="/boardlist" element={<BoardList />} />
+
         </Routes>
       </Router>
     </RecoilRoot>
