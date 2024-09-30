@@ -41,7 +41,7 @@ public class WebSocketService {
 	private final FlaskService flaskService;
 //	private int no = 1;
 	
-	@Scheduled(fixedRate = 20)
+	@Scheduled(fixedRate = 1000)
 	public void pushData() throws IOException {
 		// DB의 user_vital_sign 테이블에서 no를 1씩 증가시키며 해당 행 조회 후 vitalSign 인스턴스에 저장
 		int no = noSingleton.getNo();
@@ -59,20 +59,21 @@ public class WebSocketService {
 				.latitude(vs.getLatitude())
                 .longitude(vs.getLongitude())
                 .temperature(vs.getTemperature())
+                .vitalDate(vs.getVitalDate())
                 .build();
 		
 		// (테스트용: 연결되면 추후에 삭제) 
-//		TestGyro testGyro = testGyroRepo.findById(no).orElse(null);
-//		TestGyroDTO testGyroDTO = TestGyroDTO.builder()
-//				.userCode(testGyro.getUserCode())
-//				.x(testGyro.getX())
-//				.y(testGyro.getY())
-//				.z(testGyro.getZ())
-//				.vitalDate(testGyro.getVitalDate())
-//				.predictedActivity(testGyro.getPredictedActivity()) // 테스트용 행동라벨을 임의로 붙임
-//				.build();
+		TestGyro testGyro = testGyroRepo.findById(no).orElse(null);
+		TestGyroDTO testGyroDTO = TestGyroDTO.builder()
+				.userCode(testGyro.getUserCode())
+				.x(testGyro.getX())
+				.y(testGyro.getY())
+				.z(testGyro.getZ())
+				.vitalDate(testGyro.getVitalDate())
+				.predictedActivity(testGyro.getPredictedActivity()) // 테스트용 행동라벨을 임의로 붙임
+				.build();
 		
-		// (진짜 보낼 것)Flask로 전송하는 testGyro
+		// (진짜 보낼 것)Flask로 전송하는 Gyro
 //		Gyro gyro = gyroRepo.findById(no).orElse(null);
 //		GyroDTO gyroDTO = GyroDTO.builder()
 //				.userCode(gyro.getUserCode())
@@ -81,31 +82,37 @@ public class WebSocketService {
 //				.z(gyro.getZ())
 //				.vitalDate(gyro.getVitalDate())
 //				.build();
-		
+
 		// (진짜 보낼 것)Flask로 전송하는 vitalSign + gyro 데이터 결합한 DTO
 //		VitalAndGyroDTO vitalAndGyroDTO = VitalAndGyroDTO.builder()
 //				.gyroDTO(gyroDTO)
 //				.vitalSignDTO(vitalSignDTO)
 //				.build();
 		
-		// (진짜 보낼것) 결합된 DTO flask 요청 및 응답
-//		RiskPrediction rp = flaskService.sendDataToFlask(vitalAndGyroDTO);
+		// (진짜 보낼 것)Flask로 전송하는 vitalSign + gyro 데이터 결합한 DTO
+		VitalAndGyroDTO vitalAndGyroDTO = VitalAndGyroDTO.builder()
+				.testGyroDTO(testGyroDTO)
+				.vitalSignDTO(vitalSignDTO)
+				.build();
 		
-//		// 위험예측결과 전송
-//		RiskPredictionDTO rpDTO = RiskPredictionDTO.builder()
-//				.userCode(rp.getUserCode())
-//				.registerDate(rp.getRegisterDate())
-//				.predictionRiskLevel(rp.getPredictionRiskLevel())
-//				.build();
+		// (진짜 보낼것) 결합된 DTO flask 요청 및 응답
+		RiskPrediction rp = flaskService.sendDataToFlask(vitalAndGyroDTO);
+		
+		// 위험예측결과 전송
+		RiskPredictionDTO rpDTO = RiskPredictionDTO.builder()
+				.userCode(rp.getUserCode())
+				.registerDate(rp.getRegisterDate())
+				.predictionRiskLevel(rp.getPredictionRiskLevel())
+				.build();
 				
 		// 1. vitalSign 프론트에 전송
 		wsConfig.sendPushMessage(vitalSignDTO);
 				
 		// (진짜 보낼 것)2. riskPrediction 프론트에 전송
-//		wsConfig.sendPushMessage(rpDTO);
+		wsConfig.sendPushMessage(rpDTO);
 			
 		// 프론트에 메시지전송을 마친 후 riskRepo를 DB에 저장
-//		riskRepo.save(rp);	
+		riskRepo.save(rp);	
 		
 		// 행 갯수 세는 싱글턴 객체
 		noSingleton.incrementNo();

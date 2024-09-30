@@ -12,6 +12,6 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 public class VitalAndGyroDTO {
-	private GyroDTO gyroDTO;
+	private TestGyroDTO testGyroDTO;
 	private VitalSignDTO vitalSignDTO;
 }
