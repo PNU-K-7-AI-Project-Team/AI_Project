@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React from 'react'
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'
 import styles from './LoginForm.module.css'
 import { useRecoilState } from 'recoil';
@@ -14,6 +14,14 @@ export default function LoginForm() {
     const [auth, setAuth] = useRecoilState(authState);
     const url = process.env.REACT_APP_BACKEND_URL;
     console.log(url)
+    
+    useEffect(() => {
+        const logged = sessionStorage.getItem('userId');
+        if(logged){
+            navigate('/');
+        }
+    }, [navigate]);
+
     let token = "";
     const login = async (e) => {
         e.preventDefault();//폼 제출 시 기본 동작을 막음

@@ -26,3 +26,11 @@ export const wsState = atom({
   key: 'wsState',
   default: null,
 });
+export const predictionRiskLevelState = atom({
+  key: 'predictionRiskLevelState',
+  default: null,
+});
+export const dangerState = atom({
+  key: 'dangerState',
+  default: null,
+});

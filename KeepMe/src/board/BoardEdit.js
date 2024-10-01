@@ -3,7 +3,7 @@ import styles from './BoardEdit.module.css';
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { useNavigate, useParams, useLocation, useSearchParams } from 'react-router-dom';
-export default function BoardEdit() {
+export default function BoardEdit({onClose,postId}) {
   // const [title, setTitle] = useState('');
   const [editedTitle, setEditedTitle] = useState('');
   const [editedContent, setEditedContent] = useState('');
@@ -24,7 +24,8 @@ export default function BoardEdit() {
   useEffect(() => { 
     const fetchPost = async () => {
       try {
-        const response = await axios.get(`${url}board?idx=${idx}`,{headers:headers});
+        const response = await axios.get(`${url}board?idx=${postId}`,{headers:headers});
+        console.log('response', response);
         const post = response.data;
         setEditedTitle(post.title);
         setEditedContent(post.content);
@@ -35,7 +36,7 @@ export default function BoardEdit() {
       }
     }
     fetchPost();
-  }, [idx, url]);
+  }, [postId, url]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -45,39 +46,34 @@ export default function BoardEdit() {
       return;
     }
     try {
-      await axios.post(`${url}board/edit?idx=${idx}`,
+      await axios.post(`${url}board/edit?idx=${postId}`,
         {
           title: editedTitle, content: editedContent
         }, { headers: headers }
       );
       alert("성공적으로 게시글을 수정하였습니다.");
-      navigate("/boards");
+      onClose();
     } catch (error) {
       if(error.response.status===401){
-        console.error('Error deleting the post:', error);
+        console.error('Error editing the post:', error);
         alert('권한이 없는 사용자입니다.');
-        navigate('/boards');
+        onClose();
       }else{
-        console.error('Error deleting the post:', error);
+        console.error('Error editing the post:', error);
         alert('알 수 없는 오류가 발생했습니다.');
-
+        onClose();
       }
     }
-    // console.log({ title, userName, dept, content });
-    // 제출 후 게시판 목록 페이지로 이동
-    navigate('/boards');
+    
   };
 
-  const handleCancel = () => {
-    navigate('/boards');
-  };
+  
   return (
-    <div className={styles.bg}>
-      <h3 className={styles.text}>게시글 수정</h3>
-      <div className={styles.boardWriteContainer}>
+    <div className={styles.modalOverlay} onClick={onClose}>
+      <div className={styles.boardEditContainer} onClick={e => e.stopPropagation()}>
         <form onSubmit={handleSubmit}>
           {/* {error && <p className={styles.error}>{error}</p>} */}
-          <div className={styles.postWriteContainer}>
+          <div className={styles.postEditContainer}>
             <label htmlFor="title" className={styles.title}>제목</label>
             <input className={styles.writeTitle}
               type="text"
@@ -101,8 +97,8 @@ export default function BoardEdit() {
             />
           </div>
           <div>
-            <button type="submit" className={styles.submitButton} >확인</button>
-            <button type="button" onClick={handleCancel} className={styles.cancelButton}>취소</button>
+            <button type="submit" className={styles.submitButton}>확인</button>
+            <button type="button" onClick={onClose} className={styles.cancelButton}>취소</button>
           </div>
         </form>
       </div>

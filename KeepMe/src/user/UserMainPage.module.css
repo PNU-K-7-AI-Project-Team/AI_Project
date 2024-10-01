@@ -1,19 +1,13 @@
 .bg {
-  display: flex;
+  
   align-items: center;
   justify-content: center;
 }
 
 .container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-items: center;
-  position: absolute;
+  position: fixed;
   width: 20%;
   height: 85%;
-  justify-content: center;
-
   background: #ACDEAA;
   padding: 20px;
   box-sizing: border-box;
@@ -29,6 +23,7 @@
   margin-bottom: 20px;
 }
 .logoutIcon {
+  display: flex;
   background: none;
   border: none;
   cursor: pointer;
@@ -43,9 +38,7 @@
   align-items: center;
   margin-right: 90px;
   border-radius: 20px;
-  margin-top: 60px;
-  
-  
+  margin-top: 50px;
 }
 
 .avatar {
@@ -95,7 +88,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 15px;
-  margin-bottom: 20px;
+ 
 }
 
 .card {
@@ -108,24 +101,47 @@
   box-sizing: border-box;
 
 }
-.card p {
-  font-size: 16px;
+.card h3 {
+  font-size: 18px;
   font-weight: bold;
   color: rgba(0, 0, 0, 0.8);
   
   padding-left: 13px;
 }
+
 .card:hover {
   transform: scale(1.03);
 }
 .fullWidthCard {
   flex-basis: 100%;
 }
-
+.heartbeat{
+  font-size: 28px;
+  font-weight: bold;
+  font-family: 'Jura', sans-serif;
+  color: rgba(0, 0, 0, 0.8);
+  margin-left: 270px;
+  margin-top: -50px;
+}
+.heartbeatsvg{
+  margin-left: 180px;
+ 
+}
+.temperature {
+  font-size: 28px;
+  font-weight: bold;
+  font-family: 'Jura', sans-serif;
+  color: rgba(0, 0, 0, 0.8);
+  margin-left: 270px;
+  margin-top: -50px;
+}
+.temperaturesvg{
+  margin-left: 180px;
+}
 .footer {
-  margin-top: auto;
+  margin-top: 20px;
   text-align: center;
-  font-size: 14px;
+  font-size: 12px;
   color: rgba(0, 0, 0, 0.4);
 }
 

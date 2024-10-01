@@ -1,11 +1,10 @@
 import React from 'react'
 import styles from './WorkerBoard.module.css'
 
-export default function WorkerBoard() {
+export default function WorkerBoard({onClose}) {
     return (
-        <div>
-            <h3 className={styles.text}>작업자 관리</h3>
-            <div className={styles.workerContainer}>
+        <div className={styles.modalOverlay} onClick={onClose}> 
+            <div className={styles.workerContainer} onClick={e => e.stopPropagation()}>
                 <table>
                     <thead>
                         <tr>

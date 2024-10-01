@@ -57,7 +57,7 @@ export default function BoardWrite({ onClose }) {
 
 
     return (
-        <div className={styles.modalOverlay}>
+        <div className={styles.modalOverlay} onClick={onClose}>
             <div className={styles.boardWriteContainer} onClick={e => e.stopPropagation()}>
                 <form onSubmit={handleSubmit}>
                     {/* {error && <p className={styles.error}>{error}</p>} */}

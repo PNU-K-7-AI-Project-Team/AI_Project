@@ -5,8 +5,10 @@ import Pagination from '../pagination/Pagination'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import BoardWrite from './BoardWrite';
+import BoardDetail from './BoardDetail';
+
 export default function BoardMain({ onClose }) {
-  const [currentPage, setCurrentPage] = useState(()=>{
+  const [currentPage, setCurrentPage] = useState(() => {
     const savedPage = localStorage.getItem('currentBoardPage');
     return savedPage ? parseInt(savedPage, 10) : 1;
   });
@@ -17,62 +19,62 @@ export default function BoardMain({ onClose }) {
     number: 0,
     totalElements: 0,
     totalPages: 0,
-  })
-  const navigate = useNavigate();
-  // 현재 페이지의 게시글 가져오기
+  });
+  const [selectedPostId, setSelectedPostId] = useState(null); // 선택된 게시글 저장
+  const [isDetail, setIsDetail] = useState(false);
   const [isWrite, setIsWrite] = useState(false);
+  
 
   const url = process.env.REACT_APP_BACKEND_URL;
+
   useEffect(() => {
-    // loadBoard 함수: 게시판 데이터를 비동기로 가져오는 함수
     const loadBoard = async () => {
       try {
-        // 백엔드 API 호출: 현재 페이지 번호와 게시글 수에 따라 게시글 데이터를 가져옴
-        const response = (await axios.get(`${url}boards`,{
+        const response = (await axios.get(`${url}boards`, {
           params: {
             page: currentPage - 1,
             size: postsPerPage,
           },
-          headers: {'Authorization': sessionStorage.getItem('token')}
+          headers: { 'Authorization': sessionStorage.getItem('token') }
         })).data;
         setDataBoard(response.content);
         setPage({
           size: response.page.size,
-            number: response.page.number,
-            totalElements: response.page.totalElements,
-            totalPages: response.page.totalPages,
-        })
+          number: response.page.number,
+          totalElements: response.page.totalElements,
+          totalPages: response.page.totalPages,
+        });
         console.log(response);
       } catch (error) {
-        // 오류가 발생하면 콘솔에 에러 메시지 출력
         console.error('Error fetching posts:', error);
       }
     };
-    // 컴포넌트가 렌더링될 때와 currentPage 또는 url이 변경될 때마다 loadBoard 함수 호출
     loadBoard();
     localStorage.setItem('currentBoardPage', currentPage.toString());
-  }, [currentPage, url, postsPerPage]); // currentPage와 url이 변경될 때마다 effect 실행
+  }, [currentPage, url, postsPerPage]);
 
   const handleWrite = (e) => {
     e.preventDefault();
     setIsWrite(true);
-  }
-  // const handleHome = () => {
-  //   navigate('/');
-  // }
-  // 페이지 변경 핸들러
-  const paginate = (pageNumber) => {setCurrentPage(pageNumber);
+  };
+
+  const paginate = (pageNumber) => {
+    setCurrentPage(pageNumber);
     localStorage.setItem('currentBoardPage', pageNumber.toString());
-  }
+  };
 
   const dept = {
     HR: '인사',
     IT: '전산관리',
     QM: '품질관리',
   };
+
   const handleRowClick = (idx) => {
-    navigate(`/board?idx=${idx}`);
+    setSelectedPostId(idx); // 선택된 게시글 저장
+    console.log('post', idx);
+    setIsDetail(true); // 디테일 모달 열기
   };
+
   return (
     <div className={styles.modalOverlay} onClick={onClose}>
       <div className={styles.boardMain} onClick={e => e.stopPropagation()}>
@@ -91,20 +93,24 @@ export default function BoardMain({ onClose }) {
               <tr key={post.idx} onClick={() => handleRowClick(post.idx)}>
                 <td>{post.idx}</td>
                 <td>{post.title}</td>
-                <td>{dept[post.dept]}</td> 
+                <td>{dept[post.dept]}</td>
                 <td>{post.userName}</td>
                 <td className={styles.createDate}>{new Date(post.createDate).toLocaleDateString('ko-KR')}</td>
               </tr>
             ))}
           </tbody>
         </table>
+
+        {/* 선택된 게시글이 있을 때만 BoardDetail 모달을 보여줌 */}
+        {isDetail && selectedPostId && <BoardDetail postId={selectedPostId}  onClose={onClose}/>}
+
         <button onClick={handleWrite} className={styles.writeButton}>작성</button>
         {isWrite && <BoardWrite onClose={onClose} />}
         <button onClick={onClose} className={styles.homeButton}>닫기</button>
-        {/* <button onClick={handleHome} className={styles.homeButton}>메인</button> */}
-         {/* 페이지네이션 컴포넌트 */}
-         <div className={styles.paginationContainer}>
-         <Pagination
+
+        {/* 페이지네이션 컴포넌트 */}
+        <div className={styles.paginationContainer}>
+          <Pagination
             postsPerPage={postsPerPage}
             totalPosts={page.totalElements}
             paginate={paginate}
@@ -114,6 +120,5 @@ export default function BoardMain({ onClose }) {
         </div>
       </div>
     </div>
-    
-  )
+  );
 }

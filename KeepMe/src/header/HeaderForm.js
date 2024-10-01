@@ -31,9 +31,10 @@ export default function HeaderForm() {
       localStorage.removeItem('auth');
     }
   };
-
+  
   return (
     <div className={styles.headerbar}>
+      
       <button className={styles.mypage} onClick={openMypageAuth}>
         마이페이지
       </button>

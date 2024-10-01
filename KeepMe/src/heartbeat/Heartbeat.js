@@ -1,6 +1,5 @@
 import { useRecoilValue } from "recoil";
 import { socketDataState } from "../recoil/Atoms";
-import { useRef } from "react";
 import { Line } from 'react-chartjs-2';
 import styles from './Heartbeat.module.css';
 import {
@@ -61,11 +60,12 @@ export default function HeartbeatGraph({ userCode }) {
     return (
         <div className={styles.container}>
             <div className={styles.infoSection}>
-                <h2>{userCode}의 건강 상태</h2>
+                <h2>작업자 : {userCode}</h2>
                 <p>체온 : {userData.temperature[userData.temperature.length - 1].toFixed(1)}°C</p>
-                <p>현재 심박수 : {userData.heartbeat[userData.heartbeat.length - 1]} bpm</p>
-                <p>최고 심박수 : {maxHeartbeat} bpm</p>
-                <p>최저 심박수 : {minHeartbeat} bpm</p>
+                <p>현재 심박수 : {userData.heartbeat[userData.heartbeat.length - 1].toFixed(1)} bpm</p>
+                <p>최고 심박수 : {maxHeartbeat.toFixed(1)} bpm</p>
+                <p>최저 심박수 : {minHeartbeat.toFixed(1)} bpm</p>
+                <p>예측 위험 등급 : {userData.predictionRiskLevel}</p>
             </div>
             <div className={styles.graphSection}>
                 <Line data={data} options={options} />

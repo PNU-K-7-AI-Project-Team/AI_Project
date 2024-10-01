@@ -2,8 +2,10 @@
 .sidebar {
   display: flex;
   flex-direction: column;
+  flex-grow: 1;
   align-items: center;
   justify-content: center;
+  flex-wrap: wrap;
   position: fixed;
   width: 220px;
   height: 100vh;
@@ -11,9 +13,11 @@
   top: 0;
   z-index: 100;
   background: #143A52;
-  transition: transform 0.2s ease;  /* 슬라이드 애니메이션 */
+  transition: transform 0.2s ease;
+  /* 슬라이드 애니메이션 */
 }
-.keepme{
+
+.keepme {
   flex-grow: 1;
   align-items: center;
   justify-content: space-around;
@@ -21,67 +25,81 @@
   margin: 0px;
   width: 20vw;
   height: 10vh;
-  left:35px;
+  left: 35px;
   top: 0px;
   font-family: 'Jura', sans-serif;
   font-style: normal;
   font-weight: 100;
   font-size: 36px;
-  
-/* identical to box height */
 
-color: #ffffffd0;
+  /* identical to box height */
+
+  color: #ffffffd0;
 }
-.keepme:hover{
+
+.keepme:hover {
   color: white;
 }
-.button1{
-  position: fixed;
+
+.button1 {
+  display: flex;
+  flex-wrap: wrap;
+  flex-grow: 1;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
   width: 100px;
   height: 3vh;
-  
+
   left: 26px;
   top: 400px;
   background-color: #143A52;
   color: rgba(255, 255, 255, 0.63);
   border: none;
   border-radius: 5px;
-  
+
   font-size: 15px;
   /* 사이드바 위에 표시되도록 */
   cursor: pointer;
 }
-.button1:hover{
+
+.button1:hover {
   color: white;
 }
-.button2{
+
+.button2 {
   position: fixed;
   width: 100px;
   height: 3vh;
-  
+
   left: 35px;
   top: 450px;
   background-color: #143A52;
   color: rgba(255, 255, 255, 0.63);
   border: none;
   border-radius: 5px;
-  
+
   font-size: 15px;
-  z-index: 1000;  /* 사이드바 위에 표시되도록 */
+ 
+  /* 사이드바 위에 표시되도록 */
   cursor: pointer;
-} 
-.button2:hover{
+}
+
+.button2:hover {
   color: white;
 }
 
 /* 사이드바 숨김 상태 */
 .hideSidebar {
-  transform: translateX(-100%);  /* 사이드바를 왼쪽으로 숨김 */
+  transform: translateX(-100%);
+  /* 사이드바를 왼쪽으로 숨김 */
 }
 
 /* 사이드바 보여지는 상태 */
 .showSidebar {
-  transform: translateX(0);  /* 사이드바가 보이도록 설정 */
+  transform: translateX(0);
+  /* 사이드바가 보이도록 설정 */
 }
 
 /* 사이드바 토글 버튼 스타일 */
@@ -96,24 +114,28 @@ color: #ffffffd0;
   border-radius: 5px;
   padding: 10px 15px;
   font-size: 16px;
-  z-index: 1000;  /* 사이드바 위에 표시되도록 */
+  z-index: 1000;
+  /* 사이드바 위에 표시되도록 */
   cursor: pointer;
 }
 
 /* 작은 화면에서 사이드바 숨기기 (미디어 쿼리) */
 @media (max-width: 768px) {
   .sidebar {
-    transform: translateX(-100%);  /* 기본적으로 사이드바를 숨김 */
+    transform: translateX(-100%);
+    /* 기본적으로 사이드바를 숨김 */
   }
 
   .toggleButton {
-    display: block;  /* 작은 화면에서 토글 버튼 보이기 */
+    display: block;
+    /* 작은 화면에서 토글 버튼 보이기 */
   }
 }
 
 /* 큰 화면에서는 항상 사이드바 보이기 */
 @media (min-width: 2000px) {
   .toggleButton {
-    display: none;  /* 큰 화면에서는 토글 버튼 숨기기 */
+    display: none;
+    /* 큰 화면에서는 토글 버튼 숨기기 */
   }
 }

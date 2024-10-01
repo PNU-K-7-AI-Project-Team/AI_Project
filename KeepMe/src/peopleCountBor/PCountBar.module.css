@@ -41,10 +41,7 @@
     font-family: 'Jura', sans-serif;
     font-size: 25px;
 }
-.all:hover{
-    
-    color: rgb(0, 0, 0);
-}
+
 
 
 .today{
@@ -60,7 +57,7 @@
     left: 35vw;
     top: 5vw;
     
-    background: #FFFFFF;
+    background: #1efd008f;
     border-radius: 5px;
     
     font-style: normal;
@@ -82,9 +79,7 @@
     font-family: 'Jura', sans-serif;
     font-size: 25px;
 }
-.today:hover{
-    color: rgb(0, 0, 0);
-}
+
 .good{
     display: flex;
     flex-wrap: wrap;
@@ -98,7 +93,7 @@
     left: 55vw;
     top: 5vw;
     
-    background: #FFFFFF;
+    background: #ff9100c5;
     border-radius: 5px;
     
     font-style: normal;
@@ -107,11 +102,10 @@
    
     /* identical to box height */
     
-    color: rgba(0, 0, 0, 0.7);
+    color: rgb(255, 255, 255);
 }
-.good:hover{
-    color: rgb(0, 0, 0);
-}
+
+
 .bad{
     display: flex;
     flex-wrap: wrap-reverse;
@@ -125,7 +119,7 @@
     left: 75vw;
     top: 5vw;
     
-    background: rgba(247, 0, 0, 0.75);
+    background: #fa2222c9;
     border-radius: 5px;
     padding-left: 20px;
    
@@ -137,9 +131,7 @@
     
     color: rgba(255, 255, 255, 0.9);
 }
-.bad:hover{
-    color: rgb(187, 255, 0);
-}
+
 @media (max-width: 1100px) {
     .container{
       display: none;
