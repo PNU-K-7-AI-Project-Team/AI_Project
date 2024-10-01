@@ -54,44 +54,56 @@ public class WebSocketService {
 		// 생체 데이터 전송 DTO (Flask에 testGyro + vitalSignDTO 먼저 전송 후 응답 받으면,
 		// 1. vitalSignDTO를 프론트에 먼저 전송
 		// 2. riskPredictionDTO를 프론트에 전송
-		UserVitalSign vs = vitalRepo.findById(no).orElse(null);
+//		UserVitalSign vs = vitalRepo.findById(no).orElse(null);
 		
 //		// (최종)Vital Gyro 통합 테이블
-//		VitalGyro vg = vgRepo.findById(no).orElse(null);
-//		
-//		// (최종) Flask에 전송할 DTO
-//		FlaskRequestDTO fqDTO = FlaskRequestDTO.builder()
-//				.userCode(vg.getUserCode())
-//				.temperature(vg.getTemperature())
-//				.outsideTemperature(vg.getOutsideTemperature())
-//				.x(vg.getX())
-//				.y(vg.getY())
-//				.z(vg.getZ())
-//				.build();
-//		
-//		// (최종) 결합된 DTO flask 요청 후 응답
+		VitalGyro vg = vgRepo.findById(no).orElse(null);
+		
+		// (최종) Flask에 전송할 DTO
+		FlaskRequestDTO fqDTO = FlaskRequestDTO.builder()
+				.userCode(vg.getUserCode())
+				.temperature(vg.getTemperature())
+				.outsideTemperature(vg.getOutsideTemperature())
+				.x(vg.getX())
+				.y(vg.getY())
+				.z(vg.getZ())
+				.build();
+		
+		// (최종) 결합된 DTO flask 요청 후 응답
 //		RiskPrediction rp = flaskService.sendDataToFlask(fqDTO);
 			
 		// (테스트용: 연결되면 추후에 삭제) 
-		TestGyro testGyro = testGyroRepo.findById(no).orElse(null);
+//		TestGyro testGyro = testGyroRepo.findById(no).orElse(null);
 
 		
-		// (테스트용) Flask로 전송하는 (생체 + Gyro) 데이터 DTO
-		GyroAndVitalDTO gyroAndVitalDTO = GyroAndVitalDTO.builder()
-				.userCode(vs.getUserCode())
-				.temperature(vs.getTemperature())
-				.outsideTemperature(vs.getOutsideTemperature())
-				.vitalDate(vs.getVitalDate())
-				.x(testGyro.getX())
-				.y(testGyro.getY())
-				.z(testGyro.getZ())
-				.build();
+//		// (테스트용) Flask로 전송하는 (생체 + Gyro) 데이터 DTO
+//		GyroAndVitalDTO gyroAndVitalDTO = GyroAndVitalDTO.builder()
+//				.userCode(vs.getUserCode())
+//				.temperature(vs.getTemperature())
+//				.outsideTemperature(vs.getOutsideTemperature())
+//				.vitalDate(vs.getVitalDate())
+//				.x(testGyro.getX())
+//				.y(testGyro.getY())
+//				.z(testGyro.getZ())
+//				.build();
 				
 		// (테스트용) 결합된 DTO flask 요청 및 응답
-		RiskPrediction rp = flaskService.sendDataToFlask(gyroAndVitalDTO);
+//		RiskPrediction rp = flaskService.sendDataToFlask(gyroAndVitalDTO);
 		
 		
-//		// (최종)Vital + RiskPrediction(생체신호+예측분석 DTO) 프론트 전송용
+		// (최종)Vital + RiskPrediction(생체신호+예측분석 DTO) 프론트 전송용
+		FlaskResponseDTO frDTO = FlaskResponseDTO.builder()
+				.workDate(vg.getWorkDate())
+				.userCode(vg.getUserCode())
+				.heartbeat(vg.getHeartbeat())
+				.temperature(vg.getTemperature())
+				.outsideTemperature(vg.getOutsideTemperature())
+				.latitude(vg.getLatitude())
+				.longitude(vg.getLongitude())
+				.vitalDate(vg.getVitalDate())
+//				.predictionRiskLevel(rp.getPredictionRiskLevel())
+				.build();
+		
 //		FlaskResponseDTO frDTO = FlaskResponseDTO.builder()
 //				.workDate(vg.getWorkDate())
 //				.userCode(vg.getUserCode())
@@ -101,26 +113,14 @@ public class WebSocketService {
 //				.latitude(vg.getLatitude())
 //				.longitude(vg.getLongitude())
 //				.vitalDate(vg.getVitalDate())
-//				.predictionRiskLevel(rp.getPredictionRiskLevel())
+////				.predictionRiskLevel(rp.getPredictionRiskLevel())
 //				.build();
-		
-		FlaskResponseDTO frDTO = FlaskResponseDTO.builder()
-				.workDate(vs.getWorkDate())
-				.userCode(vs.getUserCode())
-				.heartbeat(vs.getHeartbeat())
-				.temperature(vs.getTemperature())
-				.outsideTemperature(vs.getOutsideTemperature())
-				.latitude(vs.getLatitude())
-				.longitude(vs.getLongitude())
-				.vitalDate(vs.getVitalDate())
-				.predictionRiskLevel(rp.getPredictionRiskLevel())
-				.build();
 				
 		// (진짜 보낼 것)2. riskPrediction 프론트에 전송
 		wsConfig.sendPushMessage(frDTO);
 			
 		// 프론트에 메시지전송을 마친 후 riskRepo를 DB에 저장
-		riskRepo.save(rp);	
+//		riskRepo.save(rp);	
 		
 		// 행 갯수 세는 싱글턴 객체
 		noSingleton.incrementNo();

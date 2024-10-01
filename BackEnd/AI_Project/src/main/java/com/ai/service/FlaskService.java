@@ -21,7 +21,7 @@ public class FlaskService {
 	private final RestTemplate restTemplate; 
 
 	// testGyroDTO 전송
-	public RiskPrediction sendDataToFlask(GyroAndVitalDTO dto) {
+	public RiskPrediction sendDataToFlask(FlaskRequestDTO dto) {
 		String flaskUrl = "http://192.168.0.131:5000";
 		
 		try {

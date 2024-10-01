@@ -151,70 +151,68 @@ public class WebSocketConfig extends TextWebSocketHandler implements WebSocketCo
 	
 	
 
-	// 이전 데이터 전송 (이전 데이터는 위험분석 필요없으므로 VitalSign만 전송해도됨)
-	private void sendPreviousData(List<VitalDTO> vDTOs) {
-		// 이전 vitalSign 데이터 전송
-		for (VitalDTO vDTO : vDTOs ) {
-			sendPushMessage(vDTO);
-		}
-	}
-	
-// 이전 사용자별 데이터 전송 메서드
-	public void sendPreviousUserData(String userCode, int currentNo) {
-		List<VitalDTO> vsList = vitalRepo.findPreviousUserNo(userCode, currentNo);
-		sendPreviousData(vsList);
-	}
-	
-// 이전 사용자별 데이터 전송 메서드
-	public void sendPreviousAllData(int currentNo) {
-		List<VitalDTO> list = new ArrayList<>();
-		List<Object[]> result = new ArrayList<>();
-		result = vitalRepo.findPreviousAllNo(currentNo);
-		for (Object[] row : result) {
-			list.add(VitalDTO.builder()
-					.userCode(row[0].toString())
-					.workDate(((java.sql.Date) row[1]).toLocalDate())
-					.heartbeat((double) row[2])
-					.temperature((double) row[3])
-					.outsideTemperature((double) row[4])
-					.latitude((double) row[5])
-					.longitude((double) row[6])
-					.build());
-		}
-		sendPreviousData(list);
-	}
-	
-//	// (최종) 이전 데이터 전송 (이전 데이터는 위험분석 필요없으므로 VitalSign만 전송해도됨)
-//	private void sendPreviousData(List<VitalGyro> vgList) {
-//		// UserVitalSign 리스트를 VitalSignDTO 리스트로 변환
-//		List<VitalDTO> vDTOs = vgList.stream()
-//		    .map(vs -> VitalDTO.builder()
-//		            .userCode(vs.getUserCode())
-//		            .heartbeat(vs.getHeartbeat())
-//		            .latitude(vs.getLatitude())
-//		            .longitude(vs.getLongitude())
-//		            .temperature(vs.getTemperature())
-//		            .vitalDate(vs.getVitalDate())
-//		            .build())
-//		    .collect(Collectors.toList());
-//							
+//	// 이전 데이터 전송 (이전 데이터는 위험분석 필요없으므로 VitalSign만 전송해도됨)
+//	private void sendPreviousData(List<VitalDTO> vDTOs) {
 //		// 이전 vitalSign 데이터 전송
 //		for (VitalDTO vDTO : vDTOs ) {
 //			sendPushMessage(vDTO);
 //		}
 //	}
 //	
-//	// 이전 사용자별 데이터 전송 메서드
-//		public void sendPreviousUserData(String userCode, int currentNo) {
-//			List<VitalGyro> vgList = vgRepo.findPreviousUserNo(userCode, currentNo);
-//			sendPreviousData(vgList);
+//// 이전 사용자별 데이터 전송 메서드
+//	public void sendPreviousUserData(String userCode, int currentNo) {
+//		List<VitalDTO> vsList = vitalRepo.findPreviousUserNo(userCode, currentNo);
+//		sendPreviousData(vsList);
+//	}
+//	
+//// 이전 사용자별 데이터 전송 메서드
+//	public void sendPreviousAllData(int currentNo) {
+//		List<VitalDTO> list = new ArrayList<>();
+//		List<Object[]> result = new ArrayList<>();
+//		result = vitalRepo.findPreviousAllNo(currentNo);
+//		for (Object[] row : result) {
+//			list.add(VitalDTO.builder()
+//					.userCode(row[0].toString())
+//					.workDate(((java.sql.Date) row[1]).toLocalDate())
+//					.heartbeat((double) row[2])
+//					.temperature((double) row[3])
+//					.outsideTemperature((double) row[4])
+//					.latitude((double) row[5])
+//					.longitude((double) row[6])
+//					.build());
 //		}
-//		
-//	// 이전 사용자별 데이터 전송 메서드
-//		public void sendPreviousAllData(int currentNo) {
-//			List<VitalGyro> vgList = vgRepo.findPreviousAllNo(currentNo);
-//			sendPreviousData(vgList);
-//		}
+//		sendPreviousData(list);
+//	}
+	
+	// (최종) 이전 데이터 전송 (이전 데이터는 위험분석 필요없으므로 VitalSign만 전송해도됨)
+	private void sendPreviousData(List<VitalDTO> vDTOs) {			
+		// 이전 vital 데이터 전송
+		for (VitalDTO vDTO : vDTOs ) {
+			sendPushMessage(vDTO);
+		}
+	}
+	
+	// (최종) 이전 사용자별 데이터 전송 메서드
+		public void sendPreviousUserData(String userCode, int currentNo) {
+			List<VitalDTO> list = new ArrayList<>();
+			List<Object[]> result = new ArrayList<>();
+			result = vgRepo.findPreviousUserNo(userCode, currentNo);
+			for (Object[] row : result) {
+				list.add(vitalDtoBuilder(row));
+			}
+			sendPreviousData(list);
+		}
+		
+	// (최종) 이전 사용자별 데이터 전송 메서드
+		public void sendPreviousAllData(int currentNo) {
+			List<VitalDTO> list = new ArrayList<>();
+			List<Object[]> result = new ArrayList<>();
+			result = vgRepo.findPreviousAllNo(currentNo);
+			for (Object[] row : result) {
+				list.add(vitalDtoBuilder(row));
+			}
+			sendPreviousData(list);
+		}
 	
 	
 	// 클라이언트와 웹소켓 연결 후 처음 보낸 no 추출 후 DB에 저장
@@ -235,4 +233,16 @@ public class WebSocketConfig extends TextWebSocketHandler implements WebSocketCo
 	    }
 	}
 	
+	// Object[] 배열을 VitalDTO로 변환하는 메서드
+	private VitalDTO vitalDtoBuilder(Object[] row) {
+	    return VitalDTO.builder()
+	            .userCode(row[0].toString())
+	            .workDate(((java.sql.Date) row[1]).toLocalDate()) // java.sql.Date를 LocalDate로 변환
+	            .heartbeat((double) row[2])
+	            .temperature((double) row[3])
+	            .outsideTemperature((double) row[4])
+	            .latitude((double) row[5])
+	            .longitude((double) row[6])
+	            .build();
+	}
 }
