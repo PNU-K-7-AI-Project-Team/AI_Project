@@ -14,17 +14,23 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+
+// Flask 전송용 DTO (생체+예측)
 @Getter @Setter @ToString
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class RiskPredictionDTO {	
+public class GyroAndVitalDTO {
 	private String userCode;
-	
-	// JSON 직렬화, 역직렬화 
+	private double heartbeat;
+	private double temperature;
+	private double outsideTemperature;
+
 	@JsonSerialize(using = LocalDateTimeSerializer.class)
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
-	private LocalDateTime registerDate;
-	
-	private int predictionRiskLevel;
+	private LocalDateTime vitalDate;
+	private float x;
+	private float y;
+	private float z;
+	private String predictedActivity;
 }

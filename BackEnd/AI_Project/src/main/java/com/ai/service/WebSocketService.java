@@ -1,6 +1,8 @@
 package com.ai.service;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,8 +24,9 @@ import com.ai.repository.UserVitalSignRepository;
 import com.ai.util.NoSingleton;
 import com.ai.dto.RiskPredictionDTO;
 import com.ai.dto.TestGyroDTO;
-import com.ai.dto.GyroDTO;
-import com.ai.dto.VitalAndGyroDTO;
+import com.ai.dto.GyroAndVitalDTO;
+
+import com.ai.dto.RiskAndVitalDTO;
 
 import lombok.RequiredArgsConstructor;
 
@@ -39,7 +42,6 @@ public class WebSocketService {
 	private final NoSingleton noSingleton; // 싱글톤: DB에서 한행씩 읽는 no
 	private final WebSocketConfig wsConfig;
 	private final FlaskService flaskService;
-//	private int no = 1;
 	
 	@Scheduled(fixedRate = 1000)
 	public void pushData() throws IOException {
@@ -47,69 +49,46 @@ public class WebSocketService {
 		int no = noSingleton.getNo();
 		System.out.println("no: " + no);
 		
-
-		
 		// 생체 데이터 전송 DTO (Flask에 testGyro + vitalSignDTO 먼저 전송 후 응답 받으면,
 		// 1. vitalSignDTO를 프론트에 먼저 전송
 		// 2. riskPredictionDTO를 프론트에 전송
 		UserVitalSign vs = vitalRepo.findById(no).orElse(null);
-		VitalSignDTO vitalSignDTO = VitalSignDTO.builder()
-				.userCode(vs.getUserCode())
-				.heartbeat(vs.getHeartbeat())
-				.latitude(vs.getLatitude())
-                .longitude(vs.getLongitude())
-                .temperature(vs.getTemperature())
-                .vitalDate(vs.getVitalDate())
-                .build();
-		
+	
 		// (테스트용: 연결되면 추후에 삭제) 
 		TestGyro testGyro = testGyroRepo.findById(no).orElse(null);
-		TestGyroDTO testGyroDTO = TestGyroDTO.builder()
-				.userCode(testGyro.getUserCode())
+
+		
+		// Flask로 전송하는 (생체 + Gyro) 데이터 DTO
+		GyroAndVitalDTO gyroAndVitalDTO = GyroAndVitalDTO.builder()
+				.userCode(vs.getUserCode())
+				.temperature(vs.getTemperature())
+				.outsideTemperature(vs.getOutsideTemperature())
+				.vitalDate(vs.getVitalDate())
 				.x(testGyro.getX())
 				.y(testGyro.getY())
 				.z(testGyro.getZ())
-				.vitalDate(testGyro.getVitalDate())
-				.predictedActivity(testGyro.getPredictedActivity()) // 테스트용 행동라벨을 임의로 붙임
 				.build();
-		
-		// (진짜 보낼 것)Flask로 전송하는 Gyro
-//		Gyro gyro = gyroRepo.findById(no).orElse(null);
-//		GyroDTO gyroDTO = GyroDTO.builder()
-//				.userCode(gyro.getUserCode())
-//				.x(gyro.getX())
-//				.y(gyro.getY())
-//				.z(gyro.getZ())
-//				.vitalDate(gyro.getVitalDate())
-//				.build();
-
-		// (진짜 보낼 것)Flask로 전송하는 vitalSign + gyro 데이터 결합한 DTO
-//		VitalAndGyroDTO vitalAndGyroDTO = VitalAndGyroDTO.builder()
-//				.gyroDTO(gyroDTO)
-//				.vitalSignDTO(vitalSignDTO)
-//				.build();
-		
-		// (진짜 보낼 것)Flask로 전송하는 vitalSign + gyro 데이터 결합한 DTO
-		VitalAndGyroDTO vitalAndGyroDTO = VitalAndGyroDTO.builder()
-				.testGyroDTO(testGyroDTO)
-				.vitalSignDTO(vitalSignDTO)
-				.build();
+				
 		
 		// (진짜 보낼것) 결합된 DTO flask 요청 및 응답
-		RiskPrediction rp = flaskService.sendDataToFlask(vitalAndGyroDTO);
+		RiskPrediction rp = flaskService.sendDataToFlask(gyroAndVitalDTO);
 		
-		// 위험예측결과 전송
-		RiskPredictionDTO rpDTO = RiskPredictionDTO.builder()
-				.userCode(rp.getUserCode())
-				.registerDate(rp.getRegisterDate())
+		
+		// Vital + RiskPrediction(생체신호+예측분석 DTO) 프론트 전송용
+		RiskAndVitalDTO rvDTO = RiskAndVitalDTO.builder()
+				.workDate(vs.getWorkDate())
+				.userCode(vs.getUserCode())
+				.heartbeat(vs.getHeartbeat())
+				.temperature(vs.getTemperature())
+				.outsideTemperature(vs.getOutsideTemperature())
+				.latitude(vs.getLatitude())
+				.longitude(vs.getLongitude())
+				.vitalDate(vs.getVitalDate())
 				.predictionRiskLevel(rp.getPredictionRiskLevel())
 				.build();
 				
-		// 1. vitalSign 프론트에 전송
-		wsConfig.sendPushMessage(vitalSignDTO);
-				
 		// (진짜 보낼 것)2. riskPrediction 프론트에 전송
-		wsConfig.sendPushMessage(rpDTO);
+		wsConfig.sendPushMessage(rvDTO);
 			
 		// 프론트에 메시지전송을 마친 후 riskRepo를 DB에 저장
 		riskRepo.save(rp);	

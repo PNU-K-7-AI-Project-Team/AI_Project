@@ -21,7 +21,6 @@ public class TestGyroDTO {
 	private float x;
 	private float y;
 	private float z;
-	private LocalDateTime vitalDate;
 	private String predictedActivity; // 테스트용에는 행동 라벨을 붙여놓음
 	
 }

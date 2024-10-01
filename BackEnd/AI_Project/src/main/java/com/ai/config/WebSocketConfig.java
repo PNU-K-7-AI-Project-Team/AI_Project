@@ -30,6 +30,7 @@ import com.ai.util.NoSingleton;
 import com.ai.domain.ConnectNo;
 import com.ai.domain.RiskPrediction;
 import com.ai.domain.UserVitalSign;
+import com.ai.dto.RiskAndVitalDTO;
 import com.ai.dto.RiskPredictionDTO;
 
 // WebSocket 연결을 설정
@@ -101,14 +102,15 @@ public class WebSocketConfig extends TextWebSocketHandler implements WebSocketCo
 	    ObjectMapper objectMapper = new ObjectMapper();
 	    String msg = null;
 	    VitalSignDTO vsDTO = null;
-	    RiskPredictionDTO rpDTO = null;
+//	    RiskPredictionDTO rpDTO = null;
+	    RiskAndVitalDTO rvDTO = null;
 	    
 		try { // objectMapper를 통한 JSON 형태로 직렬화
 			if (dto instanceof VitalSignDTO) {
 				vsDTO = (VitalSignDTO) dto;
 				msg = objectMapper.writeValueAsString(dto);
-			} else if (dto instanceof RiskPredictionDTO) {
-				rpDTO = (RiskPredictionDTO) dto;
+			} else if (dto instanceof RiskAndVitalDTO) {
+				rvDTO = (RiskAndVitalDTO) dto;
 				msg = objectMapper.writeValueAsString(dto);
 			}
 		} catch (JsonProcessingException e) {
@@ -128,12 +130,13 @@ public class WebSocketConfig extends TextWebSocketHandler implements WebSocketCo
 					Map<String, Object> map = sess.getAttributes();
 					String userCode = (String) map.get("userCode");
 					
-					if (vsDTO != null) {
-						if (userCode.equals("0") || userCode.equals(vsDTO.getUserCode())) {
+					if (rvDTO != null) {
+						if (userCode.equals("0") || userCode.equals(rvDTO.getUserCode())) {
 							sendMessageToClient(sess, message, userCode, msg);
 						} 
-					} else if (rpDTO != null) {
-						if (userCode.equals("0") || userCode.equals(rpDTO.getUserCode())) {
+					} 
+					else if (vsDTO != null) {
+						if (userCode.equals("0") || userCode.equals(vsDTO.getUserCode())) {
 							sendMessageToClient(sess, message, userCode, msg);
 						} 
 					}
@@ -144,8 +147,8 @@ public class WebSocketConfig extends TextWebSocketHandler implements WebSocketCo
 	
 	
 
-	// 이전 데이터 전송
-	private void sendPreviousData(List<UserVitalSign> vsList, List<RiskPrediction> rpList) {
+	// 이전 데이터 전송 (이전 데이터는 위험분석 필요없으므로 VitalSign만 전송해도됨)
+	private void sendPreviousData(List<UserVitalSign> vsList) {
 		// UserVitalSign 리스트를 VitalSignDTO 리스트로 변환
 		List<VitalSignDTO> vDTOs = vsList.stream()
 		    .map(vs -> VitalSignDTO.builder()
@@ -154,40 +157,26 @@ public class WebSocketConfig extends TextWebSocketHandler implements WebSocketCo
 		            .latitude(vs.getLatitude())
 		            .longitude(vs.getLongitude())
 		            .temperature(vs.getTemperature())
+		            .vitalDate(vs.getVitalDate())
 		            .build())
 		    .collect(Collectors.toList());
-					
-//		RiskPrediction 리스트를 RiskpredictionDTO 리스트로 변환
-//		List<RiskPredictionDTO> rDTOs = rpList.stream()
-//				.map(rp -> RiskPredictionDTO.builder()
-//						.userCode(rp.getUserCode())
-//						.no(rp.getNo())
-//						.build())
-//				.collect(Collectors.toList());
-					
+							
 		// 이전 vitalSign 데이터 전송
 		for (VitalSignDTO vDTO : vDTOs ) {
 			sendPushMessage(vDTO);
 		}
-		// 이전 위험 예측 데이터 전송
-//		for (RiskPredictionDTO rDTO : rDTOs) {
-//			wsConfig.sendPushMessage(rDTO);
-//		}
 	}
 	
 // 이전 사용자별 데이터 전송 메서드
 	public void sendPreviousUserData(String userCode, int currentNo) {
 		List<UserVitalSign> vsList = vitalRepo.findPreviousUserNo(userCode, currentNo);
-//		List<RiskPrediction> rpList = riskRepo.findPreviousNo(userCode, currentNo);
-		sendPreviousData(vsList, null);
-		
+		sendPreviousData(vsList);
 	}
 	
 // 이전 사용자별 데이터 전송 메서드
 	public void sendPreviousAllData(int currentNo) {
 		List<UserVitalSign> vsList = vitalRepo.findPreviousAllNo(currentNo);
-//		List<RiskPrediction> rpList = riskRepo.findPreviousNo(userCode, currentNo);
-		sendPreviousData(vsList, null);
+		sendPreviousData(vsList);
 	}
 	
 	
