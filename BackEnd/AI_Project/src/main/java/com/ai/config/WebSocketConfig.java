@@ -1,6 +1,8 @@
 package com.ai.config;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -22,16 +24,16 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import lombok.RequiredArgsConstructor;
 
-import com.ai.dto.VitalSignDTO;
+import com.ai.dto.VitalDTO;
 import com.ai.repository.ConnectNoRepository;
 import com.ai.repository.UserVitalSignRepository;
-
+import com.ai.repository.VitalGyroRepository;
 import com.ai.util.NoSingleton;
 import com.ai.domain.ConnectNo;
 import com.ai.domain.RiskPrediction;
 import com.ai.domain.UserVitalSign;
-import com.ai.dto.RiskAndVitalDTO;
-import com.ai.dto.RiskPredictionDTO;
+import com.ai.domain.VitalGyro;
+import com.ai.dto.FlaskResponseDTO;
 
 // WebSocket 연결을 설정
 @Configuration
@@ -46,6 +48,9 @@ public class WebSocketConfig extends TextWebSocketHandler implements WebSocketCo
 	private final NoSingleton noSingleton;
 	private final ConnectNoRepository connectRepo;
 	private final UserVitalSignRepository vitalRepo;
+	
+	private final VitalGyroRepository vgRepo;
+	
 	
 	// WebSocket 연결명 설정 (ws://localhost:8080/pushservice) ==> WebSocketConfigurer
 	@Override
@@ -101,16 +106,15 @@ public class WebSocketConfig extends TextWebSocketHandler implements WebSocketCo
 	    // PushDTO 객체를 JSON으로 변환
 	    ObjectMapper objectMapper = new ObjectMapper();
 	    String msg = null;
-	    VitalSignDTO vsDTO = null;
-//	    RiskPredictionDTO rpDTO = null;
-	    RiskAndVitalDTO rvDTO = null;
+	    VitalDTO vsDTO = null;
+	    FlaskResponseDTO rvDTO = null;
 	    
 		try { // objectMapper를 통한 JSON 형태로 직렬화
-			if (dto instanceof VitalSignDTO) {
-				vsDTO = (VitalSignDTO) dto;
+			if (dto instanceof VitalDTO) {
+				vsDTO = (VitalDTO) dto;
 				msg = objectMapper.writeValueAsString(dto);
-			} else if (dto instanceof RiskAndVitalDTO) {
-				rvDTO = (RiskAndVitalDTO) dto;
+			} else if (dto instanceof FlaskResponseDTO) {
+				rvDTO = (FlaskResponseDTO) dto;
 				msg = objectMapper.writeValueAsString(dto);
 			}
 		} catch (JsonProcessingException e) {
@@ -148,37 +152,69 @@ public class WebSocketConfig extends TextWebSocketHandler implements WebSocketCo
 	
 
 	// 이전 데이터 전송 (이전 데이터는 위험분석 필요없으므로 VitalSign만 전송해도됨)
-	private void sendPreviousData(List<UserVitalSign> vsList) {
-		// UserVitalSign 리스트를 VitalSignDTO 리스트로 변환
-		List<VitalSignDTO> vDTOs = vsList.stream()
-		    .map(vs -> VitalSignDTO.builder()
-		            .userCode(vs.getUserCode())
-		            .heartbeat(vs.getHeartbeat())
-		            .latitude(vs.getLatitude())
-		            .longitude(vs.getLongitude())
-		            .temperature(vs.getTemperature())
-		            .vitalDate(vs.getVitalDate())
-		            .build())
-		    .collect(Collectors.toList());
-							
+	private void sendPreviousData(List<VitalDTO> vDTOs) {
 		// 이전 vitalSign 데이터 전송
-		for (VitalSignDTO vDTO : vDTOs ) {
+		for (VitalDTO vDTO : vDTOs ) {
 			sendPushMessage(vDTO);
 		}
 	}
 	
 // 이전 사용자별 데이터 전송 메서드
 	public void sendPreviousUserData(String userCode, int currentNo) {
-		List<UserVitalSign> vsList = vitalRepo.findPreviousUserNo(userCode, currentNo);
+		List<VitalDTO> vsList = vitalRepo.findPreviousUserNo(userCode, currentNo);
 		sendPreviousData(vsList);
 	}
 	
 // 이전 사용자별 데이터 전송 메서드
 	public void sendPreviousAllData(int currentNo) {
-		List<UserVitalSign> vsList = vitalRepo.findPreviousAllNo(currentNo);
-		sendPreviousData(vsList);
+		List<VitalDTO> list = new ArrayList<>();
+		List<Object[]> result = new ArrayList<>();
+		result = vitalRepo.findPreviousAllNo(currentNo);
+		for (Object[] row : result) {
+			list.add(VitalDTO.builder()
+					.userCode(row[0].toString())
+					.workDate(((java.sql.Date) row[1]).toLocalDate())
+					.heartbeat((double) row[2])
+					.temperature((double) row[3])
+					.outsideTemperature((double) row[4])
+					.latitude((double) row[5])
+					.longitude((double) row[6])
+					.build());
+		}
+		sendPreviousData(list);
 	}
 	
+//	// (최종) 이전 데이터 전송 (이전 데이터는 위험분석 필요없으므로 VitalSign만 전송해도됨)
+//	private void sendPreviousData(List<VitalGyro> vgList) {
+//		// UserVitalSign 리스트를 VitalSignDTO 리스트로 변환
+//		List<VitalDTO> vDTOs = vgList.stream()
+//		    .map(vs -> VitalDTO.builder()
+//		            .userCode(vs.getUserCode())
+//		            .heartbeat(vs.getHeartbeat())
+//		            .latitude(vs.getLatitude())
+//		            .longitude(vs.getLongitude())
+//		            .temperature(vs.getTemperature())
+//		            .vitalDate(vs.getVitalDate())
+//		            .build())
+//		    .collect(Collectors.toList());
+//							
+//		// 이전 vitalSign 데이터 전송
+//		for (VitalDTO vDTO : vDTOs ) {
+//			sendPushMessage(vDTO);
+//		}
+//	}
+//	
+//	// 이전 사용자별 데이터 전송 메서드
+//		public void sendPreviousUserData(String userCode, int currentNo) {
+//			List<VitalGyro> vgList = vgRepo.findPreviousUserNo(userCode, currentNo);
+//			sendPreviousData(vgList);
+//		}
+//		
+//	// 이전 사용자별 데이터 전송 메서드
+//		public void sendPreviousAllData(int currentNo) {
+//			List<VitalGyro> vgList = vgRepo.findPreviousAllNo(currentNo);
+//			sendPreviousData(vgList);
+//		}
 	
 	
 	// 클라이언트와 웹소켓 연결 후 처음 보낸 no 추출 후 DB에 저장
