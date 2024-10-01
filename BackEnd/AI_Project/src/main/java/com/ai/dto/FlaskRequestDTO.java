@@ -1,10 +1,15 @@
 package com.ai.dto;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 
 import lombok.AllArgsConstructor;
@@ -24,13 +29,19 @@ public class FlaskRequestDTO {
 	private double heartbeat;
 	private double temperature;
 	private double outsideTemperature;
+	
+	
 
-	@JsonSerialize(using = LocalDateTimeSerializer.class)
-    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
-	private LocalDateTime vitalDate;
-	private float x;
-	private float y;
-	private float z;
+	@JsonSerialize(using = LocalDateSerializer.class)
+    @JsonDeserialize(using = LocalDateDeserializer.class)
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+	private LocalDate workDate;
+	
+	private float[] gyroData;
+	
+//	private float x;
+//	private float y;
+//	private float z;
 	private String predictedActivity;
 	
 }

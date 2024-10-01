@@ -29,8 +29,8 @@ public class RiskPrediction {
 	private String userCode;
 	
 	@Column(nullable = false)
-	private LocalDateTime registerDate;
+	private LocalDateTime workDate;
 	
 	@Column(nullable = false)
-	private int predictionRiskLevel;
+	private int riskFlag;
 }

@@ -26,12 +26,10 @@ import lombok.RequiredArgsConstructor;
 
 import com.ai.dto.VitalDTO;
 import com.ai.repository.ConnectNoRepository;
-import com.ai.repository.UserVitalSignRepository;
 import com.ai.repository.VitalGyroRepository;
 import com.ai.util.NoSingleton;
 import com.ai.domain.ConnectNo;
 import com.ai.domain.RiskPrediction;
-import com.ai.domain.UserVitalSign;
 import com.ai.domain.VitalGyro;
 import com.ai.dto.FlaskResponseDTO;
 
@@ -47,8 +45,6 @@ public class WebSocketConfig extends TextWebSocketHandler implements WebSocketCo
 	private final CustomHandshakeInterceptor customInter;
 	private final NoSingleton noSingleton;
 	private final ConnectNoRepository connectRepo;
-	private final UserVitalSignRepository vitalRepo;
-	
 	private final VitalGyroRepository vgRepo;
 	
 	
@@ -149,41 +145,7 @@ public class WebSocketConfig extends TextWebSocketHandler implements WebSocketCo
 		    }
 	}
 	
-	
 
-//	// 이전 데이터 전송 (이전 데이터는 위험분석 필요없으므로 VitalSign만 전송해도됨)
-//	private void sendPreviousData(List<VitalDTO> vDTOs) {
-//		// 이전 vitalSign 데이터 전송
-//		for (VitalDTO vDTO : vDTOs ) {
-//			sendPushMessage(vDTO);
-//		}
-//	}
-//	
-//// 이전 사용자별 데이터 전송 메서드
-//	public void sendPreviousUserData(String userCode, int currentNo) {
-//		List<VitalDTO> vsList = vitalRepo.findPreviousUserNo(userCode, currentNo);
-//		sendPreviousData(vsList);
-//	}
-//	
-//// 이전 사용자별 데이터 전송 메서드
-//	public void sendPreviousAllData(int currentNo) {
-//		List<VitalDTO> list = new ArrayList<>();
-//		List<Object[]> result = new ArrayList<>();
-//		result = vitalRepo.findPreviousAllNo(currentNo);
-//		for (Object[] row : result) {
-//			list.add(VitalDTO.builder()
-//					.userCode(row[0].toString())
-//					.workDate(((java.sql.Date) row[1]).toLocalDate())
-//					.heartbeat((double) row[2])
-//					.temperature((double) row[3])
-//					.outsideTemperature((double) row[4])
-//					.latitude((double) row[5])
-//					.longitude((double) row[6])
-//					.build());
-//		}
-//		sendPreviousData(list);
-//	}
-	
 	// (최종) 이전 데이터 전송 (이전 데이터는 위험분석 필요없으므로 VitalSign만 전송해도됨)
 	private void sendPreviousData(List<VitalDTO> vDTOs) {			
 		// 이전 vital 데이터 전송

@@ -6,8 +6,7 @@ import org.springframework.web.client.RestTemplate;
 
 import com.ai.domain.RiskPrediction;
 import com.ai.dto.FlaskRequestDTO;
-import com.ai.dto.GyroAndVitalDTO;
-import com.ai.dto.TestGyroDTO;
+
 import com.ai.repository.RiskPredictionRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -22,7 +21,7 @@ public class FlaskService {
 
 	// testGyroDTO 전송
 	public RiskPrediction sendDataToFlask(FlaskRequestDTO dto) {
-		String flaskUrl = "http://192.168.0.131:5000";
+		String flaskUrl = "http://192.168.0.127:5000";
 		
 		try {
 			RiskPrediction response = restTemplate.postForObject(flaskUrl, dto, RiskPrediction.class);
@@ -34,8 +33,8 @@ public class FlaskService {
 				// 응답 받은 데이터를 DB에 저장
 				RiskPrediction rp = RiskPrediction.builder()
 						.userCode(response.getUserCode())
-						.registerDate(response.getRegisterDate())
-						.predictionRiskLevel(response.getPredictionRiskLevel())
+						.workDate(response.getWorkDate())
+						.riskFlag(response.getRiskFlag())
 						.build();
 				
 				return rp;
