@@ -1,15 +1,4 @@
-.container{
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: row;
-    flex-grow: 1;
-    align-items: center;
-    justify-content: space-around;
-    position: absolute;
-    width: 19vw;
-    height: 8.5vh;
-    
-}
+
 .all{
     display: flex;
     flex-wrap: wrap;
@@ -21,7 +10,7 @@
     width: 19vw;
     height: 8.5vh;
     left: 15vw;
-    top: 5vw;
+    top: 3vw;
     
     background: #FFFFFF;
     border-radius: 5px;
@@ -55,9 +44,9 @@
     width: 19vw;
     height: 8.5vh;
     left: 35vw;
-    top: 5vw;
+    top: 3vw;
     
-    background: #55f840c2;
+    background: #3afa6ad5;
     border-radius: 5px;
     
     font-style: normal;
@@ -91,9 +80,9 @@
     width: 19vw;
     height: 8.5vh;
     left: 55vw;
-    top: 5vw;
+    top: 3vw;
     
-    background: #ff9100c5;
+    background: #ff9100b7;
     border-radius: 5px;
     
     font-style: normal;
@@ -117,7 +106,7 @@
     width: 19vw;
     height: 8.5vh;
     left: 75vw;
-    top: 5vw;
+    top: 3vw;
     
     background: #fa2222c9;
     border-radius: 5px;

@@ -4,6 +4,7 @@ import Modal from '../modal/Modal';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { selectedUserCodeState, socketDataState } from '../recoil/Atoms';
 import HeartbeatGraph from '../heartbeat/Heartbeat';
+import Line from './Line';
 
 export default function NaverMap({ onLocationClick }) {
   const socketData = useRecoilValue(socketDataState); // WebSocket 데이터를 가져옴
@@ -30,7 +31,7 @@ export default function NaverMap({ onLocationClick }) {
         iconUrl = '/img/danger2.png'; // 경고 상태일 때 (필요에 따라 이미지 변경)
         break;
       default:
-        iconUrl = '/img/normal2.png'; // 기본 이미지 (예외 처리용)
+        iconUrl = '/img/normal.png'; // 기본 이미지 (예외 처리용)
     }
 
     // 마커 생성
@@ -38,9 +39,7 @@ export default function NaverMap({ onLocationClick }) {
       position,
       icon: {
         url: iconUrl,
-        size: new naver.maps.Size(50, 100),
-        origin: new naver.maps.Point(0, 0),
-        anchor: new naver.maps.Point(25, 50),
+       
       },
       title: `User ${userCode}`,
     });
@@ -138,6 +137,7 @@ export default function NaverMap({ onLocationClick }) {
   return (
     <div>
       <div id="map" className={styles.map} /> {/* 맵이 렌더링될 div */}
+    
       {isModalOpen && selectedUserCode && (
         <Modal isOpen={isModalOpen} onClose={handleCloseModal}>
           {selectedUserCode && <HeartbeatGraph userCode={selectedUserCode} />} {/* 선택된 사용자 코드에 따른 그래프 표시 */}

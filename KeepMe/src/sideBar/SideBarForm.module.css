@@ -11,7 +11,7 @@
   height: 100vh;
   left: 0;
   top: 0;
-  z-index: 100;
+  z-index: 400;
   background: #143A52;
   transition: transform 0.2s ease;
   /* 슬라이드 애니메이션 */

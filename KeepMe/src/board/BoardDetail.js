@@ -98,7 +98,7 @@ export default function BoardDetail({onClose, postId}) {
                 <div className={styles.contentContainer}>
                     <p>{post.content}</p>
                 </div>
-                <button className={styles.BackbuttonContainer} onClick={onClose}>목록</button>
+                <button className={styles.BackbuttonContainer} onClick={onClose}>닫기</button>
                 <button className={styles.EditbuttonContainer} onClick={handleEditButton}>수정</button>
                 {isEdit && <BoardEdit onClose={onClose} postId={postId}/>}
                 <button className={styles.DeletebuttonContainer} onClick={handleDeleteButton}>삭제</button>

@@ -2,11 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from './BoardList.module.css';
 import axios from 'axios';
-
+import BoardDetail from './BoardDetail';
 export default function BoardList() {
   const navigate = useNavigate();
   const [dataBoard, setDataBoard] = useState([]);
-
+  const [isDetail, setIsDetail] = useState(false);
+  const [selectedPostId, setSelectedPostId] = useState(null);
   const url = process.env.REACT_APP_BACKEND_URL;
 
   useEffect(() => {
@@ -28,12 +29,16 @@ export default function BoardList() {
   }, [url]);
 
   const handleRowClick = (idx) => {
-    navigate(`/board?idx=${idx}`);
+    setSelectedPostId(idx); // 선택된 게시글 저장
+    console.log('post', idx);
+    setIsDetail(true); // 디테일 모달 열기
   };
-
+const onClose = () => {
+  setIsDetail(false);
+  setSelectedPostId(null);
+}
   return (
-  
-      <div className={styles.bg}>
+      <div className={styles.bg} >
         <h3 className={styles.h3Board}>공지사항</h3>
         <div className={styles.boardContainer}>
           <table className={styles.boardTable}>
@@ -47,6 +52,8 @@ export default function BoardList() {
               ))}
             </tbody>
           </table>
+           {/* 선택된 게시글이 있을 때만 BoardDetail 모달을 보여줌 */}
+        {isDetail && selectedPostId && <BoardDetail postId={selectedPostId} onClose={onClose} />}
         </div>
       </div>
     
