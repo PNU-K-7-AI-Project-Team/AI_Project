@@ -27,18 +27,7 @@ public class FlaskResponseDTO {
 	
 	
 	private String userCode;
-	private double heartbeat;
-	private double temperature;
-	private double outsideTemperature;
-	private double latitude;
-	private double longitude;
-	
-	// JSON 직렬화, 역직렬화 
-	@JsonSerialize(using = LocalDateTimeSerializer.class)
-	@JsonDeserialize(using = LocalDateTimeDeserializer.class)
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss.SSS")
-	private LocalDateTime vitalDate;
-	
+
 	@JsonSerialize(using = LocalDateSerializer.class)
 	@JsonDeserialize(using = LocalDateDeserializer.class)
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")

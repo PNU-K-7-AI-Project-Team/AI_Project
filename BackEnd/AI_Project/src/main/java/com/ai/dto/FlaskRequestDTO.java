@@ -38,10 +38,7 @@ public class FlaskRequestDTO {
 	private LocalDate workDate;
 	
 	private float[] gyroData;
-	
-//	private float x;
-//	private float y;
-//	private float z;
+
 	private String predictedActivity;
 	
 }

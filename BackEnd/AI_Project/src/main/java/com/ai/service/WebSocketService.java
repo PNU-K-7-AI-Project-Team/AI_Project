@@ -5,10 +5,12 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.springframework.web.reactive.function.client.WebClient;
 
 import com.ai.config.WebSocketConfig;
 import com.ai.domain.ConnectNo;
@@ -36,18 +38,34 @@ public class WebSocketService {
 	private final NoSingleton noSingleton; // 싱글톤: DB에서 한행씩 읽는 no
 	private final WebSocketConfig wsConfig;
 	private final FlaskService flaskService;
+	private final WebClient webClient;
 	
-	@Scheduled(fixedRate = 20)
+	@Scheduled(fixedRate = 1000)
 	public void pushData() throws IOException {
 		// DB의 user_vital_sign 테이블에서 no를 1씩 증가시키며 해당 행 조회 후 vitalSign 인스턴스에 저장
 		int no = noSingleton.getNo();
 		System.out.println("no: " + no);
 
-		
-//		// (최종)Vital Gyro 통합 테이블
+		// (최종)Vital Gyro 통합 테이블
 		VitalGyro vg = vgRepo.findById(no).orElse(null);
 		
-//		List<Float> gyroData = Arrays.asList(vg.getX(), vg.getY(), vg.getZ()); // x, y, z 값을 리스트로 묶음
+		if(vg == null) {
+			return; // DB 데이터가 더이상 조회 안되면 종료
+		}
+		
+		// (최종)Vital DTO
+		VitalDTO vitalDTO = VitalDTO.builder()
+				.workDate(vg.getWorkDate())
+				.userCode(vg.getUserCode())
+				.heartbeat(vg.getHeartbeat())
+				.temperature(vg.getTemperature())
+				.outsideTemperature(vg.getOutsideTemperature())
+				.latitude(vg.getLatitude())
+				.longitude(vg.getLongitude())
+				.build();
+					
+		// vitalDTO 프론트에 전송(DB에 있는 생체신호 1행씩 20ms 주기로 전송)
+		wsConfig.sendPushMessage(vitalDTO);
 		
 		// (최종) Flask에 전송할 DTO
 		FlaskRequestDTO fqDTO = FlaskRequestDTO.builder()
@@ -58,30 +76,36 @@ public class WebSocketService {
 				.gyroData(new float[] {vg.getX(), vg.getY(), vg.getZ()})
 				.build();
 		
-		// (최종) 결합된 DTO flask 요청 후 응답
-		RiskPrediction rp = flaskService.sendDataToFlask(fqDTO);
+		CompletableFuture<RiskPrediction> futureResponse = sendDataToFlaskAsync(fqDTO);
+		
+		futureResponse.thenAccept(rp -> {
+			FlaskResponseDTO frDTO = FlaskResponseDTO.builder()
+					.workDate(vg.getWorkDate())
+					.userCode(vg.getUserCode())
+					.riskFlag(rp.getRiskFlag())
+					.build();
 			
-		// (최종)Vital + RiskPrediction(생체신호+예측분석 DTO) 프론트 전송용
-		FlaskResponseDTO frDTO = FlaskResponseDTO.builder()
-				.workDate(vg.getWorkDate())
-				.userCode(vg.getUserCode())
-				.heartbeat(vg.getHeartbeat())
-				.temperature(vg.getTemperature())
-				.outsideTemperature(vg.getOutsideTemperature())
-				.latitude(vg.getLatitude())
-				.longitude(vg.getLongitude())
-				.vitalDate(vg.getVitalDate())
-				.riskFlag(rp.getRiskFlag())
-				.build();
-					
-		// (진짜 보낼 것)2. riskPrediction 프론트에 전송
-		wsConfig.sendPushMessage(frDTO);
+			wsConfig.sendPushMessage(frDTO);
 			
-		// 프론트에 메시지전송을 마친 후 riskRepo를 DB에 저장
-		riskRepo.save(rp);	
+			riskRepo.save(rp);
+		}).exceptionally(ex -> {
+			System.err.println("에러 발생: " + ex.getMessage());
+			return null;
+		});
+		
+		
 		
 		// 행 갯수 세는 싱글턴 객체
 		noSingleton.incrementNo();
+	}
+	
+	private CompletableFuture<RiskPrediction> sendDataToFlaskAsync(FlaskRequestDTO fqDTO) {
+		return webClient.post()
+				.uri("http://192.168.0.127:5000")
+				.bodyValue(fqDTO)
+				.retrieve()
+				.bodyToMono(RiskPrediction.class)
+				.toFuture();
 	}
 	
 }
