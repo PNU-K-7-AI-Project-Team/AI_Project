@@ -109,9 +109,9 @@
   padding-left: 13px;
 }
 
-.card:hover {
+/* .card:hover {
   transform: scale(1.03);
-}
+} */
 .fullWidthCard {
   flex-basis: 100%;
 }
@@ -124,7 +124,7 @@
   margin-top: -50px;
 }
 .heartbeatsvg{
-  margin-left: 180px;
+  margin-left: 200px;
  
 }
 .temperature {
@@ -136,7 +136,7 @@
   margin-top: -50px;
 }
 .temperaturesvg{
-  margin-left: 180px;
+  margin-left: 200px;
 }
 .footer {
   margin-top: 20px;

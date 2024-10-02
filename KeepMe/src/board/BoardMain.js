@@ -23,7 +23,7 @@ export default function BoardMain({ onClose }) {
   const [selectedPostId, setSelectedPostId] = useState(null); // 선택된 게시글 저장
   const [isDetail, setIsDetail] = useState(false);
   const [isWrite, setIsWrite] = useState(false);
-  
+
 
   const url = process.env.REACT_APP_BACKEND_URL;
 
@@ -79,7 +79,7 @@ export default function BoardMain({ onClose }) {
     <div className={styles.modalOverlay} onClick={onClose}>
       <div className={styles.boardMain} onClick={e => e.stopPropagation()}>
         <table className={styles.boardTable}>
-          <thead>
+          <thead className={styles.boardtablethead}>
             <tr>
               <th>번호</th>
               <th>제목</th>
@@ -102,7 +102,7 @@ export default function BoardMain({ onClose }) {
         </table>
 
         {/* 선택된 게시글이 있을 때만 BoardDetail 모달을 보여줌 */}
-        {isDetail && selectedPostId && <BoardDetail postId={selectedPostId}  onClose={onClose}/>}
+        {isDetail && selectedPostId && <BoardDetail postId={selectedPostId} onClose={onClose} />}
 
         <button onClick={handleWrite} className={styles.writeButton}>작성</button>
         {isWrite && <BoardWrite onClose={onClose} />}

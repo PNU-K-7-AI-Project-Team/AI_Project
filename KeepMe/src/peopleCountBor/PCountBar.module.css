@@ -57,7 +57,7 @@
     left: 35vw;
     top: 5vw;
     
-    background: #1efd008f;
+    background: #55f840c2;
     border-radius: 5px;
     
     font-style: normal;
@@ -66,7 +66,7 @@
    
     /* identical to box height */
     
-    color: rgba(0, 0, 0, 0.7);
+    color: rgb(255, 255, 255);
 }
 .h3Today{
     margin-top: 1;

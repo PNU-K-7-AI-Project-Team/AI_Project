@@ -4,7 +4,7 @@ export default function DangerList() {
   return (
     <div className={styles.container}>
       <div className={styles.bg}>
-        <h3>위험자 리스트</h3>
+        {/* <h3>위험자 리스트</h3> */}
       </div>
     </div>
   )
