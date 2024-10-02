@@ -1,5 +1,6 @@
 package com.ai.domain;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import jakarta.persistence.Column;
@@ -21,16 +22,35 @@ import lombok.ToString;
 @Entity
 @Builder
 public class RiskPrediction {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int no;
 	
-	@Column(length = 8, nullable = false)
+	@Id
+	@Column(length = 8)
 	private String userCode;
 	
 	@Column(nullable = false)
-	private LocalDateTime workDate;
+	private LocalDate workDate;
 	
 	@Column(nullable = false)
 	private int riskFlag;
+	
+	@Column(nullable = false)
+	private double heartbeat;
+	
+	@Column(nullable = false)
+	private double temperature;
+	
+	@Column(nullable = false)
+	private double outsideTemperature;
+	
+	@Column(nullable = false)
+	private double latitude;
+	
+	@Column(nullable = false)
+	private double longitude;
+	
+	@Column(nullable = false)
+	private LocalDateTime vitalDate;
+	
+	@Column(length = 45, nullable = false)
+	private String activity;
 }

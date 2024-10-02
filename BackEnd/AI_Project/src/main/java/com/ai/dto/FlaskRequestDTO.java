@@ -2,7 +2,6 @@ package com.ai.dto;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -19,26 +18,34 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-//Flask 전송용 DTO (생체+예측)
 @Getter @Setter @ToString
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class FlaskRequestDTO {
+
 	private String userCode;
-	private double heartbeat;
-	private double temperature;
-	private double outsideTemperature;
-	
-	
 
 	@JsonSerialize(using = LocalDateSerializer.class)
-    @JsonDeserialize(using = LocalDateDeserializer.class)
+	@JsonDeserialize(using = LocalDateDeserializer.class)
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
 	private LocalDate workDate;
 	
+	@JsonSerialize(using = LocalDateTimeSerializer.class)
+	@JsonDeserialize(using = LocalDateTimeDeserializer.class)
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss.SSS")
+	private LocalDateTime vitalDate;
+
+	private double heartbeat;
+	
+	private double latitude;
+	
+	private double longitude;
+	
+	private double temperature;
+	
+	private double outsideTemperature;
+	
 	private float[] gyroData;
 
-	private String predictedActivity;
-	
 }

@@ -33,5 +33,22 @@ public class FlaskResponseDTO {
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
 	private LocalDate workDate;
 	
+	@JsonSerialize(using = LocalDateTimeSerializer.class)
+	@JsonDeserialize(using = LocalDateTimeDeserializer.class)
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss.SSS")
+	private LocalDateTime vitalDate;
+	
 	private int riskFlag;
+	
+	private double heartbeat;
+	
+	private double latitude;
+	
+	private double longitude;
+	
+	private double temperature;
+	
+	private double outsideTemperature;
+	
+	private String activity;
 }
