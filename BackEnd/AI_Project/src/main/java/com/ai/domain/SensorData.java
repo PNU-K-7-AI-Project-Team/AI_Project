@@ -3,8 +3,6 @@ package com.ai.domain;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -12,15 +10,15 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
 @Getter @Setter @ToString
 @AllArgsConstructor
-@NoArgsConstructor
+@RequiredArgsConstructor
 @Entity
-public class VitalGyro {
+public class SensorData {
 	
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int no;
@@ -34,10 +32,10 @@ public class VitalGyro {
 	@Column(nullable = false)
 	private int heartbeat;
 	
-	@Column(nullable = false)
+	@Column(nullable = false, columnDefinition = "DOUBLE(2,1)")
 	private double temperature;
 	
-	@Column(nullable = false)
+	@Column(nullable = false, columnDefinition = "DOUBLE(2,1)")
 	private double outsideTemperature;
 	
 	@Column(nullable = false)
@@ -46,8 +44,8 @@ public class VitalGyro {
 	@Column(nullable = false)
 	private double longitude;
 	
-	@Column(nullable = false)
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss.SSS")
+	@Column(nullable = false, columnDefinition = "DATETIME(3)")
+//	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss.SSS")
 	private LocalDateTime vitalDate;
 	
 	@Column(nullable = false)
@@ -58,5 +56,4 @@ public class VitalGyro {
 	
 	@Column(nullable = false)
 	private float z;
-	
 }

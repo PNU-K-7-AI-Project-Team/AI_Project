@@ -17,11 +17,11 @@ import org.springframework.web.socket.WebSocketSession;
 import com.ai.config.WebSocketConfig;
 import com.ai.domain.Log;
 import com.ai.domain.RiskPrediction;
-import com.ai.domain.VitalGyro;
+import com.ai.domain.SensorData;
 import com.ai.dto.VitalDTO;
 import com.ai.repository.LogRepository;
 import com.ai.repository.RiskPredictionRepository;
-import com.ai.repository.VitalGyroRepository;
+import com.ai.repository.SensorDataRepository;
 import com.ai.util.NoSingleton;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -36,7 +36,8 @@ import lombok.RequiredArgsConstructor;
 public class WebSocketService {
 	
 	private final RiskPredictionRepository riskRepo;
-	private final VitalGyroRepository vgRepo;
+	private final LogRepository logRepo;
+	private final SensorDataRepository sensorRepo;
 	
 	private final NoSingleton noSingleton; // 싱글톤: DB에서 한행씩 읽는 no
 	private final WebSocketConfig wsConfig;
@@ -50,23 +51,23 @@ public class WebSocketService {
 		System.out.println("no: " + no);
 
 		// (최종)Vital Gyro 통합 테이블
-		VitalGyro vg = vgRepo.findById(no).orElse(null);
+		SensorData sd = sensorRepo.findById(no).orElse(null);
 		
-		if(vg == null) {
+		if(sd == null) {
 			return; // DB 데이터가 더이상 조회 안되면 종료
 		}
 		
 		// (최종) Flask에 전송할 DTO
 		FlaskRequestDTO fqDTO = FlaskRequestDTO.builder()
-				.userCode(vg.getUserCode())
-				.workDate(vg.getWorkDate())
-				.gyroData(new float[] {vg.getX(), vg.getY(), vg.getZ()})
-				.heartbeat(vg.getHeartbeat())
-				.temperature(vg.getTemperature())
-				.outsideTemperature(vg.getOutsideTemperature())
-				.vitalDate(vg.getVitalDate())
-				.longitude(vg.getLongitude())
-				.latitude(vg.getLatitude())
+				.userCode(sd.getUserCode())
+				.workDate(sd.getWorkDate())
+				.gyroData(new float[] {sd.getX(), sd.getY(), sd.getZ()})
+				.heartbeat(sd.getHeartbeat())
+				.temperature(sd.getTemperature())
+				.outsideTemperature(sd.getOutsideTemperature())
+				.vitalDate(sd.getVitalDate())
+				.longitude(sd.getLongitude())
+				.latitude(sd.getLatitude())
 				.build();
 
 		// Flask 요청(fqDTO) 전송 후 응답 frDTO로 변환

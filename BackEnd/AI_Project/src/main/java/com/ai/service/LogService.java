@@ -8,7 +8,6 @@ import com.ai.config.WebSocketConfig;
 import com.ai.domain.Log;
 import com.ai.repository.LogRepository;
 import com.ai.repository.RiskPredictionRepository;
-import com.ai.repository.VitalGyroRepository;
 import com.ai.util.NoSingleton;
 
 import lombok.RequiredArgsConstructor;

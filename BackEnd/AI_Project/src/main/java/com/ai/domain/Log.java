@@ -34,12 +34,12 @@ public class Log {
 	private int riskFlag;
 	
 	@Column(nullable = false)
-	private double heartbeat;
+	private int heartbeat;
 	
-	@Column(nullable = false)
+	@Column(nullable = false, columnDefinition = "DOUBLE(2,1)")
 	private double temperature;
 	
-	@Column(nullable = false)
+	@Column(nullable = false, columnDefinition = "DOUBLE(2,1)")
 	private double outsideTemperature;
 	
 	@Column(nullable = false)
@@ -51,7 +51,7 @@ public class Log {
 	@Column(length = 45, nullable = false)
 	private String activity;
 	
-	@Column(nullable = false)
+	@Column(nullable = false, columnDefinition = "DATETIME(3)")
 	private LocalDateTime vitalDate;
 	
 

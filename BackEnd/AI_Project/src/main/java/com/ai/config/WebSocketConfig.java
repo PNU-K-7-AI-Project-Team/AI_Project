@@ -1,14 +1,10 @@
 package com.ai.config;
 
-import java.io.IOException;
-import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
+
 import java.util.Set;
-import java.util.stream.Collectors;
+
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.socket.CloseStatus;
@@ -19,19 +15,9 @@ import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
 import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import lombok.RequiredArgsConstructor;
 
-import com.ai.dto.VitalDTO;
-import com.ai.repository.ConnectNoRepository;
-import com.ai.repository.VitalGyroRepository;
-import com.ai.util.NoSingleton;
-import com.ai.domain.ConnectNo;
-import com.ai.domain.RiskPrediction;
-import com.ai.domain.VitalGyro;
-import com.ai.dto.FlaskResponseDTO;
 
 // WebSocket 연결을 설정
 @Configuration
@@ -43,11 +29,7 @@ public class WebSocketConfig extends TextWebSocketHandler implements WebSocketCo
 	private static Set<WebSocketSession> clients = Collections.synchronizedSet(new HashSet<WebSocketSession>());
 
 	private final CustomHandshakeInterceptor customInter;
-	private final NoSingleton noSingleton;
 
-	private final VitalGyroRepository vgRepo;
-	
-	
 	// WebSocket 연결명 설정 (ws://localhost:8080/pushservice) ==> WebSocketConfigurer
 	@Override
 	public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
