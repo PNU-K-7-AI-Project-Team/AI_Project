@@ -3,8 +3,6 @@ package com.ai.domain;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -20,19 +18,23 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class VitalGyro {
-	
-	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class Log {
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int no;
+	
+	@Column(nullable = false, length = 8)
+	private String userCode;
 	
 	@Column(nullable = false)
 	private LocalDate workDate;
 	
-	@Column(length = 8, nullable = false)
-	private String userCode;
+	@Column(nullable = false)
+	private int riskFlag;
 	
 	@Column(nullable = false)
-	private int heartbeat;
+	private double heartbeat;
 	
 	@Column(nullable = false)
 	private double temperature;
@@ -46,17 +48,11 @@ public class VitalGyro {
 	@Column(nullable = false)
 	private double longitude;
 	
+	@Column(length = 45, nullable = false)
+	private String activity;
+	
 	@Column(nullable = false)
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss.SSS")
 	private LocalDateTime vitalDate;
 	
-	@Column(nullable = false)
-	private float x;
-	
-	@Column(nullable = false)
-	private float y;
-	
-	@Column(nullable = false)
-	private float z;
-	
+
 }
