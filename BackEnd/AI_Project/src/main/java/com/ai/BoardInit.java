@@ -11,8 +11,8 @@
 //
 //import com.ai.domain.Board;
 //import com.ai.domain.User;
-//import com.ai.dao.BoardRepository;
-//import com.ai.dao.UserRepository;
+//import com.ai.repository.BoardRepository;
+//import com.ai.repository.UserRepository;
 //
 //import lombok.RequiredArgsConstructor;
 //

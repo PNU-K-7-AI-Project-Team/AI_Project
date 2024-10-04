@@ -18,16 +18,15 @@ import com.ai.config.WebSocketConfig;
 import com.ai.domain.Log;
 import com.ai.domain.RiskPrediction;
 import com.ai.domain.SensorData;
-import com.ai.dto.VitalDTO;
+
 import com.ai.repository.LogRepository;
 import com.ai.repository.RiskPredictionRepository;
 import com.ai.repository.SensorDataRepository;
+
 import com.ai.util.NoSingleton;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ai.dto.FlaskRequestDTO;
-
-import com.ai.dto.FlaskResponseDTO;
 
 import lombok.RequiredArgsConstructor;
 
@@ -97,7 +96,6 @@ public class WebSocketService {
 			                isChanged = true;
 		            }
 				}
-				
 				if (isChanged) {
 					sendPushMessage(rp);
 				}
@@ -135,17 +133,8 @@ public class WebSocketService {
 		    ObjectMapper objectMapper = new ObjectMapper();
 		    String msg = null;
 		    RiskPrediction frontData = null;
-//		    VitalDTO vsDTO = null;
-//		    FlaskResponseDTO rvDTO = null;
-		    
-			try { // objectMapper를 통한 JSON 형태로 직렬화
-//				if (dto instanceof VitalDTO) {
-//					vsDTO = (VitalDTO) dto;
-//					msg = objectMapper.writeValueAsString(dto);
-//				} else if (dto instanceof FlaskResponseDTO) {
-//					rvDTO = (FlaskResponseDTO) dto;
-//					msg = objectMapper.writeValueAsString(dto);
-//				}
+
+			try { 
 				frontData = (RiskPrediction) rp;
 				msg = objectMapper.writeValueAsString(rp);
 			} catch (JsonProcessingException e) {
@@ -170,7 +159,6 @@ public class WebSocketService {
 								sendMessageToClient(sess, message, userCode, msg);
 							} 
 						} 
-
 					}
 			    }
 		}

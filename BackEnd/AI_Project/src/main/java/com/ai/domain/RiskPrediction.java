@@ -45,12 +45,12 @@ public class RiskPrediction {
 	private int riskFlag;
 	
 	@Column(nullable = false)
-	private double heartbeat;
+	private int heartbeat;
 	
-	@Column(nullable = false)
+	@Column(nullable = false, columnDefinition = "DOUBLE(2,1)" )
 	private double temperature;
 	
-	@Column(nullable = false)
+	@Column(nullable = false, columnDefinition = "DOUBLE(2,1)")
 	private double outsideTemperature;
 	
 	@Column(nullable = false)
@@ -59,7 +59,7 @@ public class RiskPrediction {
 	@Column(nullable = false)
 	private double longitude;
 	
-	@Column(nullable = false)
+	@Column(nullable = false, columnDefinition = "DATETIME(3)")
 	@JsonSerialize(using = LocalDateTimeSerializer.class)
 	@JsonDeserialize(using = LocalDateTimeDeserializer.class)
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss.SSS")
