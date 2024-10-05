@@ -47,8 +47,8 @@ export default function HeartbeatGraph({ userCode }) {
         scales: {
             y: {
                 beginAtZero: false,
-                suggestedMin: Math.min(...userData.heartbeat) - 5,
-                suggestedMax: Math.max(...userData.heartbeat) + 5
+                suggestedMin: Math.min(...userData.heartbeat) - 1,
+                suggestedMax: Math.max(...userData.heartbeat) + 1
             },
 
         },
