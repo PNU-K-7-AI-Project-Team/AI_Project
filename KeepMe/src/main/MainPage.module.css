@@ -16,20 +16,38 @@
     /* background-image: url('./temperature1.png'); */
     width: 70px; /* 원하는 버튼 너비 */
     height: 70px; /* 원하는 버튼 높이 */
-    left: 17%;
-    top:20%;
+    left: 84vw;
+    top:10vw;
     border: none; /* 테두리 없애기 */
     cursor: pointer; /* 마우스를 올릴 때 포인터로 변경 */
     z-index: 100;
 }
-
+.temperature:hover{
+    transform: scale(1.05);
+}
 .heartbeat{
     position: absolute;
     width: 70px; /* 원하는 버튼 너비 */
     height: 70px; /* 원하는 버튼 높이 */
-    left: 22%;
-    top:20%;
+    left: 88.5vw;
+    top:3.4vw;
     border: none; /* 테두리 없애기 */
     cursor: pointer; /* 마우스를 올릴 때 포인터로 변경 */
     z-index: 100;
+}
+.heartbeat:hover{
+    transform: scale(1.05);
+}
+.chart{
+    position: absolute;
+    width: 70px; /* 원하는 버튼 너비 */
+    height: 70px; /* 원하는 버튼 높이 */
+    left: 93vw;
+    top:3.4vw;
+    border: none; /* 테두리 없애기 */
+    cursor: pointer; /* 마우스를 올릴 때 포인터로 변경 */
+    z-index: 100;
+}
+.chart:hover{
+    transform: scale(1.05);
 }

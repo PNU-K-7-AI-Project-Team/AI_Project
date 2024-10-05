@@ -17,7 +17,7 @@
     padding: 20px;
     border-radius: 5px;
     width: 70%; /* 화면 너비의 90% */
-    max-width: 800px; /* 최대 너비는 600px로 제한 */
+    max-width: 700px; /* 최대 너비는 600px로 제한 */
     height: 40%;
     max-height: 600px;
     overflow-y: auto;

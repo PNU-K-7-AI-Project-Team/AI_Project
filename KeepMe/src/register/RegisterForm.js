@@ -132,7 +132,7 @@ export default function RegisterForm() {
         <div className={styles.bg}>
 
             <div className={styles.RegisterForm}>
-                <h1 className={styles.name}>join</h1>
+                <h1 className={styles.name}>Join</h1>
                 <form onSubmit={register}>
                     <div>
                         <input type='username' className={styles.username} placeholder='이름' value={userName} onChange={(e) => setUserName(e.target.value)} />
@@ -195,6 +195,11 @@ export default function RegisterForm() {
                     <div>
                         <button className={styles.join} type="submit">
                             확인
+                        </button>
+                    </div>
+                    <div>
+                        <button className={styles.cancel} onClick={() => navigate('/')}>
+                            취소
                         </button>
                     </div>
                 </form>

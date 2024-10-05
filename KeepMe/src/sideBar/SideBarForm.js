@@ -16,9 +16,9 @@ export default function SideBarForm() {
   const handleKeepMeClick = () => {
     navigate('/main');
   };
-  // const handleWorkerClick = () => {
-  //   setIsWorkerOpen(true);
-  // };
+  const handleWorkerClick = () => {
+    setIsWorkerOpen(true);
+  };
   const closeWorker = () => {
     setIsWorkerOpen(false);
   };
@@ -38,7 +38,7 @@ export default function SideBarForm() {
       {isBoardOpen && <BoardMain onClose={closeBoard} />}
 
     
-
+      <button className={styles.button2} onClick={handleWorkerClick}>작업자 관리</button>
       {isWorkerOpen && <WorkerBoard onClose={closeWorker} />}
     </div>
   );

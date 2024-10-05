@@ -2,6 +2,7 @@
     background-image: url('loginbg3.jpg');
     width: 100vw;
     height: 100vh;
+    /* filter: blur(1px); 대체 방식 */
 }
 .LoginForm{
     display: flex;
@@ -17,6 +18,7 @@
     background: #ECF2F4;
     border-radius: 10px;
     box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.3);
+    z-index: 10;
 }
 
 .name{
@@ -95,7 +97,7 @@
     border-radius: 10px;
     border: none;
 
-    font-family: 'Inter';
+    font-family:  "Nanum Gothic", sans-serif;
     font-style: normal;
     font-weight: 400;
     font-size: 20px;
@@ -118,7 +120,7 @@
     border-radius: 10px;
     border: none;
     margin-left: 10px;
-    font-family: 'Inter';
+    font-family:  "Nanum Gothic", sans-serif;
     font-style: normal;
     font-weight: 400;
     font-size: 20px;

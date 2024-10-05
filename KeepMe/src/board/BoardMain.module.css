@@ -1,25 +1,26 @@
-
-.modalOverlay{
+.modalOverlay {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(0, 0, 0, 0.5); /* 배경 오버레이 */
+    background-color: rgba(0, 0, 0, 0.5);
+    /* 배경 오버레이 */
     display: flex;
     align-items: center;
     justify-content: center;
     z-index: 1000;
 }
-.boardMain{
+
+.boardMain {
     display: flex;
     flex-direction: column;
     justify-items: center;
     position: fixed;
-    width: 1550px;
-    height: 900px;
-    left: 288px;
-    top: 50px;
+    width: 800px;
+    height: 500px;
+    top: 21%;
+    left: 29%;
     background: #FFFFFF;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     z-index: 999;
@@ -28,31 +29,29 @@
 
 .boardTable {
     width: 100%;
-    justify-content: space-between; /* 항목 간격 일정하게 */
+    justify-content: space-between;
+    /* 항목 간격 일정하게 */
     border-collapse: collapse;
-    border-radius: 5px;
+    background-color: #CDE3EB;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
 }
 
 .boardTable th {
     background-color: #CDE3EB;
     font-weight: bold;
-    font-size: 18px;
+    font-size: 15px;
     text-align: center;
-    padding: 15px;
-    height: 65px;
+    height: 10px;
+    padding: 2px;
     border-right: 1px solid #0a040413;
-
-}
-.boardTable th:last-child {
-    border-right: none;
-}
-.boardTable :nth-child(1){
     border-top-left-radius: 5px;
-}
-.boardTable :nth-child(5){
     border-top-right-radius: 5px;
 }
 
+.boardTable th:last-child {
+    border-right: none;
+}
 
 .boardTable td {
     border-bottom: 1px solid #ddd;
@@ -60,44 +59,39 @@
     height: 70px;
 }
 
-.boardTable th:nth-child(1),
 .boardTable td:nth-child(1) {
     width: 150px;
     /* 번호 열 */
     text-align: center;
 }
 
-.boardTable th:nth-child(2), 
 .boardTable td:nth-child(2) {
     width: 660px;
     /* 제목 열 */
-    padding-left: 20px;  
+    padding-left: 20px;
     text-align: center left;
 
 }
 
-.boardTable th:nth-child(3),
 .boardTable td:nth-child(3) {
     width: 200px;
     /* 부서 열 */
     text-align: center;
 }
 
-.boardTable th:nth-child(4),
 .boardTable td:nth-child(4) {
     width: 200px;
     /* 작성자 열 */
     text-align: center;
-    
 }
-.boardTable th:nth-child(5) 
+
 .boardTable td:nth-child(5) {
     width: 100px;
     /* 작성일 열 */
     text-align: center;
     padding-left: 20px;
-    
 }
+
 .boardTable td:last-child {
     border-right: none;
 }
@@ -105,37 +99,33 @@
 .boardTable tr:hover {
     background-color: #f5f5f5;
 }
-.createDate{
-    width: 200px;
+
+.createDate {
     /* 작성일 열 */
     text-align: center;
-    }
-.pagination {
+}
+  /* 페이지네이션 스타일 */
+  .paginationContainer {
     position: absolute;
-    width: 100%;
-    height: 100px;
-    left: 0px;
-    top: 800px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    width: 100px;
+    height: 50px;
+    top: 87%;
+    left: 44%;
 }
 .writeButton {
     position: absolute;
-    width: 100px;
-    height: 40px;
-    left: 1409px;
-    top: 840px;
-    
-    background: #143A52;
-    border-radius: 5px;
+    width: 60px;
+    height: 30px;
+    top: 90%;
+    left: 82%;
+    background: #143a52;
+    border-radius: 15px;
     border: none;
-
     font-family: 'Inter';
     font-style: normal;
     font-weight: 400;
-    font-size: 20px;
-    line-height: 29px;
+    font-size: 15px;
+    
     /* identical to box height */
     
     color: rgba(255, 255, 255, 0.6);
@@ -145,31 +135,21 @@
 }
 .homeButton{
     position: absolute;
-    width: 100px;
-    height: 40px;
-    left: 1300px;
-    top: 840px;
+    width: 60px;
+    height: 30px;
+    top: 90%;
+    left: 90%;
     background: #143A52;
-    border-radius: 5px;
+    border-radius: 15px;
     border: none;
-
     font-family: 'Inter';
     font-style: normal;
     font-weight: 400;
-    font-size: 20px;
-    line-height: 29px;
-    /* identical to box height */
+    font-size: 15px;
     
+    /* identical to box height */
     color: rgba(255, 255, 255, 0.6);
 }
 .homeButton:hover{
     color: white;
-}
-  /* 페이지네이션 스타일 */
-.paginationContainer {
-    position: absolute;
-    width: 400px;
-    height: 100px;
-    top: 830px;
-    left: 500px;
 }

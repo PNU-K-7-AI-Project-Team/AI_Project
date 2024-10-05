@@ -12,38 +12,23 @@
 }
 
 .boardWriteContainer{
-    display: flex;
+     display: flex;
     flex-direction: column;
     justify-items: center;
     position: fixed;
-    width: 1550px;
-    height: 900px;
-    left: 288px;
-    top: 50px;
+    width: 800px;
+    height: 500px;
+    top: 21%;
+    left: 29%;
     background: #FFFFFF;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     z-index: 999;
     border-radius: 5px;
 }
-.text{
-    position: absolute;
-    width: 120px;
-    height: 19px;
-    left: 290px;
-    top: 47px;
-    
-    font-style: normal;
-    font-weight: 600;
-    font-size: 16px;
-    line-height: 19px;
-    /* identical to box height */
-    
-    color: #000000;
 
-}
 .postWriteContainer{
     width: 100%;
-    height: 95px;
+    height: 80px;
     background-color: #CDE3EB;
     border-collapse: collapse;
     border-top-left-radius: 5px;
@@ -52,7 +37,7 @@
     
 }
 .title{
-    padding-left: 40px;
+    padding-left: 23px;
     padding-top: 20px;
 
 }
@@ -60,9 +45,9 @@
     font-style: normal;
     font-weight: 600;
     font-size: 18px;
-    line-height: 5px;
+    
     /* identical to box height */
-    margin-top: 20px;
+    margin-top: 10px;
     margin-left: 10px;
     width: 400px;
     color: #000000;
@@ -75,7 +60,7 @@
     line-height: 19px;
     /* identical to box height */
     margin-top: 15px;
-    padding-left: 40px;
+    padding-left: 23px;
     padding-top: 0px;
     color: #000000;
     padding-bottom: 18px;
@@ -105,11 +90,12 @@
     border: 1px solid #00000031;
 }
 .writeContent{
-    width: 1455px;
-    height: 700px;
+    width: 93%;
+    height: 315px;
     border-radius: 5px;
     border: 1px solid #00000031;
-    margin-left: 40px;
+    margin-left: 21px;
+    margin-right: 20px;
     margin-top: 20px;
     font-size: 18px;
     padding-left: 10px;
@@ -118,19 +104,18 @@
 
 .submitButton{
     position: absolute;
-    width: 100px;
-    height: 40px;
-    left: 1300px;
-    top: 840px;
+    width: 60px;
+    height: 30px;
+    top: 90%;
+    left: 82%;
     background: #143A52;
-    border-radius: 5px;
+    border-radius: 15px;
     border: none;
-
     font-family: 'Inter';
     font-style: normal;
     font-weight: 400;
-    font-size: 20px;
-    line-height: 29px;
+    font-size: 15px;
+    
     /* identical to box height */
     
     color: rgba(255, 255, 255, 0.6);
@@ -138,22 +123,19 @@
 }
 .cancelButton{
     position: absolute;
-    width: 100px;
-    height: 40px;
-    left: 1409px;
-    top: 840px;
-    
+    width: 60px;
+    height: 30px;
+    top: 90%;
+    left: 90%;
     background: #143A52;
-    border-radius: 5px;
+    border-radius: 15px;
     border: none;
-
     font-family: 'Inter';
     font-style: normal;
     font-weight: 400;
-    font-size: 20px;
-    line-height: 29px;
-    /* identical to box height */
+    font-size: 15px;
     
+    /* identical to box height */
     color: rgba(255, 255, 255, 0.6);
 }
 

@@ -66,7 +66,7 @@ export default function LoginForm() {
     return (
         <div className={styles.bg}>
             <div className={styles.LoginForm}>
-                <h1 className={styles.name}>login</h1>
+                <h1 className={styles.name}>Login</h1>
                 <form onSubmit={login}>
                     <div>
                         <input type='userId' className={styles.id} placeholder='아이디' value={userId} onChange={(e) => setUserId(e.target.value)} />

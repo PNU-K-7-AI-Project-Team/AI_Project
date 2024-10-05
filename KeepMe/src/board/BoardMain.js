@@ -88,7 +88,7 @@ export default function BoardMain({ onClose }) {
               <th>작성일</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody className={styles.body}>
             {dataBoard.map((post) => (
               <tr key={post.idx} onClick={() => handleRowClick(post.idx)}>
                 <td>{post.idx}</td>

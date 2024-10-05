@@ -1,63 +1,131 @@
-import React, { useRef, useEffect, useState, useCallback } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import styles from './NaverMap.module.css';
 import Modal from '../modal/Modal';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { selectedUserCodeState, socketDataState } from '../recoil/Atoms';
 import HeartbeatGraph from '../heartbeat/Heartbeat';
-import Line from './Line';
+import axios from 'axios';
 
 export default function NaverMap({ onLocationClick }) {
-  const socketData = useRecoilValue(socketDataState); // WebSocket 데이터를 가져옴
-  console.log('socketData', socketData);
+  const [mapsocketData, setMapsocketData] = useRecoilState(socketDataState); // WebSocket 데이터를 가져옴
+  console.log('지도에서 받아온 데이터', mapsocketData);
   const mapRef = useRef(null); // 맵 인스턴스를 저장할 참조 변수
   const markersRef = useRef({}); // 마커 인스턴스를 저장할 객체
   const [isModalOpen, setIsModalOpen] = useState(false); // 모달 열림/닫힘 상태
-  const [selectedUserCode, setSelectedUserCode] = useRecoilState(selectedUserCodeState); // 선택된 사용자 코드 상태
+  const [selectedUserCode, setSelectedUserCode] = useState(null); // 선택된 사용자 코드 상태
+  console.log('selectedUserCode위', selectedUserCode);
+  const [selectedWorkDate, setSelectedWorkDate] = useState(null); // 선택된 사용자 코드 상태
   const { naver } = window; // naver 객체는 Naver Maps API가 로드된 후 접근 가능
-  // const [predictionRiskLevel, setPredictionRiskLevel] = useState(null);
-  
-  // 마커를 생성하는 함수
-  const createMarker = (userCode, position, predictionRiskLevel) => {
-    let iconUrl;
-    // 상태에 따른 아이콘 URL 설정
-    switch (predictionRiskLevel) {
-      case 0:
-        iconUrl = '/img/normal2.png'; // 정상 상태일 때
-        break;
-      case 1:
-        iconUrl = '/img/caution.png'; // 위험 상태일 때
-        break;
-      case 2:
-        iconUrl = '/img/danger2.png'; // 경고 상태일 때 (필요에 따라 이미지 변경)
-        break;
-      default:
-        iconUrl = '/img/normal.png'; // 기본 이미지 (예외 처리용)
-    }
+  const url = process.env.REACT_APP_BACKEND_URL;
 
+  const getIconUrl = (riskFlag) => {
+    switch (riskFlag) {
+      case 0:
+        return '/img/normal.png'; // 정상 상태일 때
+      case 1:
+        return '/img/caution.png'; // 위험 상태일 때
+      case 2:
+        return '/img/danger2.png'; // 경고 상태일 때 (필요에 따라 이미지 변경)
+      default:
+        return '/img/normal.png'; // 기본 이미지 (예외 처리용)
+    }
+  };
+
+  const fetchUserdata = async () => {
+    const token = sessionStorage.getItem('token');
+    if (!token) {
+      console.error('No token found');
+      return;
+    }
+    console.log('selectedUserCode', selectedUserCode); 
+    
+    try {
+      const response = await axios.get(`${url}userlog?`, {
+        params: {
+          userCode: selectedUserCode,
+          workDate: selectedWorkDate
+        },
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': token,
+        }
+      });    
+      console.log('백엔드에서 받은거', response);
+      const userCodedata = response.data;
+      console.log('userCodedata', userCodedata);
+      if (!userCodedata) {
+        console.error('No data found for user');
+        return;
+      }
+      const userdata = userCodedata.map(item =>({
+        userCode: item.userCode,
+        heartbeat: item.heartbeat,
+        temperature: item.temperature,
+        latitude: item.latitude,
+        longitude: item.longitude,
+        timestamp: item.timestamp,
+        riskFlag: item.riskFlag,
+        vitalDate: item.vitalDate,
+        workDate: item.workDate,
+      }))
+      setMapsocketData(prevData => {
+        const newData = {...prevData};
+        console.log('userCodedata', userCodedata);
+        userdata.forEach(item => {
+          const existingData = newData[item.userCode] || {};
+          newData[item.userCode] = {
+            ...existingData,
+            heartbeat: [...(existingData.heartbeat || []), item.heartbeat].slice(-60),
+            temperature: [...(existingData.temperature || []), Number(item.temperature)].slice(-60),
+            latitude: item.latitude,
+            longitude: item.longitude,
+            timestamp: new Date().getTime(),
+            riskFlag: item.riskFlag,
+            vitalDate: item.vitalDate,
+            workDate: item.workDate,
+            activity: item.activity,
+            outsideTemperature: item.outsideTemperature,
+          };
+        });
+        return newData;
+      });
+  
+    } catch (error) {
+      console.error('Error fetching initial data:', error);
+    }
+  };
+
+  // 마커를 생성하는 함수
+  const createMarker = (userCode, position, riskFlag, workDate) => {
     // 마커 생성
     const marker = new naver.maps.Marker({
       position,
       icon: {
-        url: iconUrl,
-       
+        url: getIconUrl(riskFlag),
       },
       title: `User ${userCode}`,
+      workDate: workDate,
     });
-
+    console.log('marker' , marker);
     // 마커 클릭 이벤트 등록
     naver.maps.Event.addListener(marker, 'click', (e) => {
       e.domEvent.stopPropagation();
       console.log('Marker clicked:', userCode);
       setSelectedUserCode(userCode); // 선택된 사용자 코드 업데이트
+      setSelectedWorkDate(workDate);
       setIsModalOpen(true); // 모달 열기
       if (onLocationClick) {
         onLocationClick(userCode); // 외부 클릭 처리 함수 호출
       }
     });
-
     return marker;
   };
-
+  useEffect(() => {
+    if (selectedUserCode && selectedWorkDate) {
+      fetchUserdata();
+    }
+  }, [selectedUserCode, selectedWorkDate]);
+  
   // 맵 초기화
   useEffect(() => {
     const initializeMap = () => {
@@ -84,50 +152,63 @@ export default function NaverMap({ onLocationClick }) {
   //   // 컴포넌트가 언마운트될 때 인터벌 클리어
   //   return () => clearInterval(refreshInterval);
   // }, []);
-
-  // 마커 업데이트 함수
+  useEffect(() => {
+    console.log('mapsocketData가 변했을떼', mapsocketData); // 데이터 확인용 로그
+  }, [mapsocketData]);
   useEffect(() => {
     let animationFrameId;
-
+  
     const updateMarkers = () => {
-      Object.entries(socketData).forEach(([userCode, data]) => {
-        if (!data.latitude || !data.longitude) {
+      Object.entries(mapsocketData).forEach(([userCode, data]) => {
+        if (!userCode || !data.latitude || !data.longitude) {
           console.error(`Invalid position data for user ${userCode}`);
-          return; // 위치 데이터가 없으면 무시
+          return;    
         }
-
+  
+        const workDate = mapsocketData[userCode].workDate;
         const position = new naver.maps.LatLng(data.latitude, data.longitude);
-        const predictionRiskLevel = socketData[userCode].predictionRiskLevel;
-
-
-
-        // 이미 있는 마커를 업데이트하거나 새로운 마커를 생성
+        const riskFlag = mapsocketData[userCode].riskFlag;
+        const iconUrl = getIconUrl(riskFlag);
+  
+        // 이미 있는 마커를 업데이트하거나 새로운 마커 생성
         if (markersRef.current[userCode]) {
-          markersRef.current[userCode].setPosition(position);
+          const marker = markersRef.current[userCode];
+          marker.setPosition(position);
+  
+          // 기존 아이콘과 riskFlag를 비교하고, 다르면 아이콘을 업데이트
+          if (marker.customIcon !== iconUrl) {
+            marker.setIcon({
+              url: iconUrl,
+            });
+  
+            // 새로운 아이콘 URL 저장
+            marker.customIcon = iconUrl;
+          }
         } else {
-          markersRef.current[userCode] = createMarker(userCode, position, predictionRiskLevel);
-
-          markersRef.current[userCode].setMap(mapRef.current); // 맵에 마커 추가
+          const newMarker = createMarker(userCode, position, riskFlag, workDate);
+          markersRef.current[userCode] = newMarker;
+  
+          // 마커에 새 아이콘 정보 저장
+          newMarker.customIcon = iconUrl;
+          newMarker.setMap(mapRef.current);
         }
       });
     };
-
-    // 애니메이션 프레임으로 마커를 계속 업데이트
+  
     const animate = () => {
       updateMarkers();
       animationFrameId = requestAnimationFrame(animate);
     };
-
+  
     animate();
-
-    // 컴포넌트 언마운트 시 애니메이션 프레임 취소
+  
     return () => {
       if (animationFrameId) {
         cancelAnimationFrame(animationFrameId);
       }
     };
-  }, [socketData, createMarker]);
-
+  }, [mapsocketData]);
+  
   // 모달 닫기 핸들러
   const handleCloseModal = () => {
     setIsModalOpen(false);
@@ -137,7 +218,6 @@ export default function NaverMap({ onLocationClick }) {
   return (
     <div>
       <div id="map" className={styles.map} /> {/* 맵이 렌더링될 div */}
-    
       {isModalOpen && selectedUserCode && (
         <Modal isOpen={isModalOpen} onClose={handleCloseModal}>
           {selectedUserCode && <HeartbeatGraph userCode={selectedUserCode} />} {/* 선택된 사용자 코드에 따른 그래프 표시 */}

@@ -7,35 +7,31 @@ import SideBarForm from '../sideBar/SideBarForm'
 import Footer from '../footer/Footer'
 import TemperatureG from '../graph/TemperatureG'
 import HeartBeatG from '../graph/HeartBeatG'
+import RiskChart from '../graph/RiskChart'
+import ActiveUsersList from '../analysisGraph/ActiveUsersList'
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { socketDataState, userIdState, authState, wsState, dangerState } from '../recoil/Atoms'; // WebSocket에서 가져온 심박수 데이터
-
+import { socketDataState, userIdState, authState, wsState } from '../recoil/Atoms'; // WebSocket에서 가져온 심박수 데이터
 export default function MainPage() {
   const wsRef = useRef(null);
   const [socketData, setSocketData] = useRecoilState(socketDataState);
   const userRole = useRecoilValue(userIdState) || sessionStorage.getItem('userId');
   const setAuth = useRecoilValue(authState);
   const [ws, setWs] = useRecoilState(wsState); // WebSocket 상태
-  const [danger, setDanger] = useRecoilState(dangerState);
-  const [istemperature,setIstemperature] = useState(false);
-  console.log('danger', danger);
-  // const [predictionRiskLevel, setPredictionRiskLevel] = useRecoilState(predictionRiskLevelState);
+  const [istemperature, setIstemperature] = useState(false);
+  const [isChart, setIsChart] = useState(false);
   console.log('socketData', socketData);
-  // const danger = socketData.filter(data => data.predictionRiskLevel === '2');
-  // console.log('danger', danger);
+  const [activeUsers, setActiveUsers] = useState([]);
   useEffect(() => {
     if (!ws && userRole) {
       const url = process.env.REACT_APP_BACKEND_URL;
       const newWs = new WebSocket(`${url}pushservice?userId=${userRole}`);
       setWs(newWs);
-
       newWs.onopen = () => {
         console.log('WebSocket 연결 성공');
       };
-
       newWs.onmessage = (e) => {
         const newData = JSON.parse(e.data);
-        console.log('newData', newData);
+        console.log('소켓에서 받아옴', newData);
         setSocketData((prevData) => ({
           ...prevData,
           [newData.userCode]: {
@@ -44,10 +40,20 @@ export default function MainPage() {
             latitude: newData.latitude,
             longitude: newData.longitude,
             timestamp: new Date().getTime(),
-            predictionRiskLevel: newData.predictionRiskLevel,
+            riskFlag: newData.riskFlag,
+            vitalDate: newData.vitalDate,
+            workDate: newData.workDate,
+            activity: newData.activity,
+            outsideTemperature: newData.outsideTemperature,
           }
         }));
-
+        setActiveUsers((prevActiveUsers) => {
+          const exists = prevActiveUsers.find(user => user.userCode === newData.userCode && user.workDate === newData.workDate);
+          if (!exists) {
+            return [...prevActiveUsers, { userCode: newData.userCode, workDate: newData.workDate }];
+          }
+          return prevActiveUsers;
+        });
       };
     }
     return () => {
@@ -59,39 +65,21 @@ export default function MainPage() {
     };
   }, [setSocketData, userRole, setAuth, ws]);
 
-  Object.keys(socketData).forEach((key) => {
-    console.log('userCode:', key, 'predictionRiskLevel:', socketData[key]?.predictionRiskLevel)
-  });
-
-
-  useEffect(() => {
-    // socketData가 undefined 또는 null일 경우 방어 코드 추가
-    if (!socketData || Object.keys(socketData).length === 0) {
-      console.log('socketData is empty or undefined');
-      return; // socketData가 비어 있으면 필터링을 건너뜀
-    }
-
-    console.log('socketData updated:', socketData);
-
-    // 데이터가 존재하는지 확인하면서 안전하게 필터링
-    const filteredData = Object.keys(socketData)
-      .filter((key) => {
-        const data = socketData[key];
-        // data가 존재하고 predictionRiskLevel이 2인 것만 필터링
-        return data && data.predictionRiskLevel === 2;
-      })
-      .map((key) => ({
-        userCode: key,
-        data: socketData[key],
-      }));
-
-    console.log('filteredData:', filteredData);
-    setDanger(filteredData); // dangerState에 필터링된 데이터 저장
-  }, [socketData, setDanger]); // socketData가 변경될 때마다 필터링을 실행
   const userCount = Object.keys(socketData).length;
-  const todayCount = Object.values(socketData).filter(data => {
-    const today = new Date().toDateString();
-    return new Date(data.timestamp).toDateString() === today;
+  const normalCount = Object.values(socketData).filter(data => {
+    const normal = data.riskFlag === 0;
+    console.log('normal', normal);
+    return normal;
+  }).length;
+  const cautionCount = Object.values(socketData).filter(data => {
+    const caution = data.riskFlag === 1;
+    console.log('caution', caution);
+    return caution;
+  }).length;
+  const dangerCount = Object.values(socketData).filter(data => {
+    const danger = data.riskFlag === 2;
+    console.log('danger', danger);
+    return danger;
   }).length;
   // const normalCount = userData.filter(user => user.status === 'normal').length;
   // const dangerCount = userData.filter(user => user.status === 'danger').length;
@@ -110,20 +98,32 @@ export default function MainPage() {
   const onCloseHeartBeat = () => {
     setIstemperature(false);
   }
+  const openChart = () => {
+    setIsChart(true);
+  }
+  const onCloseChart = () => {
+    setIsChart(false);
+  }
+
   return (
     <div className={styles.bg}>
-      <SideBarForm />
+      {/* <SideBarForm /> */}
       <HeaderForm />
       <div className={styles.fourcontainer}>
-        <PCountBar userCount={userCount} todayCount={todayCount} />
+        <PCountBar userCount={userCount} normalCount={normalCount} cautionCount={cautionCount} dangerCount={dangerCount} />
       </div>
       <div>
-      <NaverMap />
-      <img src= '/img/temperature1.png' className={styles.temperature} onClick={opentemperature}></img>
-      {istemperature && <TemperatureG onClose={onClose}/>}
-      <img src= '/img/heartbeat.png' className={styles.heartbeat} onClick={openHeartBeat}></img>
-      {istemperature && <HeartBeatG onClose={onCloseHeartBeat}/>}
+        <NaverMap />
+        {/* <img src='/img/temperature1.png' className={styles.temperature} onClick={opentemperature}></img>
+        {istemperature && <ActiveUsersList activeUsers={activeUsers} onClose={onClose} />}
+        {/* <img src='/img/heartbeat.png' className={styles.heartbeat} onClick={openHeartBeat}></img>
+        {istemperature && <HeartBeatG onClose={onCloseHeartBeat} />}
+        <img src='/img/chart.png' className={styles.chart} onClick={openChart}></img>
+        {isChart && <RiskChart onClose={onCloseChart} />} */} 
       </div>
+      {/* <div>
+        <ActiveUsersList activeUsers={activeUsers} />
+      </div> */}
       <Footer />
     </div>
   )

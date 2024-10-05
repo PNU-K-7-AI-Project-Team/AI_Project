@@ -13,7 +13,36 @@
     background: #ffffff;
     
 }
-
+.title{
+    position: absolute;
+    left: 3vw;
+    font-family: 'Jura', sans-serif;
+    font-size: 30px;
+    font-weight: 500;
+    color: #000000be;
+}
+.board{
+    display: flex;
+    flex-wrap: wrap;
+    flex-grow: 1;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    width: 5vw;
+    height: 2.5vh;
+    left: 82vw;
+   
+    background: #ffffff;
+    border: none;
+    cursor: pointer;
+    color: #0000007c;
+    font-size: 15px;
+    font-weight: 600;
+}
+.board:hover{
+    color: #000000;
+}
 .logout{
     display: flex;
     flex-wrap: wrap;
@@ -24,8 +53,8 @@
     position: absolute;
     width: 5vw;
     height: 2.5vh;
-    left: 90vw;
-    top: 0.5vh;
+    left: 92vw;
+   
     background: #ffffff;
     border: none;
     cursor: pointer;
@@ -46,8 +75,8 @@
     position: absolute;
     width: 5vw;
     height: 2.5vh;
-    left: 85vw;
-    top: 0.5vh;
+    left: 87vw;
+    
     background: #ffffff;
     color: #0000007c;
     border: none;
@@ -57,4 +86,19 @@
 }
 .mypage:hover{
     color: #000000;
+}
+@media (max-width: 1920px) {
+    .icon{
+        display: none;
+    }
+}
+@media (max-width: 1919px) {
+    .buttonText {
+        display: none; /* 텍스트 숨기기 */
+      }
+      .icon {
+        display: inline-block;
+        font-size:30px; /* 아이콘 크기 조정 */
+      }
+    
 }
