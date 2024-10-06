@@ -1,5 +1,6 @@
 package com.ai.repository;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Optional;
@@ -7,7 +8,6 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 
 import com.ai.domain.RiskPrediction;
 
@@ -21,18 +21,21 @@ public interface RiskPredictionRepository extends JpaRepository<RiskPrediction, 
 	nativeQuery = true)
 	Optional<RiskPrediction> findByUserCode(String userCode);
 	
-	@Transactional
 	@Modifying
-	@Query(value = "CALL upsert_risk_prediction(:user_code, :work_date, :risk_flag, :heartbeat, :temperature, :outside_temperature, :latitude, :longitude, :activity, :vital_date)", nativeQuery = true)
-	void upsertRiskPrediction(
-	        @Param("user_code") String userCode,
-	        @Param("work_date") LocalDate workDate,
-	        @Param("risk_flag") int riskFlag,
-	        @Param("heartbeat") double heartbeat,
-	        @Param("temperature") double temperature,
-	        @Param("outside_temperature") double outsideTemperature,
-	        @Param("latitude") double latitude,
-	        @Param("longitude") double longitude,
-	        @Param("activity") String activity,
-	        @Param("vital_date") LocalDateTime vitalDate);
+	@Transactional
+	@Query(value = "CALL upsert_risk_prediction(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", nativeQuery = true)
+	void upsertRiskPrediction(String userCode, LocalDate workDate, int riskFlag,
+			int heartbeat, BigDecimal temperature, BigDecimal outsideTemperature,
+			double latitude, double longitude, String activity, LocalDateTime vitalDate);
 	}
+
+//@Transactional
+//@Modifying
+//@Query(value = "CALL upsert_risk_prediction(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", nativeQuery = true)
+//void upsertRiskPrediction(String userCode, LocalDate workDate, int riskFlag,
+//		int heartbeat, BigDecimal temperature, BigDecimal outsideTemperature,
+//		double latitude, double longitude, String activity, LocalDateTime vitalDate);
+//}
+
+
+

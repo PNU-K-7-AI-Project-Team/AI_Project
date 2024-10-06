@@ -13,6 +13,7 @@ import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -24,38 +25,32 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class FlaskRequestDTO {
+public class FlaskResponseDTO {
 
 	private String userCode;
-
+	
 	@JsonSerialize(using = LocalDateSerializer.class)
 	@JsonDeserialize(using = LocalDateDeserializer.class)
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
 	private LocalDate workDate;
 	
-	@JsonSerialize(using = LocalDateTimeSerializer.class)
-	@JsonDeserialize(using = LocalDateTimeDeserializer.class)
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss.SSS")
-	private LocalDateTime vitalDate;
-
+	private int riskFlag;
+	
 	private int heartbeat;
+	
+	private BigDecimal temperature;
+	
+	private BigDecimal outsideTemperature;
 	
 	private double latitude;
 	
 	private double longitude;
 	
-	@Column(nullable = false, precision = 3, scale = 1)
-	private BigDecimal temperature;
+	@JsonSerialize(using = LocalDateTimeSerializer.class)
+	@JsonDeserialize(using = LocalDateTimeDeserializer.class)
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss.SSS")
+	private LocalDateTime vitalDate;
 	
-	@Column(nullable = false, precision = 3, scale = 1)
-	private BigDecimal outsideTemperature;
-	
-	private float[] gyroData;
-	
-//	private float x;
-//	
-//	private float y;
-//	
-//	private float z;
+	private String activity;
 
 }

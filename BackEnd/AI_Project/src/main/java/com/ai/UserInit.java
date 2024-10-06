@@ -12,7 +12,6 @@
 //
 //import com.ai.domain.Dept;
 //import com.ai.domain.Gender;
-//import com.ai.domain.Position;
 //import com.ai.domain.Region;
 //import com.ai.domain.Role;
 //import com.ai.domain.User;
@@ -57,6 +56,11 @@
 //        };
 //        return names[RANDOM.nextInt(names.length)];
 //    }
+//    
+//	int[] numbers = {1, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22,
+//			23, 24, 25, 26, 27, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 
+//			39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49};
+//
 //
 //    @Override
 //    public void run(ApplicationArguments args) throws Exception {
@@ -70,58 +74,21 @@
 //                  .password(passwordEnc.encode("11"))
 //                  .userName("관리자1")
 //                  .role(Role.ROLE_ADMIN)
-//                  .position(Position.MANAGER)
 //                  .dept(Dept.IT)
 //                  .region(Region.HQ)
-//                  .dateOfBirth(new Date())
 //                  .gender(Gender.M)
 //                  .build()  
 //        );
-//
-//        userRepo.save(User.builder()
-//                  .userCode("-1")
-//                  .userId("manager")
-//                  .password(passwordEnc.encode("11"))
-//                  .userName("관리자2")
-//                  .role(Role.ROLE_ADMIN)
-//                  .position(Position.MANAGER)
-//                  .dept(Dept.IT)
-//                  .region(Region.HQ)
-//                  .dateOfBirth(new Date())
-//                  .gender(Gender.M)
-//                  .build()  
-//        );
-//
-////        for (int i = 1; i <= 51; i++) {
-////            // 1과 3, 그리고 12에서 51까지만 작업을 수행
-////            if (i == 1 || (i >= 12 && i <= 51)) {
-////                userRepo.save(User.builder()
-////                      .userCode(String.valueOf(i))
-////                      .userId("u"+i)
-////                      .password(passwordEnc.encode("11"))
-////                      .userName(generateUniqueUserName()) // Ensure unique user name
-////                      .role(Role.ROLE_USER)
-////                      .position(Position.JUNIOR)
-////                      .dept(Dept.IT)
-////                      .region(Region.HQ)
-////                      .dateOfBirth(new Date())
-////                      .gender(Gender.M)
-////                      .build()  
-////            );
-////            }
-////        }
-//        
-//        for (int i = 1; i <= 38; i++) {
+//      
+//        for (int i : numbers) {
 //            userRepo.save(User.builder()
 //                  .userCode(String.valueOf(i))
 //                  .userId("u"+i)
 //                  .password(passwordEnc.encode("11"))
 //                  .userName(generateUniqueUserName()) // Ensure unique user name
 //                  .role(Role.ROLE_USER)
-//                  .position(Position.JUNIOR)
 //                  .dept(Dept.IT)
 //                  .region(Region.HQ)
-//                  .dateOfBirth(new Date())
 //                  .gender(Gender.M)
 //                  .build()  
 //            );

@@ -1,6 +1,6 @@
 package com.ai.dto;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import com.ai.domain.Dept;
 
@@ -15,9 +15,7 @@ public interface GetBoardsDTO {
 	Dept getDept();
 	String getUserId();
 	String getUserName();
-	Date getCreateDate();
-	Date getUpdateDate();
-
+	LocalDateTime getCreateDate();
 }
 
 //DTO는 필요한 데이터들만 정의해서 쓸수있음

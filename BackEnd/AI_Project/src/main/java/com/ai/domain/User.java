@@ -1,8 +1,17 @@
 package com.ai.domain;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
+import org.hibernate.annotations.CreationTimestamp;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -27,8 +36,6 @@ import lombok.ToString;
 public class User {
 	@Id
 	@Column (length = 8, nullable = false)
-	// @Id: 해당 필드가 기본키이다
-	// @GeneratedValue(~): 기본 키의 값을 자동으로 생성 (Auto Increment)
 	private String userCode;
 	
 	@Column (length = 45, nullable = false, unique = true) //unique = true: 해당 데이터 중복없음
@@ -48,27 +55,21 @@ public class User {
 	@Column(nullable = false)
 	private Role role;
 	
-	@Enumerated(EnumType.STRING)
-	private Position position;
-	
+	@Column(nullable = false)
 	@Enumerated(EnumType.STRING)
 	private Dept dept;
 	
+	@Column(nullable = false)
 	@Enumerated(EnumType.STRING)
 	private Region region;
 	
-	@Column
-	@Temporal(TemporalType.DATE) // Temporal: 날짜타입 정의 어노테이션
-	private Date dateOfBirth;
-	
 	@Enumerated(EnumType.STRING)
-	@Column
+	@Column(nullable = false)
 	private Gender gender; 
 	
-	//입사일자(계정생성일자)
-	@Column(updatable = false, insertable = false)
-	@Temporal(TemporalType.TIMESTAMP) 
-	private Date createDate;
+	@CreationTimestamp
+    @Column(nullable = false, updatable = false)
+    private LocalDate createDate;
 
 }
 

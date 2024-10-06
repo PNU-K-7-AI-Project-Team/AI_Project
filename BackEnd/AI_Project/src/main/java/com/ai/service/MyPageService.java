@@ -23,10 +23,8 @@ public class MyPageService {
 		return MyInfoDTO.builder()
 				   .userId(user.getUserId())
 				   .userName(user.getUserName())
-				   .position(user.getPosition())
 				   .dept(user.getDept())
 				   .region(user.getRegion())
-				   .dateOfBirth(user.getDateOfBirth())
 				   .gender(user.getGender())
 				   .createDate(user.getCreateDate())
 				   .build();

@@ -1,13 +1,24 @@
 package com.ai.domain;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -28,6 +39,9 @@ public class Log {
 	private String userCode;
 	
 	@Column(nullable = false)
+	@JsonSerialize(using = LocalDateSerializer.class)
+	@JsonDeserialize(using = LocalDateDeserializer.class)
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
 	private LocalDate workDate;
 	
 	@Column(nullable = false)
@@ -36,11 +50,11 @@ public class Log {
 	@Column(nullable = false)
 	private int heartbeat;
 	
-	@Column(nullable = false, columnDefinition = "DOUBLE(2,1)")
-	private double temperature;
+	@Column(nullable = false, precision = 3, scale = 1)
+	private BigDecimal temperature;
 	
-	@Column(nullable = false, columnDefinition = "DOUBLE(2,1)")
-	private double outsideTemperature;
+	@Column(nullable = false, precision = 3, scale = 1)
+	private BigDecimal outsideTemperature;
 	
 	@Column(nullable = false)
 	private double latitude;
@@ -52,7 +66,14 @@ public class Log {
 	private String activity;
 	
 	@Column(nullable = false, columnDefinition = "DATETIME(3)")
+	@JsonSerialize(using = LocalDateTimeSerializer.class)
+	@JsonDeserialize(using = LocalDateTimeDeserializer.class)
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss.SSS")
 	private LocalDateTime vitalDate;
+	
+	@ManyToOne // User 테이블과의 다대일 관계 설정
+	@JoinColumn(name = "userCode", referencedColumnName = "userCode", insertable = false, updatable = false)
+	private User user; // User 객체를 참조하는 필드
 	
 
 }

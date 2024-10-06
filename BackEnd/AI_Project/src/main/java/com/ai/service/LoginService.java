@@ -13,6 +13,8 @@ import com.ai.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
 
+
+// 로그인 및 회원가입 서비스 계층
 @Service
 @RequiredArgsConstructor
 public class LoginService {
@@ -51,11 +53,9 @@ public class LoginService {
 					  .userId(user.getUserId())
 					  .password(passwordEnc.encode(user.getPassword())) // encode를 통해 암호화
 					  .userName(user.getUserName())
-					  .position(user.getPosition())
 					  .dept(user.getDept())
 					  .region(user.getRegion())
 					  .gender(user.getGender())
-					  .dateOfBirth(user.getDateOfBirth())
 					  .role(Role.ROLE_USER)
 					  .build());
 	}
