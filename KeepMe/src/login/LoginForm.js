@@ -41,7 +41,6 @@ export default function LoginForm() {
                 token = response.headers.get("Authorization");
                 sessionStorage.setItem("userId", userId);
                 sessionStorage.setItem("token", token);
-                console.log('afaaf',response.status)
                 setAuth(true);
                 if(userId === 'admin'){
                     console.log('setauth',setAuth)
@@ -59,6 +58,8 @@ export default function LoginForm() {
             console.error('Login Failed');
         }
     }
+
+   
     const joinclick = () => {
         navigate('/signup')
     }

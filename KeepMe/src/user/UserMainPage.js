@@ -34,7 +34,7 @@ export default function UserMainPage() {
           latitude: newData.latitude,
           longitude: newData.longitude,
           timestamp: new Date().getTime(),
-          predictionRiskLevel: newData.predictionRiskLevel,
+          riskFlag: newData.riskFlag,
         }));
 
       };
@@ -57,6 +57,18 @@ export default function UserMainPage() {
       localStorage.removeItem('auth');
     }
   };
+  const getRiskFlagText = (riskFlag) => {
+    switch (riskFlag) {
+      case 0:
+        return '정상';
+      case 1:
+        return '주의';
+      case 2:
+        return '위험';
+      default:
+        return '알 수 없음';
+    }
+  };
 
   return (
     <div className={styles.bg}>
@@ -65,7 +77,7 @@ export default function UserMainPage() {
           <div className={styles.userInfo}>
             <div className={styles.avatar}><svg xmlns="http://www.w3.org/2000/svg" height="68px" viewBox="0 -960 960 960" width="70px" fill="#000000"><path d="M626-533q22.5 0 38.25-15.75T680-587q0-22.5-15.75-38.25T626-641q-22.5 0-38.25 15.75T572-587q0 22.5 15.75 38.25T626-533Zm-292 0q22.5 0 38.25-15.75T388-587q0-22.5-15.75-38.25T334-641q-22.5 0-38.25 15.75T280-587q0 22.5 15.75 38.25T334-533Zm146 272q66 0 121.5-35.5T682-393h-52q-23 40-63 61.5T480.5-310q-46.5 0-87-21T331-393h-53q26 61 81 96.5T480-261Zm0 181q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-400Zm0 340q142.38 0 241.19-98.81Q820-337.63 820-480q0-142.38-98.81-241.19T480-820q-142.37 0-241.19 98.81Q140-622.38 140-480q0 142.37 98.81 241.19Q337.63-140 480-140Z"/></svg></div>
             <div className={styles.userDetails}>
-              <div className={styles.userName}>이창수
+              <div className={styles.userName}>홍길동
                 <span className={styles.userRole}>도금</span>
               </div>
               <div className={styles.userCompany}>강남건설</div>
@@ -81,19 +93,15 @@ export default function UserMainPage() {
         <main className={styles.mainContent}>
           <div className={styles.card}>
             <h3>상태</h3>
-            {/* <p>
-              {userData.predictionRiskLevel && userData.predictionRiskLevel.length > 0
-                ? `${userData.predictionRiskLevel[userData.predictionRiskLevel.length - 1]}`
-                : 'N/A'}
-            </p> */}
+            <p className={styles.riskFlag}>{getRiskFlagText(userData.riskFlag)}</p>
           </div>
           <div className={styles.card}>
             <h3>기기</h3>
-            
+            <p className={styles.device}>83%</p>
           </div>
           <div className={`${styles.card} ${styles.fullWidthCard}`}>
             <h3>알림</h3>
-            
+            <p className={styles.alarm}>알림이 없습니다.</p>
           </div>
           <div className={`${styles.card} ${styles.fullWidthCard}`}>
             <h3>심박수</h3>

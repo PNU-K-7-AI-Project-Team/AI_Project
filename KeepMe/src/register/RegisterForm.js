@@ -120,7 +120,7 @@ export default function RegisterForm() {
             console.log(response.data);
             if (response.status === 200) {
                 alert('회원가입이 완료되었습니다.');
-                navigate('/login')
+                navigate('/')
             }
         } catch (error) {
             console.error('Register failed:', error)

@@ -32,9 +32,13 @@
     justify-content: space-between;
     /* 항목 간격 일정하게 */
     border-collapse: collapse;
+    background-color: #ffffff;
+   border-radius: 5px;
+}
+
+.boardtable thead{  
+   border-radius: 5px;
     background-color: #CDE3EB;
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
 }
 
 .boardTable th {
@@ -42,21 +46,28 @@
     font-weight: bold;
     font-size: 15px;
     text-align: center;
-    height: 10px;
+    height: 30px;
     padding: 2px;
     border-right: 1px solid #0a040413;
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
+   
 }
-
 .boardTable th:last-child {
+    border-top-right-radius: 5px;
     border-right: none;
 }
+.boardTable th:first-child {
+    border-top-left-radius: 5px;
+}
 
+.boardTable tbody{
+    background-color: #ffffff;
+
+}
 .boardTable td {
     border-bottom: 1px solid #ddd;
     border-right: 1px solid #ddd;
-    height: 70px;
+    height: 37px;
+    font-size: 14px;
 }
 
 .boardTable td:nth-child(1) {
@@ -89,7 +100,7 @@
     width: 100px;
     /* 작성일 열 */
     text-align: center;
-    padding-left: 20px;
+   
 }
 
 .boardTable td:last-child {
@@ -102,6 +113,7 @@
 
 .createDate {
     /* 작성일 열 */
+    margin-left: 0px;
     text-align: center;
 }
   /* 페이지네이션 스타일 */

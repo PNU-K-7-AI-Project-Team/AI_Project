@@ -11,9 +11,7 @@ export default function NaverMap({ onLocationClick }) {
   console.log('지도에서 받아온 데이터', mapsocketData);
   const mapRef = useRef(null); // 맵 인스턴스를 저장할 참조 변수
   const markersRef = useRef({}); // 마커 인스턴스를 저장할 객체
-  const [isModalOpen, setIsModalOpen] = useState(false); // 모달 열림/닫힘 상태
   const [selectedUserCode, setSelectedUserCode] = useState(null); // 선택된 사용자 코드 상태
-  console.log('selectedUserCode위', selectedUserCode);
   const [selectedWorkDate, setSelectedWorkDate] = useState(null); // 선택된 사용자 코드 상태
   const { naver } = window; // naver 객체는 Naver Maps API가 로드된 후 접근 가능
   const url = process.env.REACT_APP_BACKEND_URL;
@@ -23,9 +21,9 @@ export default function NaverMap({ onLocationClick }) {
       case 0:
         return '/img/normal.png'; // 정상 상태일 때
       case 1:
-        return '/img/caution.png'; // 위험 상태일 때
+        return '/img/caution (2).png'; // 위험 상태일 때
       case 2:
-        return '/img/danger2.png'; // 경고 상태일 때 (필요에 따라 이미지 변경)
+        return '/img/danger.png'; // 경고 상태일 때 (필요에 따라 이미지 변경)
       default:
         return '/img/normal.png'; // 기본 이미지 (예외 처리용)
     }
@@ -67,6 +65,8 @@ export default function NaverMap({ onLocationClick }) {
         riskFlag: item.riskFlag,
         vitalDate: item.vitalDate,
         workDate: item.workDate,
+        activity: item.activity,
+        outsideTemperature: item.outsideTemperature,
       }))
       setMapsocketData(prevData => {
         const newData = {...prevData};
@@ -113,7 +113,6 @@ export default function NaverMap({ onLocationClick }) {
       console.log('Marker clicked:', userCode);
       setSelectedUserCode(userCode); // 선택된 사용자 코드 업데이트
       setSelectedWorkDate(workDate);
-      setIsModalOpen(true); // 모달 열기
       if (onLocationClick) {
         onLocationClick(userCode); // 외부 클릭 처리 함수 호출
       }
@@ -210,19 +209,15 @@ export default function NaverMap({ onLocationClick }) {
   }, [mapsocketData]);
   
   // 모달 닫기 핸들러
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
+  const handleClose = () => {
     setSelectedUserCode(null);
+    setSelectedWorkDate(null);
   };
 
   return (
     <div>
-      <div id="map" className={styles.map} /> {/* 맵이 렌더링될 div */}
-      {isModalOpen && selectedUserCode && (
-        <Modal isOpen={isModalOpen} onClose={handleCloseModal}>
-          {selectedUserCode && <HeartbeatGraph userCode={selectedUserCode} />} {/* 선택된 사용자 코드에 따른 그래프 표시 */}
-        </Modal>
-      )}
+      <div id="map" className={styles.map} /> 
+      {selectedUserCode && selectedWorkDate && <HeartbeatGraph userCode={selectedUserCode} workDate={selectedWorkDate} onClose={handleClose}/>}
     </div>
   );
 }

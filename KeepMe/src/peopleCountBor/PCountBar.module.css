@@ -7,12 +7,12 @@
     align-items: center;
     justify-content: space-around;
     position: absolute;
-    width: 19vw;
+    width: 18vw;
     height: 8.5vh;
-    left: 3vw;
+    left: 2.5vw;
     top: 3vw;
     
-    background: #FFFFFF;
+    background: #ffffffdc;
     border-radius: 15px;
     z-index: 100;
 }
@@ -52,11 +52,11 @@
     align-items: center;
     justify-content: space-around;
     position: absolute;
-    width: 19vw;
+    width: 18vw;
     height: 8.5vh;
-    left: 23vw;
+    left: 21.5vw;
     top: 3vw;
-    background: #6EDF87;
+    background: #6edf87d7;
     border-radius: 15px;
     font-family:  "Nanum Gothic", sans-serif;
     font-style: normal;
@@ -105,12 +105,12 @@
     align-items: center;
     justify-content: space-around;
     position: absolute;
-    width: 19vw;
+    width: 18vw;
     height: 8.5vh;
-    left: 43vw;
+    left: 40.5vw;
     top: 3vw;
     
-    background: #EAB34A;
+    background: #eab24ad7;
     border-radius: 15px;
     font-family:  "Nanum Gothic", sans-serif;
     font-style: normal;
@@ -154,12 +154,12 @@
     align-items: center;
     justify-content: space-around;
     position: absolute;
-    width: 19vw;
+    width: 18vw;
     height: 8.5vh;
-    left: 63vw;
+    left: 59.5vw;
     top: 3vw;
     
-    background: #E95454;
+    background: #e95454d3;
     border-radius: 15px;
     padding-left: 20px;
     font-family:  "Nanum Gothic", sans-serif;

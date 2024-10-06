@@ -92,7 +92,6 @@ export default function BoardDetail({onClose, postId}) {
                     <div className={styles.etcContainer}>
                         <span>부서: {dept[post.dept]}</span>
                         <span>작성자: {post.userName}</span>
-                        
                     </div>
                 </div>
                 <div className={styles.contentContainer}>

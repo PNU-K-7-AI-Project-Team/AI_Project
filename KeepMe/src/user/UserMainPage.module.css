@@ -120,23 +120,48 @@
   font-weight: bold;
   font-family: 'Jura', sans-serif;
   color: rgba(0, 0, 0, 0.8);
-  margin-left: 270px;
+  margin-left: 200px;
   margin-top: -50px;
 }
 .heartbeatsvg{
-  margin-left: 200px;
+  margin-left: 140px;
  
+}
+.riskFlag{
+  font-size: 24px;
+  font-weight: 600;
+  font-family:  "Nanum Gothic", sans-serif;
+  color: rgba(0, 0, 0, 0.678);
+  margin-left: 100px;
+  margin-top: 50px;
+}
+.device{
+  font-size: 24px;
+  font-weight: 600;
+  font-family:  "Nanum Gothic", sans-serif;
+  color: rgba(0, 0, 0, 0.623);
+  margin-left: 100px;
+  margin-top: 50px;
+}
+.alarm{
+  font-size: 19px;
+  font-weight: 600;
+  font-family:  "Nanum Gothic", sans-serif;
+  color: rgba(0, 0, 0, 0.623);
+  margin-left: 190px;
+  margin-top: 60px;
 }
 .temperature {
   font-size: 28px;
   font-weight: bold;
   font-family: 'Jura', sans-serif;
   color: rgba(0, 0, 0, 0.8);
-  margin-left: 270px;
+  width: 100px;
+  margin-left: 200px;
   margin-top: -50px;
 }
 .temperaturesvg{
-  margin-left: 200px;
+  margin-left: 140px;
 }
 .footer {
   margin-top: 20px;

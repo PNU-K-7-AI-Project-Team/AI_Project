@@ -34,3 +34,7 @@ export const dangerState = atom({
   key: 'dangerState',
   default: null,
 });
+export const userRoleState = atom({
+  key: 'userRoleState',
+  default: null,
+});

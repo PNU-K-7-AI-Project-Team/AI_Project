@@ -3,7 +3,6 @@ import { useState, useEffect } from 'react'
 import styles from './BoardMain.module.css'
 import Pagination from '../pagination/Pagination'
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
 import BoardWrite from './BoardWrite';
 import BoardDetail from './BoardDetail';
 
@@ -38,11 +37,12 @@ export default function BoardMain({ onClose }) {
           headers: { 'Authorization': sessionStorage.getItem('token') }
         })).data;
         setDataBoard(response.content);
+        console.log('게시판response', response);
         setPage({
-          size: response.page.size,
-          number: response.page.number,
-          totalElements: response.page.totalElements,
-          totalPages: response.page.totalPages,
+          size: response.pagesize,
+          number: response.pageNumber,
+          totalElements: response.totalElements,
+          totalPages: response.totalPages,
         });
         console.log(response);
       } catch (error) {
@@ -69,6 +69,17 @@ export default function BoardMain({ onClose }) {
     QM: '품질관리',
   };
 
+  const formatDate = (createDateArray) => {
+    const [year, month, day, hours, minutes, seconds] = createDateArray;
+    const formattedMonth = String(month).padStart(2, '0');
+    const formattedDay = String(day).padStart(2, '0');
+    const formattedHours = String(hours).padStart(2, '0');
+    const formattedMinutes = String(minutes).padStart(2, '0');
+    const formattedSeconds = String(seconds).padStart(2, '0');
+  
+    return `${year}-${formattedMonth}-${formattedDay} ${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
+  };
+
   const handleRowClick = (idx) => {
     setSelectedPostId(idx); // 선택된 게시글 저장
     console.log('post', idx);
@@ -79,7 +90,7 @@ export default function BoardMain({ onClose }) {
     <div className={styles.modalOverlay} onClick={onClose}>
       <div className={styles.boardMain} onClick={e => e.stopPropagation()}>
         <table className={styles.boardTable}>
-          <thead className={styles.boardtablethead}>
+          <thead>
             <tr>
               <th>번호</th>
               <th>제목</th>
@@ -95,7 +106,7 @@ export default function BoardMain({ onClose }) {
                 <td>{post.title}</td>
                 <td>{dept[post.dept]}</td>
                 <td>{post.userName}</td>
-                <td className={styles.createDate}>{new Date(post.createDate).toLocaleDateString('ko-KR')}</td>
+                <td className={styles.createDate}>{formatDate(post.createDate)}</td>
               </tr>
             ))}
           </tbody>

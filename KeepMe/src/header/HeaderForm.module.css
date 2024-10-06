@@ -10,12 +10,12 @@
     width: 100vw;
     height: 4vh;
     top: 0;
-    background: #ffffff;
+    background: #ffffffce;
     
 }
 .title{
     position: absolute;
-    left: 3vw;
+    left: 2.5vw;
     font-family: 'Jura', sans-serif;
     font-size: 30px;
     font-weight: 500;
@@ -31,12 +31,12 @@
     position: absolute;
     width: 5vw;
     height: 2.5vh;
-    left: 82vw;
+    left: 83vw;
    
     background: #ffffff;
     border: none;
     cursor: pointer;
-    color: #0000007c;
+    color: #000000b4;
     font-size: 15px;
     font-weight: 600;
 }
@@ -53,12 +53,12 @@
     position: absolute;
     width: 5vw;
     height: 2.5vh;
-    left: 92vw;
+    left: 93vw;
    
     background: #ffffff;
     border: none;
     cursor: pointer;
-    color: #0000007c;
+    color: #000000b4;
     font-size: 15px;
     font-weight: 600;
 }
@@ -75,10 +75,10 @@
     position: absolute;
     width: 5vw;
     height: 2.5vh;
-    left: 87vw;
+    left: 88vw;
     
     background: #ffffff;
-    color: #0000007c;
+    color: #000000b4;
     border: none;
     cursor: pointer;
     font-size: 15px;
