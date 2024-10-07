@@ -1,10 +1,9 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { socketDataState, userIdState, wsState, authState } from '../recoil/Atoms'; // WebSocket에서 가져온 심박수 데이터
 import styles from './UserMainPage.module.css';
 
 export default function UserMainPage() {
-  const wsRef = useRef(null);
   const [socketData, setSocketData] = useRecoilState(socketDataState);
   const userRole = useRecoilValue(userIdState) || sessionStorage.getItem('userId');
   const [ws, setWs] = useRecoilState(wsState); // WebSocket 상태
@@ -52,7 +51,7 @@ export default function UserMainPage() {
   console.log('User data:', userData); // temperature 배열의 내용을 출력
   const handleLogout = () => {
     if (window.confirm('정말로 로그아웃 하시겠습니까?')) {
-      window.location.href = '/logout';
+      window.location.href = '/';
       sessionStorage.clear();
       localStorage.removeItem('auth');
     }

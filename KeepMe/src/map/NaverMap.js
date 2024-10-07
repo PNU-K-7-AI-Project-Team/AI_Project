@@ -1,8 +1,7 @@
 import React, { useRef, useEffect, useState } from 'react';
 import styles from './NaverMap.module.css';
-import Modal from '../modal/Modal';
-import { useRecoilState, useRecoilValue } from 'recoil';
-import { selectedUserCodeState, socketDataState } from '../recoil/Atoms';
+import { useRecoilState } from 'recoil';
+import { socketDataState } from '../recoil/Atoms';
 import HeartbeatGraph from '../heartbeat/Heartbeat';
 import axios from 'axios';
 

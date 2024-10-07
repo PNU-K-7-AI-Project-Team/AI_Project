@@ -42,7 +42,7 @@ export default function LoginForm() {
                 sessionStorage.setItem("userId", userId);
                 sessionStorage.setItem("token", token);
                 setAuth(true);
-                if(userId === 'admin'){
+                if(userId === 'admin' || userId === 'admin11'){
                     console.log('setauth',setAuth)
                     setUserRole('admin');
                     navigate('/main');

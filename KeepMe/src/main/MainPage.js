@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react'
+import React, { useEffect, useState } from 'react'
 import styles from './MainPage.module.css'
 import NaverMap from '../map/NaverMap'
 import PCountBar from '../peopleCountBor/PCountBar'
