@@ -191,7 +191,7 @@ public class WebSocketService {
 				Map<String, Object> map = sess.getAttributes();
 				String userCode = (String) map.get("userCode");
 				if (frontData != null) {
-					if (userCode.equals("0") || userCode.equals(frontData.getUserCode())) {
+					if (userCode.equals("0") || userCode.equals("00") ||userCode.equals(frontData.getUserCode())) {
 						sendMessageToClient(sess, message, userCode, msg);
 					} 
 				} 

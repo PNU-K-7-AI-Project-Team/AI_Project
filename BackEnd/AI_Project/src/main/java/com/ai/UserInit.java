@@ -68,30 +68,54 @@
 //        // 실행 시 계정 추가
 //
 //        // 관리자용
+////        userRepo.save(User.builder()
+////                  .userCode("0")
+////                  .userId("admin")
+////                  .password(passwordEnc.encode("11"))
+////                  .userName("관리자1")
+////                  .role(Role.ROLE_ADMIN)
+////                  .dept(Dept.IT)
+////                  .region(Region.HQ)
+////                  .gender(Gender.M)
+////                  .build()  
+////        );
+////        
+////        userRepo.save(User.builder()
+////                .userCode("00")
+////                .userId("admin11")
+////                .password(passwordEnc.encode("11"))
+////                .userName("관리자2")
+////                .role(Role.ROLE_ADMIN)
+////                .dept(Dept.IT)
+////                .region(Region.HQ)
+////                .gender(Gender.M)
+////                .build()  
+////      );
+//        
 //        userRepo.save(User.builder()
-//                  .userCode("0")
-//                  .userId("admin")
-//                  .password(passwordEnc.encode("11"))
-//                  .userName("관리자1")
-//                  .role(Role.ROLE_ADMIN)
-//                  .dept(Dept.IT)
-//                  .region(Region.HQ)
-//                  .gender(Gender.M)
-//                  .build()  
-//        );
+//                .userCode("00")
+//                .userId("admin22")
+//                .password(passwordEnc.encode("11"))
+//                .userName("관리자3")
+//                .role(Role.ROLE_ADMIN)
+//                .dept(Dept.IT)
+//                .region(Region.HQ)
+//                .gender(Gender.M)
+//                .build()  
+//      );
 //      
-//        for (int i : numbers) {
-//            userRepo.save(User.builder()
-//                  .userCode(String.valueOf(i))
-//                  .userId("u"+i)
-//                  .password(passwordEnc.encode("11"))
-//                  .userName(generateUniqueUserName()) // Ensure unique user name
-//                  .role(Role.ROLE_USER)
-//                  .dept(Dept.IT)
-//                  .region(Region.HQ)
-//                  .gender(Gender.M)
-//                  .build()  
-//            );
-//        }
+////        for (int i : numbers) {
+////            userRepo.save(User.builder()
+////                  .userCode(String.valueOf(i))
+////                  .userId("u"+i)
+////                  .password(passwordEnc.encode("11"))
+////                  .userName(generateUniqueUserName()) // Ensure unique user name
+////                  .role(Role.ROLE_USER)
+////                  .dept(Dept.IT)
+////                  .region(Region.HQ)
+////                  .gender(Gender.M)
+////                  .build()  
+////            );
+////        }
 //    }
 //}
