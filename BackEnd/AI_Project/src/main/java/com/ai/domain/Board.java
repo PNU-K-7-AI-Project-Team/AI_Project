@@ -6,6 +6,7 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -58,7 +59,8 @@ public class Board {
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
 	private LocalDateTime createDate;
 	
-    @ManyToOne // User 테이블과의 다대일 관계 설정
+    // User 테이블과의 다대일 관계 설정, CascadeType.REMOVE 추가
+    @ManyToOne(cascade = CascadeType.ALL) // User 삭제 시 관련된 Board도 삭제
     @JoinColumn(name = "userCode", referencedColumnName = "userCode", insertable = false, updatable = false)
     private User user; // User 객체를 참조하는 필드
 

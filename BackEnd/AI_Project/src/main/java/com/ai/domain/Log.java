@@ -12,6 +12,7 @@ import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -71,9 +72,10 @@ public class Log {
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss.SSS")
 	private LocalDateTime vitalDate;
 	
-	@ManyToOne // User 테이블과의 다대일 관계 설정
-	@JoinColumn(name = "userCode", referencedColumnName = "userCode", insertable = false, updatable = false)
-	private User user; // User 객체를 참조하는 필드
+    // User 테이블과의 다대일 관계 설정, CascadeType.REMOVE 추가
+    @ManyToOne(cascade = CascadeType.REMOVE) // User 삭제 시 관련된 Log도 삭제
+    @JoinColumn(name = "userCode", referencedColumnName = "userCode", insertable = false, updatable = false)
+    private User user; // User 객체를 참조하는 필드
 	
 
 }

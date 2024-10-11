@@ -17,8 +17,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -72,8 +71,4 @@ public class SensorData {
 	
 	@Column(nullable = false)
 	private float z;
-	
-	@ManyToOne // User 테이블과의 다대일 관계 설정
-	@JoinColumn(name = "userCode", referencedColumnName = "userCode", insertable = false, updatable = false)
-	private User user; // User 객체를 참조하는 필드
 }
