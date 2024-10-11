@@ -185,12 +185,12 @@
   font-family: 'Jura', sans-serif;
   font-weight: 500;
 }
-.heartbeat p {
+.heartbeat h3 {
   text-align: center;
   width: 100px;
   margin: 0px;
   margin-top: 10px;
-  font-size: 14px;
+  font-size: 12px;
   font-family:  "Nanum Gothic", sans-serif;
 }
 .closeButton {
@@ -208,12 +208,12 @@
   display: flex;
   flex-direction: row;
 }
-.temperatureAction p{
+.temperatureAction h2{
   text-align: center;
   width: 100px;
   margin: 0px;
   margin-top: 10px;
-  font-size: 14px;
+  font-size: 13px;
   font-family:  "Nanum Gothic", sans-serif;
   
   
@@ -221,7 +221,7 @@
 
 .temperatureAction span{
   width: 100px;
-  
+  text-align: center;
   margin-top: 10px;
   font-size: 25px;
   font-family: 'Jura', sans-serif;

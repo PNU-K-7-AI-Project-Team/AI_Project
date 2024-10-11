@@ -126,13 +126,13 @@ export default function HeartbeatGraph({ userCode, workDate, onClose }) {
                         </div>
                         <div className={styles.infoSection}>
                             <div className={styles.heartbeat}>
-                                <p className={styles.infoMaxHeartbeat}><p>최고 심박수</p><span>{maxHeartbeat.toFixed(0)} bpm</span></p>
-                                <p className={styles.infoHeartbeat}><p>현재 심박수</p><span>{userData.heartbeat[userData.heartbeat.length - 1].toFixed(0)} bpm</span></p>
+                                <p className={styles.infoMaxHeartbeat}><h3>최고 심박수</h3><span>{maxHeartbeat.toFixed(0)} bpm</span></p>
+                                <p className={styles.infoHeartbeat}><h3>현재 심박수</h3><span>{userData.heartbeat[userData.heartbeat.length - 1].toFixed(0)} bpm</span></p>
 
                             </div>
                             <div className={styles.temperatureAction}>
-                                <p className={styles.infoTemperature}><p>체온</p><span>{userData.temperature[userData.temperature.length - 1].toFixed(0)}°C</span></p>
-                                <p className={styles.infoAction}><p>활동</p><h3 className={styles.infoActionText}>{activity(userData.activity) || '알 수 없음'}</h3></p>
+                                <p className={styles.infoTemperature}><h2>체온</h2><span>{userData.temperature[userData.temperature.length - 1].toFixed(0)}°C</span></p>
+                                <p className={styles.infoAction}><h2>활동</h2><h3 className={styles.infoActionText}>{activity(userData.activity) || '알 수 없음'}</h3></p>
                             </div>
                         </div>
                     </div>

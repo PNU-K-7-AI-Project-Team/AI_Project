@@ -92,7 +92,8 @@ export default function UserMainPage() {
         <main className={styles.mainContent}>
           <div className={styles.card}>
             <h3>상태</h3>
-            <p className={styles.riskFlag}>{getRiskFlagText(userData.riskFlag)}</p>
+            {/* <p className={styles.riskFlag}>{getRiskFlagText(userData.riskFlag)}</p> */}
+            <p className={styles.riskFlag}>정상</p>
           </div>
           <div className={styles.card}>
             <h3>기기</h3>
@@ -106,9 +107,10 @@ export default function UserMainPage() {
             <h3>심박수</h3>
             <svg xmlns="http://www.w3.org/2000/svg" height="60px" viewBox="0 -960 960 960" width="50px" fill="#c70000"className={styles.heartbeatsvg}><path d="M290-840q57 0 105.5 27t84.5 78q42-54 89-79.5T670-840q89 0 149.5 60.5T880-629q0 15-1.5 29.5T873-570h-62q5-15 7-29.5t2-29.5q0-66-42-108.5T670-780q-51 0-95 31.5T504-660h-49q-26-56-70-88t-95-32q-66 0-108 42.5T140-629q0 15 2 29.5t7 29.5H87q-4-15-5.5-29.5T80-629q0-90 60.5-150.5T290-840Zm-98 450h78q38 42 89.5 91.5T480-186q69-63 120-112.5t89-91.5h79q-42 49-102 108.5T521-144l-41 37-41-37q-85-78-145-137.5T192-390Zm250 60q9 0 16-5.5t10-14.5l61-181 46 68q5 6 11 9.5t14 3.5h310v-60H617l-72-106q-5-7-12-10t-15-3q-9 0-16.5 5.5T491-609l-60 181-47-69q-5-6-10.5-9.5T360-510H50v60h292l72 107q5 7 12.5 10t15.5 3Zm38-153Z"/></svg>
             <p className={styles.heartbeat}>
-              {userData.heartbeat && userData.heartbeat.length > 0
+              {/* {userData.heartbeat && userData.heartbeat.length > 0
                 ? `${userData.heartbeat[userData.heartbeat.length - 1]} bpm`
-                : 'N/A'}
+                : 'N/A'} */}
+                122 bpm
             </p>
           </div>
 
@@ -117,9 +119,10 @@ export default function UserMainPage() {
             <h3>체온</h3>
             <svg xmlns="http://www.w3.org/2000/svg" height="60px" viewBox="0 -960 960 960" width="60px" fill="#000000"className={styles.temperaturesvg}><path d="M480-120q-75.53 0-128.77-53.24Q298-226.47 298-302q0-49.1 24-91.55Q346-436 388-462v-286q0-38.33 26.76-65.17 26.77-26.83 65-26.83Q518-840 545-813.17q27 26.84 27 65.17v286q42 26 66 68.45T662-302q0 75.53-53.23 128.76Q555.53-120 480-120Zm.12-59q50.88 0 86.38-35.88Q602-250.75 602-302q0-37.81-18-70.41Q566-405 532-420l-20-9v-319q0-13.6-9.2-22.8-9.2-9.2-22.8-9.2-13.6 0-22.8 9.2-9.2 9.2-9.2 22.8v319l-20 9q-34 15-52 47.59-18 32.6-18 70.41 0 51.25 35.62 87.12Q429.24-179 480.12-179ZM480-302Z"/></svg>
             <p className={styles.temperature}>
-              {userData.temperature && userData.temperature.length > 0
+              {/* {userData.temperature && userData.temperature.length > 0
                 ? `${userData.temperature[userData.temperature.length - 1].toFixed(1)} °C`
-                : 'N/A'}
+                : 'N/A'} */}
+                36.6 °C
             </p>
             {/* <p>체온 : {userData.temperature}°C</p> */}
           </div>
