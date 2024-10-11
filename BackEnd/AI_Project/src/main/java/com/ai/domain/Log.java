@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -36,8 +37,8 @@ public class Log {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int no;
 	
-	@Column(nullable = false, length = 8)
-	private String userCode;
+//	@Column(nullable = false, length = 8)
+//	private String userCode;
 	
 	@Column(nullable = false)
 	@JsonSerialize(using = LocalDateSerializer.class)
@@ -72,10 +73,10 @@ public class Log {
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss.SSS")
 	private LocalDateTime vitalDate;
 	
-    // User 테이블과의 다대일 관계 설정, CascadeType.REMOVE 추가
-    @ManyToOne(cascade = CascadeType.REMOVE) // User 삭제 시 관련된 Log도 삭제
-    @JoinColumn(name = "userCode", referencedColumnName = "userCode", insertable = false, updatable = false)
-    private User user; // User 객체를 참조하는 필드
+    @ManyToOne
+    @JoinColumn(name = "user_code", nullable = false)
+    @JsonBackReference // JSON 직렬화 시 제외
+    private User user;
 	
 
 }

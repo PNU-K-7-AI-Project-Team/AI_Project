@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -18,7 +19,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-
+import jakarta.persistence.MapsId;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -70,8 +71,9 @@ public class RiskPrediction {
 	@Column(length = 45, nullable = false)
 	private String activity;
 	
-    // User 테이블과의 다대일 관계 설정, CascadeType.REMOVE 추가
-    @ManyToOne(cascade = CascadeType.REMOVE) // User 삭제 시 관련된 RiskPrediction도 삭제
-    @JoinColumn(name = "userCode", referencedColumnName = "userCode", insertable = false, updatable = false)
-    private User user; // User 객체를 참조하는 필드
+    @ManyToOne
+    @JoinColumn(name = "userCode", nullable = false)
+    @MapsId
+    @JsonBackReference // JSON 직렬화 시 제외
+    private User user;
 }

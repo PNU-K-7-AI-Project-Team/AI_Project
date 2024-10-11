@@ -40,7 +40,7 @@ public class BoardInit implements ApplicationRunner {
         
         for (int i = 1; i <= 60; i++) {
             boardRepo.save(Board.builder()
-                    .userCode(admin.getUserCode())
+                    .user(admin)
                     .title(admin.getUserName() + "의 공지사항")
                     .content(admin.getUserName() + "의 공지사항 내용")
                     .userId(admin.getUserId())
@@ -49,7 +49,7 @@ public class BoardInit implements ApplicationRunner {
                     .build());
             
             boardRepo.save(Board.builder()
-                    .userCode(manager.getUserCode())
+            		.user(manager)
                     .title(manager.getUserName() + "의 공지사항")
                     .content(manager.getUserName() + "의 공지사항 내용")
                     .userId(manager.getUserId())

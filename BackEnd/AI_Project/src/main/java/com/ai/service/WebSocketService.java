@@ -138,7 +138,7 @@ public class WebSocketService {
 		        || Math.abs(rp.getLongitude() - ld.getLongitude()) > EPSILON
 		        || rp.getTemperature().setScale(1, RoundingMode.HALF_UP).compareTo(ld.getTemperature().setScale(1, RoundingMode.HALF_UP)) != 0
 		        || rp.getOutsideTemperature().setScale(1, RoundingMode.HALF_UP).compareTo(ld.getOutsideTemperature().setScale(1, RoundingMode.HALF_UP)) != 0
-		        || !rp.getUserCode().equals(ld.getUserCode())
+		        || !rp.getUserCode().equals(ld.getUser().getUserCode())
 		        || !rp.getActivity().equals(ld.getActivity())) {
 		    sendPushMessage(rp);
 		}

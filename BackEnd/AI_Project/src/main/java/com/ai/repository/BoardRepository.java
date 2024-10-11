@@ -8,10 +8,11 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import com.ai.domain.Board;
+import com.ai.domain.User;
 import com.ai.dto.GetBoardsDTO;
 
 public interface BoardRepository extends JpaRepository<Board, Integer> {
-	Optional<Board> findByUserCode(String userCode); // Integer는 null값을 가질수있음
+	Optional<Board> findByUser(User user); // Integer는 null값을 가질수있음
 	
 	@Query // 데이터 조회 및 전체 데이터 개수를 계산하는 SQL 쿼리문 정의 어노테이션
 	(value = "SELECT idx, user_code, title, content, user_id, user_name, dept, create_date FROM board", // db에서 조회할 데이터  
