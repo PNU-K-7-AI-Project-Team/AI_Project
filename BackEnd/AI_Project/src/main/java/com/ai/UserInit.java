@@ -70,7 +70,7 @@ public class UserInit implements ApplicationRunner{
         // 관리자용
         userRepo.save(User.builder()
                   .userCode("0")
-                  .userId("admin")
+                  .userId("admin1")
                   .password(passwordEnc.encode("11"))
                   .userName("관리자1")
                   .role(Role.ROLE_ADMIN)
@@ -82,7 +82,7 @@ public class UserInit implements ApplicationRunner{
         
         userRepo.save(User.builder()
                 .userCode("00")
-                .userId("manager")
+                .userId("admin2")
                 .password(passwordEnc.encode("11"))
                 .userName("관리자2")
                 .role(Role.ROLE_ADMIN)

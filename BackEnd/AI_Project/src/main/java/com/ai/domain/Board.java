@@ -60,7 +60,7 @@ public class Board {
 	private LocalDateTime createDate;
 	
     // User 테이블과의 다대일 관계 설정, CascadeType.REMOVE 추가
-    @ManyToOne(cascade = CascadeType.ALL) // User 삭제 시 관련된 Board도 삭제
+    @ManyToOne(cascade = CascadeType.REMOVE) // User 삭제 시 관련된 Board도 삭제
     @JoinColumn(name = "userCode", referencedColumnName = "userCode", insertable = false, updatable = false)
     private User user; // User 객체를 참조하는 필드
 
