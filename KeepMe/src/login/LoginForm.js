@@ -42,9 +42,9 @@ export default function LoginForm() {
                 sessionStorage.setItem("userId", userId);
                 sessionStorage.setItem("token", token);
                 setAuth(true);
-                if(userId === 'admin' || userId === 'admin11'){
+                if(userId === 'admin1' || userId === 'admin2'){
                     console.log('setauth',setAuth)
-                    setUserRole('admin');
+                    setUserRole(userId);
                     navigate('/main');
                 }else{
                     setUserRole(userId);
@@ -53,9 +53,11 @@ export default function LoginForm() {
                 }
             } else {
                 console.error('Login Failed');
+                alert('아이디와 비밀번호를 확인해주세요.')
             }
         } catch (error) {
             console.error('Login Failed');
+            alert('아이디와 비밀번호를 확인해주세요.')
         }
     }
 

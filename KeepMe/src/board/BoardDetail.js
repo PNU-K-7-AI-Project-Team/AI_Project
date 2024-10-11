@@ -56,6 +56,7 @@ export default function BoardDetail({onClose, postId}) {
               const response = await axios.post(`${url}board/delete?idx=${postId}`,'',{headers:headers});
               if(response.status===200){
                 alert('게시글이 삭제되었습니다.');
+                onClose()
               }else{
                 alert('알 수 없는 오류가 발생했습니다.');
               }

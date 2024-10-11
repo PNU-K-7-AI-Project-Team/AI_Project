@@ -118,6 +118,7 @@ export default function NaverMap({ onLocationClick }) {
     });
     return marker;
   };
+  
   useEffect(() => {
     if (selectedUserCode && selectedWorkDate) {
       fetchUserdata();

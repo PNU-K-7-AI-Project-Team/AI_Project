@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import styles from './Mypage.module.css';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 function MyPage({ onClose }) {
   const [newPassword, setNewPassword] = useState('');
   const [checkNewPassword, setCheckNewPassword] = useState('');
   const [newDepartment, setNewDepartment] = useState('');
   const url = process.env.REACT_APP_BACKEND_URL;
+  const navigation = useNavigate();
   const headers = {
     'Content-Type': 'application/json',
     'Authorization': sessionStorage.getItem('token')
@@ -19,11 +21,11 @@ function MyPage({ onClose }) {
     if (newPassword === checkNewPassword) {
       try {
         const response = await axios.post(`${url}mypage/changepw`, {
-          Password: newPassword
+          password: newPassword
         }, { headers: headers });
         alert('비밀번호가 변경되었습니다.');
         console.log('비밀번호 변경 완료:', response.data);
-        onClose();
+        // onClose();
       } catch (error) {
         alert('비밀번호 변경 중 오류가 발생했습니다.');
         setNewPassword('');
@@ -40,11 +42,11 @@ function MyPage({ onClose }) {
     console.log('부서 변경:', newDepartment);
     try {
       const response = await axios.post(`${url}mypage/changedept`, {
-        newDepartment: newDepartment
+        dept: newDepartment
       }, { headers: headers });
       console.log('부서 변경 완료:', response.data);
       alert('부서가 변경되었습니다.');
-      onClose();
+      // onClose();
     } catch (error) {
       console.log('부서 변경 중 오류가 발생했습니다.', error);
       alert('부서 변경 중 오류가 발생했습니다.');
@@ -54,10 +56,14 @@ function MyPage({ onClose }) {
   const handleDeleteAccount = async () => {
     if (window.confirm('정말로 탈퇴하시겠습니까?')) {
       try {
-        const response = await axios.post(`${url}mypage/deleteacc`,'',{ headers: headers });
-        console.log('회원 탈퇴 처리:', response.data);
+        const response = await axios.post(`${url}mypage/deleteacc`,{},{headers: {
+          'authorization': sessionStorage.getItem('token'),
+          'Content-Type': 'application/json',
+        }});
+        console.log('회원 탈퇴 처리:', response);
         alert('회원 탈퇴가 완료되었습니다.');
-        onClose();
+        sessionStorage.removeItem('token');
+        navigation('/');
       } catch (error) {
         console.log('회원 탈퇴 중 오류가 발생했습니다.');
       }

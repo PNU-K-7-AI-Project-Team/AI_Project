@@ -20,7 +20,7 @@ function App() {
           <Route path="/" element={<LoginForm />} className={styles.LoginForm} />
           <Route path="/signup" element={<RegisterForm />} />
           <Route path="/user" element={<UserMainPage />} />
-          <Route path="/main" element={ <MainPage />} />
+          <Route path="/main" element={<MainPage/>} />
         </Routes>
       </Router>
     </RecoilRoot>
